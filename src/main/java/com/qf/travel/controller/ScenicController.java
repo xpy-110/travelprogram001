@@ -31,6 +31,55 @@ public class ScenicController {
         model.addAttribute("scenics",scenics);
         return "memeber";
     }
+    /*动态生成首页景点信息*/
+    @ResponseBody
+    @RequestMapping("/getAllScenicByType")
+    public List<Scenic> getAllScenicByType(String stype, Model model){
+        System.out.println("stype = " + stype);
+        String stypes = "景点";
+        List<Scenic> scenics = scenicService.getScenicByType(stypes);
+        System.out.println("Scontroller:: scenics = " + scenics);
+        model.addAttribute("scenics",scenics);
+        return scenics;
+    }
+    /*动态生成首页酒店信息*/
+    @ResponseBody
+    @RequestMapping("/getHotelScenicByType")
+    public List<Scenic> getHotelScenicByType(String stype, Model model){
+        System.out.println("stype = " + stype);
+        String stypes = "酒店";
+        List<Scenic> scenics = scenicService.getScenicByType(stypes);
+        System.out.println("Scontroller:: scenics = " + scenics);
+        model.addAttribute("scenics",scenics);
+        return scenics;
+    }
+    /*动态生成首页路线信息*/
+    @ResponseBody
+    @RequestMapping("/getPathScenicByType")
+    public List<Scenic> getPathScenicByType(){
+        String stypes = "酒店";
+        List<Scenic> scenics = scenicService.getScenicByType(stypes);
+        System.out.println("Scontroller:: scenics = " + scenics);
+        return scenics;
+    }
+    /*动态生成top信息，最新旅游*/
+    @ResponseBody
+    @RequestMapping("/getTopScenicByTime")
+    public List<Scenic> getTopScenicByTime(){
+        String stypes = "景点";
+        List<Scenic> scenics = scenicService.getTopScenicByTime(stypes);
+        return scenics;
+    }
+
+    /*动态生成top信息，最新旅游*/
+    @ResponseBody
+    @RequestMapping("/getTopScenicByType")
+    public List<Scenic> getTopScenicByType(String stype){
+        System.out.println("人气stype = " + stype);
+        String stypes = "景点";
+        List<Scenic> scenics = scenicService.getTopScenicBySindent(stypes);
+        return scenics;
+    }
 
     //酒店管理
     //酒店维护

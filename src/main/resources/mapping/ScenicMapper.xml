@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.travel.mapper.ScenicMapper">
+    <!--scenic 首页显示-->
+
     <!--首页显示查询所有类型是景点的数据，进行摆出-->
     <select id="getScenicByType" parameterType="string" resultType="scenic">
         select * from scenic where Stype=#{stype} ORDER BY Scllect DESC LIMIT 0,6
@@ -10,6 +12,18 @@
     <select id="getScenicByName" parameterType="string" resultType="scenic">
         select * from scenic where Sname like "%"#{sname}"%" or Scity like "%"#{sname}"%"
     </select>
+    <!--注册时间排行,最新旅游-->
+    <select id="getTopScenicByTime" resultType="scenic">
+        select * from scenic where stype=#{stype} order by stime desc limit 0,4;
+    </select>
+    <!--top人气景点和路线排行-->
+    <select id="getTopScenicBySindent" resultType="scenic" parameterType="string">
+        select * from scenic where stype=#{stype} order by sindent desc limit 0,4;
+    </select>
+
+
+    <!--scenic 首页显示-->
+
     <select id="loadAll" resultType="scenic">
         select * from scenic
     </select>

@@ -22,6 +22,25 @@ public class ScenicServiceImpl implements ScenicService {
         System.out.println("scenics = " + scenics);
         return scenics;
     }
+    @Override
+    public List<Scenic> getTopScenicByTime(String stype) {
+        List<Scenic> scenics = scenicMapper.getTopScenicByTime(stype);
+        return scenics;
+    }
+
+    @Override
+    public List<Scenic> getTopScenicBySindent(String stype) {
+        List<Scenic> scenics = scenicMapper.getTopScenicBySindent(stype);
+        return scenics;
+    }
+
+    @Override
+    public List<Scenic> getScenicByName(String sname) {
+        List<Scenic> scenics = scenicMapper.getScenicByType(sname);
+        System.out.println("scenics = " + scenics);
+        return scenics;
+    }
+
 
     @Override
     public List<Scenic> loadAllByStype(String type,int page,int rows) {
