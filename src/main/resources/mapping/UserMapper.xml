@@ -83,5 +83,9 @@
     <insert id="save" parameterType="user">
         insert into user values(default,#{uname},#{upwd},#{email},#{realname},#{tel},#{sex},#{birth},#{createtime})
     </insert>
+    <!--模糊查询-->
+    <select id="inquireUser" parameterType="map" resultType="user">
+        select * from user where uid in (select uid from user_role where rid=#{rid}) and concat(uid,uname,realname) like "%"#{uuu}"%"
+    </select>
 
 </mapper>
