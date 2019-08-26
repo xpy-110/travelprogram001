@@ -8,6 +8,13 @@ import java.util.List;
 public interface ScenicService {
     /*查询所有数据 根据类型 进行分页*/
     public List<Scenic> getScenicByType(String stype);
+    /*查询时间排行 每次4个*/
+    public List<Scenic> getTopScenicByTime(String stype);
+    /*查询人气排行 每次4个数据*/
+    public List<Scenic> getTopScenicBySindent(String stype);
+    // 模糊查询
+    public List<Scenic> getScenicByName(String sname);
+
 
     //根据类型查询数据
     public List<Scenic> loadAllByStype(String type,int page,int rows);

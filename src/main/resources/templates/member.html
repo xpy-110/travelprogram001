@@ -31,6 +31,174 @@
                 alert("11");
                 window.location.href = "getScenicByType?stype=jingdian";
             })
+
+            function myfun(){
+                alert("000")
+            }
+            window.onload = function () {
+
+                getScenicByType("#sellhot","show-good-gsales");
+                getHotelScenicByType("#hotelhot");
+                getScenicByTime("#pathhot");
+                getTopsScenicByType("#topsindent")
+            }
+            function getScenicByType(parentDiv) {
+                $.post("getAllScenicByType",function (scenics) {
+                    var datas = eval(scenics);
+                    for (var key in datas){
+                        var gooddiv =$("<div></div>");
+                        gooddiv.attr("class","childDiv");
+                        var img = $("<img/>");
+                        img.attr("src",datas[key].simgs);
+                        img.attr("class","goodimg");
+                        var gnamefont = $("<font></font>")
+                        gnamefont.text(datas[key].sname);
+                        gnamefont.attr("class","goodname");
+                        var gpricefont=$("<font></font>");
+                        gpricefont.text("￥"+datas[key].sprice);
+                        gpricefont.attr("class","goodprice");
+                        var gindentfont = $("<font style='border-color: #0f0f0f'></font>")
+                        gindentfont.text("销量:"+datas[key].sindent);
+                        gindentfont.attr("class","goodindent");
+                        var gfeature = $("<font style='border-color: #5a5a5a'></font>")
+                        gfeature.text("此地特色有："+datas[key].sfeature);
+                        gfeature.attr("class","goodfeature");
+                        gooddiv.append(img);
+                        gooddiv.append(gnamefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gpricefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gindentfont);
+                        gooddiv.append("<br>")
+
+                        gooddiv.attr("id",datas[key].sid);
+                        gooddiv.click(function(){
+                            var sid=$(this).attr("id");
+                            alert(sid)
+                            window.open("login?sid="+sid);
+                        });
+                        $(parentDiv).append(gooddiv);
+                    }
+                })
+            }
+
+            function getHotelScenicByType(parentDiv) {
+                $.post("getHotelScenicByType",function (scenics) {
+                    var datas = eval(scenics);
+                    for (var key in datas){
+                        var gooddiv =$("<div></div>");
+                        gooddiv.attr("class","childDiv");
+                        var img = $("<img/>");
+                        img.attr("src",datas[key].simgs);
+                        img.attr("class","goodimg");
+                        var gnamefont = $("<font></font>")
+                        gnamefont.text(datas[key].sname);
+                        gnamefont.attr("class","goodname");
+                        var gpricefont=$("<font></font>");
+                        gpricefont.text("￥"+datas[key].sprice);
+                        gpricefont.attr("class","goodprice");
+                        var gindentfont = $("<font style='border-color: #0f0f0f'></font>")
+                        gindentfont.text("热度:"+datas[key].sindent);
+                        gindentfont.attr("class","goodindent");
+                        var gfeature = $("<font style='border-color: #5a5a5a'></font>")
+                        gfeature.text("此酒店的特色有："+datas[key].sfeature);
+                        gfeature.attr("class","goodfeature");
+                        gooddiv.append(img);
+                        gooddiv.append(gnamefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gpricefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gindentfont);
+                        gooddiv.append("<br>")
+
+                        gooddiv.attr("id",datas[key].sid);
+                        gooddiv.click(function(){
+                            var sid=$(this).attr("id");
+                            alert(sid)
+                            window.open("login?sid="+sid);
+                        });
+                        $(parentDiv).append(gooddiv);
+                    }
+                })
+            }
+            function getScenicByTime(parentDiv) {
+                $.post("getTopScenicByTime",function (scenics) {
+                    var datas = eval(scenics);
+                    for (var key in datas){
+                        var gooddiv =$("<div></div>");
+                        gooddiv.attr("class","top_childDiv");
+                        var img = $("<img/>");
+                        img.attr("src",datas[key].simgs);
+                        img.attr("class","topgoodimg");
+                        var gnamefont = $("<font></font>")
+                        gnamefont.text(datas[key].sname);
+                        gnamefont.attr("class","goodname");
+                        var gpricefont=$("<font></font>");
+                        gpricefont.text("￥"+datas[key].sprice);
+                        gpricefont.attr("class","goodprice");
+                        var gindentfont = $("<font style='border-color: #0f0f0f'></font>")
+                        gindentfont.text("热度:"+datas[key].sindent);
+                        gindentfont.attr("class","goodindent");
+                        var gfeature = $("<font style='border-color: #5a5a5a'></font>")
+                        gfeature.text("此酒店的特色有："+datas[key].sfeature);
+                        gfeature.attr("class","goodfeature");
+                        gooddiv.append(img);
+                        gooddiv.append(gnamefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gpricefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gindentfont);
+                        gooddiv.append("<br>")
+
+                        gooddiv.attr("id",datas[key].sid);
+                        gooddiv.click(function(){
+                            var sid=$(this).attr("id");
+                            alert(sid)
+                            window.open("login?sid="+sid);
+                        });
+                        $(parentDiv).append(gooddiv);
+                    }
+                })
+            }
+            function getTopsScenicByType(parentDiv) {
+                $.post("getTopScenicByType",function (scenic) {
+                    var datas = eval(scenics);
+                    for (var key in datas){
+                        var gooddiv =$("<div></div>");
+                        gooddiv.attr("class","top_childDiv");
+                        var img = $("<img/>");
+                        img.attr("src",datas[key].simgs);
+                        img.attr("class","topgoodimg");
+                        var gnamefont = $("<font></font>")
+                        gnamefont.text(datas[key].sname);
+                        gnamefont.attr("class","goodname");
+                        var gpricefont=$("<font></font>");
+                        gpricefont.text("￥"+datas[key].sprice);
+                        gpricefont.attr("class","goodprice");
+                        var gindentfont = $("<font style='border-color: #0f0f0f'></font>")
+                        gindentfont.text("热度:"+datas[key].sindent);
+                        gindentfont.attr("class","goodindent");
+                        var gfeature = $("<font style='border-color: #5a5a5a'></font>")
+                        gfeature.text("此酒店的特色有："+datas[key].sfeature);
+                        gfeature.attr("class","goodfeature");
+                        gooddiv.append(img);
+                        gooddiv.append(gnamefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gpricefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gindentfont);
+                        gooddiv.append("<br>")
+                        gooddiv.append(gfeature)
+                        gooddiv.attr("id",datas[key].sid);
+                        gooddiv.click(function(){
+                            var sid=$(this).attr("id");
+                            alert(sid)
+                            window.open("login?sid="+sid);
+                        });
+                        $(parentDiv).append(gooddiv);
+                    }
+                })
+            }
         })
     </script>
 </head>
@@ -216,7 +384,170 @@
         </div>
     </section>
     <!-- banner start-->
+    <!-- 旅游 start-->
+    <section id="content">
+        <!-- 精选start-->
+        <section class="hemai_jx">
+            <div class="jx_top">
+                <div class="jx_tit">
+                    <img src="images/icon_5.jpg" alt="">
+                    <span>精选</span>
+                </div>
+                <!-- Nav tabs -->
+                <ul class="jx_tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <span></span>
+                        <a href="#popularity" aria-controls="popularity" role="tab" data-toggle="tab">最新旅游</font></a>
+                    </li>
+                    <li role="presentation">
+                        <span></span>
+                        <a href="#newest" aria-controls="newest" role="tab" data-toggle="tab" id="sindent">人气旅游</a>
+                    </li>
+                    <li role="presentation">
+                        <span></span>
+                        <a href="#theme" aria-controls="theme" role="tab" data-toggle="tab" id="spath">特色路线</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="jx_content">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="popularity">
+                        <div class="row" id="pathhot">
 
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="newest">
+                        <div class="row" id="topsindent">
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_1.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_1.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_1.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_1.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="theme">
+                        <div class="row" id="top-path">
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_2.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_2.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_2.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="javascript:;">
+                                    <img src="images/jiangxuan_2.jpg" alt="">
+                                    <div class="has_border">
+                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
+                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 精选end-->
+        <!-- 国内游 start-->
+        <section class="hemai_jx">
+            <div class="jx_top">
+                <div class="jx_tit">
+                    <img src="images/icon_6.jpg" alt="">
+                    <span id="butn1">国内游</span>
+
+                </div>
+            </div>
+            <div class="heima_gn">
+                <div class="guonei_l">
+                    <img src="images/guonei_1.jpg" alt="">
+                </div>
+                <div class="guone_r">
+                    <div class="row">
+                        <div id="sellhot" class="col-md-3">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 国内游 end-->
+        <!-- 境外游 start-->
+        <section class="hemai_jx">
+            <div class="jx_top">
+                <div class="jx_tit">
+                    <img src="images/icon_7.jpg" alt="">
+                    <span>境外游</span>
+                </div>
+            </div>
+            <div class="heima_gn">
+                <div class="guonei_l">
+                    <img src="images/jiangwai_1.jpg" alt="">
+                </div>
+                <div class="guone_r">
+                    <div class="row">
+                        <div class="col-md-4" id="hotelhot">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 境外游 end-->
+    </section>
         <!-- 精选end-->
         <!-- 国内游 start-->
 
