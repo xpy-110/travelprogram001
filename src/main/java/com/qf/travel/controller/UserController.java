@@ -168,7 +168,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/member")
-    public String member(){
+    public String member(HttpServletRequest request){
+        request.getSession().setAttribute("islogin",true);
         return "member";
     }
     //权限不足时，响应的页面
@@ -182,10 +183,9 @@ public class UserController {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();//用户登录（清除用户在shiro中的驻留信息）
         request.getSession().invalidate();
-        request.getSession().setAttribute("islogin",true);
-
-        return "member";
+        return "redirect:member";
     }
+
     @RequestMapping("/main")
     public String main(){
         return "main";
