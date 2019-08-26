@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付详情界面</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>旅游网</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <meta charset="UTF-8">
+    <title>订单页面</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<style type="text/css">
+    .login{
+        width: 400px;
+        font-size: 12px;
+        position:absolute;right:10px;top:122px;
+    }
+    .login_out{
+        width: 400px;
+        font-size: 12px;
+        position:absolute;right:10px;top:122px;
+    }
+</style>
+<body>
+<!-- 头部 start -->
+<header id="header">
+    <div class="top_banner">
+        <img src="images/top_banner.jpg" alt="">
+    </div>
+    <div class="shortcut">
+        <!-- 未登录状态  -->
+        <div  class="login_out" th:if="${session.islogin==true}">
+                <span  class="label label-danger" style="cursor:pointer;" onclick="window.location.href='login'">登录
+                </span>&nbsp; &nbsp;
+            <a href="register">注册</a>&nbsp; &nbsp;
+            <a href="login">我的订单</a>&nbsp; &nbsp;
+            <a href="login">个人中心 </a>&nbsp; &nbsp;
+            <a href="login" class="collection">我的收藏</a>&nbsp; &nbsp;
+        </div>
+        <!-- 登录状态  -->
+        <div class="login" th:if="${session.islogin==false}">
+                <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
+                    <a href="findIndent">我的订单</a>&nbsp; &nbsp;
+                    <a href="indent">个人中心 </a>&nbsp; &nbsp;
+                  <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
+                <a href="logout">退出</a>
+                </span>
+
+        </div>
+    </div>
+    <div class="header_wrap">
+        <div class="topbar">
+            <div class="logo">
+                <img src="images/logo1.png" style="height: 60px;width: 220px;">
+            </div>
+            <div class="search">
+                <input name="" type="text" placeholder="请输入订单名称" class="search_input" autocomplete="off">
+                <a href="javascript:;" class="search-button">搜索</a>
+            </div>
+            <div class="hottel">
+                <div class="hot_pic">
+                    <img src="images/hot_tel.jpg" alt="">
+                </div>
+                <div class="hot_tel">
+                    <p class="hot_time">客服热线(9:00-6:00)</p>
+                    <p class="hot_num">400-618-9090</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- 头部 end -->
+<!-- 头部 end -->
+<!-- 首页导航 -->
+<div class="navitem">
+    <ul class="nav">
+        <li class="nav-active"><a href="index.html">首页</a></li>
+        <li><a href="route_list.html">全部</a></li>
+        <li><a href="route_list.html">待付款</a></li>
+        <li><a href="route_list.html">已支付</a></li>
+        <li><a href="route_list.html">评价</a></li>
+        <li><a href="favoriterank.html">收藏排行榜</a></li>
+    </ul>
+</div>
+<div>表头信息，均属于个人中心</div>
+    <h1>欢迎来到支付界面</h1>
+
+    <a href="findIndent">支付成功，自动跳转至订单界面</a>
+</body>
+</html>

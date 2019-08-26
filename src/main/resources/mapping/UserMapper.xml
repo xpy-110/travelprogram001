@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.UserMapper">
+    <select id="findUserInfoByUname" parameterType="string" resultType="com.qf.travel.pojo.User">
+        select
+        *
+        from
+        user u
+        where
+        u.uname = #{uname}
+    </select>
+    <select id="findUser" parameterType="user" resultType="com.qf.travel.pojo.User">
+        select
+         *
+        from
+        user u
+        where
+        u.uname=#{uname}
+        and
+        u.upwd=#{upwd}
+    </select>
+    <select id="findUR" resultType="int" parameterType="int">
+        select
+        rid
+        from
+        user_role
+        where
+        uid=#{uid}
+    </select>
+    <select id="loadUserId" resultType="user" parameterType="int">
+        select * from user where uid in (select uid from user_role where rid=#{rid})
+    </select>
+    <select id="getUserById" parameterType="int" resultType="user">
+        select * from user where uid=#{uid}
+    </select>
+    <select id="getUidByName" parameterType="string" resultType="int">
+        select uid from user where uname=#{uname}
+    </select>
+
+    <update id="updateUser" parameterType="user">
+        update user set uname=#{user.uname},upwd=#{user.upwd},email=#{user.email},realname=#{user.realname},tel=#{user.tel},sex=#{user.sex},birth=#{user.birth},createtime=#{user.createtime} where uid=#{user.uid}
+    </update>
+    <insert id="saveUser" parameterType="user">
+        insert user values(default,#{user.uname},#{user.upwd},#{user.email},#{user.realname},#{user.tel},#{user.sex},#{user.birth},#{user.createtime})
+    </insert>
+    <insert id="saveRoleUser" parameterType="map">
+        insert user_role values(#{rid},#{uid})
+    </insert>
+
+    <delete id="deleteUser" parameterType="list">
+        delete from user
+        <where>
+            uid in
+            <foreach collection="list" item="uid" separator="," open="(" close=")">
+                #{uid}
+            </foreach>
+        </where>
+    </delete>
+    <delete id="deleteUserRole" parameterType="list">
+        delete from user_role
+        <where>
+            uid in
+            <foreach collection="list" item="uid" separator="," open="(" close=")">
+                #{uid}
+            </foreach>
+        </where>
+    </delete>
+    <select id="getUserCount" resultType="int" parameterType="int">
+        select count(uid) from user where uid in (select uid from user_role where rid=#{rid})
+    </select>
+    <!--根据名字,电话，邮箱 判断查看是否含有user-->
+    <select id="getUserByName" parameterType="string" resultType="user">
+        select * from user where uname = #{uname}
+    </select>
+    <select id="getUserByTel" parameterType="string" resultType="user">
+        select * from user where tel=#{tel}
+    </select>
+    <select id="getUserByEmail" parameterType="string" resultType="user">
+        select * from user where email=#{email}
+    </select>
+    <insert id="save" parameterType="user">
+        insert into user values(default,#{uname},#{upwd},#{email},#{realname},#{tel},#{sex},#{birth},#{createtime})
+    </insert>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.PermissionMapper">
+    <resultMap id="resultPermission" type="com.qf.travel.pojo.Permission">
+        <id property="id" column="pid"></id>
+        <result property="pId" column="mcode"></result>
+        <result property="pname" column="pname"></result>
+        <result property="mname" column="mname"></result>
+        <result property="check" column="check"></result>
+    </resultMap>
+    <select id="loadAll" resultMap="resultPermission">
+        select * from permission
+    </select>
+    <select id="loadAllById" resultMap="resultPermission" parameterType="int">
+        select * from permission where pid in (select pid from user_permission where uid=#{uid})
+    </select>
+    <select id="findPermissionsByUname" parameterType="string" resultMap="resultPermission">
+       SELECT p.*
+        FROM
+         user        u,
+        permission  p,
+         user_permission up
+    WHERE
+       u.uid = up.uid
+       AND up.pid = p.pid
+         AND u.uname=#{uname}
+    </select>
+    <delete id="deletePermissionByuid" parameterType="int">
+        delete from user_permission where uid=#{uid}
+    </delete>
+    <insert id="savePermissionByuid" parameterType="map">
+        insert user_permission values(#{uid},#{pid})
+    </insert>
+    <insert id="addPermission" parameterType="permission">
+        insert permission values(default,#{permission.pname},#{permission.mname},#{permission.pId},#{permission.check})
+    </insert>
+    <delete id="deletePermission" parameterType="int">
+        delete from permission where pid=#{id}
+    </delete>
+    <update id="updatePermission" parameterType="permission">
+        update permission set pname=#{permission.pname},mname=#{permission.mname},mcode=#{permission.pId} where pid=#{permission.pid}
+    </update>
+    <select id="loadPermissionByPid" parameterType="int">
+        select * from permission where pid=#{id}
+    </select>
+    <delete id="deleteUserPermission" parameterType="int">
+        delete from user_permission where pid=#{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>旅游网</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-3.3.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--导入布局js，共享header和footer-->
+    <script type="text/javascript" src="js/include.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        $(function () {
+            $("#butn1").click(function () {
+                var stype = $("#butn1").val();
+                alert(stype);
+                alert("11");
+                window.location.href = "getScenicByType?stype=jingdian";
+            })
+        })
+    </script>
+</head>
+<style type="text/css">
+    .login{
+        width: 400px;
+        font-size: 12px;
+        position:absolute;right:10px;top:122px;
+    }
+    .login_out{
+        width: 400px;
+        font-size: 12px;
+        position:absolute;right:10px;top:122px;
+    }
+    #sellhot{
+        width:88%;
+        height:990px;
+        float:left;
+        margin-left:6%;
+    }
+    #pathhot{
+        width: 88%;
+        height: 280px;
+        float: left;
+        margin-left:6%;
+    }
+    #hotelhot{
+        width:88%;
+        height:990px;
+        float:left;
+        margin-left:6%;
+    }
+    .top_childDiv{
+        width:23%;
+        height:245px;
+        background-color:white;
+        margin-left: 10px;
+        float:left;
+        border:1px solid white;
+        padding: 5px;
+        text-align: center;
+    }
+    .top_childDiv:hover{
+        border:1px solid #333333;
+    }
+    .childDiv{
+        width:30%;
+        height:245px;
+        background-color:white;
+        margin-left: 10px;
+        float:left;
+        border:1px solid white;
+        padding: 5px;
+        text-align: center;
+    }
+    .childDiv:hover {
+        border:1px solid #ff0036;
+    }
+    .goodimg{
+        width:100%;
+        height:60%;
+    }
+    .goodtopimg{
+        width:100%;
+        height:60%;
+    }
+    .goodname{
+        font-size: 15px;
+    }
+    .goodprice{
+        color:red;
+        font-size: 20px;
+    }
+    .gindentfont{
+        color:gray;
+        font-size: 10px;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $("#font1").onclick(function () {
+            alert("被点击了")
+        })
+
+
+    })
+
+</script>
+<body>
+	<!--引入头部-->
+    <!-- 头部 start -->
+    <header id="header">
+        <div class="top_banner">
+            <img src="images/top_banner.jpg" alt="">
+        </div>
+        <div class="shortcut">
+            <!-- 未登录状态  -->
+            <div  class="login_out" th:if="${session.islogin==true}">
+                <span  class="label label-danger" style="cursor:pointer;" onclick="window.location.href='login'">登录
+                </span>&nbsp; &nbsp;
+                <a href="register">注册</a>&nbsp; &nbsp;
+                <a href="login">我的订单</a>&nbsp; &nbsp;
+                <a href="login">个人中心 </a>&nbsp; &nbsp;
+                <a href="login" class="collection">我的收藏</a>&nbsp; &nbsp;
+            </div>
+            <!-- 登录状态  -->
+            <div class="login" th:if="${session.islogin==false}">
+                <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
+                    <a href="findIndent">我的订单</a>&nbsp; &nbsp;
+                    <a href="indent">个人中心 </a>&nbsp; &nbsp;
+                  <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
+                <a href="logout">退出</a>
+                </span>
+
+            </div>
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <img src="images/logo1.png" style="height: 60px;width: 220px;">
+                </div>
+                <div class="search">
+                    <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                    <a href="javascript:;" class="search-button">搜索</a>
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <img src="images/hot_tel.jpg" alt="">
+                    </div>
+                    <div class="hot_tel">
+                        <p class="hot_time">客服热线(9:00-6:00)</p>
+                        <p class="hot_num">400-618-9090</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部 end -->
+    <!-- 首页导航 -->
+    <div class="navitem">
+        <ul class="nav">
+            <li class="nav-active"><a href="index.html">首页</a></li>
+            <li><a href="route_list.html">门票</a></li>
+            <li><a href="route_list.html">酒店</a></li>
+            <li><a href="route_list.html">香港车票</a></li>
+            <li><a href="route_list.html">出境游</a></li>
+            <li><a href="route_list.html">国内游</a></li>
+            <li><a href="route_list.html">港澳游</a></li>
+            <li><a href="route_list.html">抱团定制</a></li>
+            <li><a href="route_list.html">全球自由行</a></li>
+            <li><a href="favoriterank.html">收藏排行榜</a></li>
+        </ul>
+    </div>
+    <section id="banner">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="2000">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="images/banner_1.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="images/banner_2.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="images/banner_3.jpg" alt="">
+                </div>
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+    <!-- banner start-->
+
+        <!-- 精选end-->
+        <!-- 国内游 start-->
+
+    <!--导入底部-->
+    <footer id="footer">
+        <div class="why_select">
+            <dl>
+                <dt class="fl">
+                    <img src="images/icon_1.jpg" alt="">
+                </dt>
+                <dd>
+                    <h1>产品齐全</h1>
+                    <h2>产品全自主选，随心买</h2>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="fl">
+                    <img src="images/icon_2.jpg" alt="">
+                </dt>
+                <dd>
+                    <h1>便利快捷</h1>
+                    <h2>24小时不打烊，随时买</h2>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="fl">
+                    <img src="images/icon_3.jpg" alt="">
+                </dt>
+                <dd>
+                    <h1>安全支付</h1>
+                    <h2>知名支付工具，放心买</h2>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="fl">
+                    <img src="images/icon_4.jpg" alt="">
+                </dt>
+                <dd style="margin-right:0px;">
+                    <h1>贴心服务</h1>
+                    <h2>客服全年无休，安心买</h2>
+                </dd>
+            </dl>
+        </div>
+        <div class="company">
+            <p>北京千峰教育科技股份有限公司 版权所有Copyright 2006-2018, All Rights Reserved 苏ICP备16007882</p>
+        </div>
+    </footer>
+</body>
+</html>

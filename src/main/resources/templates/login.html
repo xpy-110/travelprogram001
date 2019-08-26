@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>旅游网-登录</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/common.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+    <![endif]-->
+      <!--导入angularJS文件-->
+    <!--<script src="js/angular.min.js"></script>-->
+	<!--导入jquery-->
+</head>
+<style type="text/css">
+	#login_wrap {
+		width:100%;
+		min-width: 1300px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.login-box {
+		width: 360px;
+		height: 450px;
+		position: absolute;
+		top: 50px;
+		right:170px;
+		background: #fff;
+	}
+	.title {
+		height: 80px;
+		line-height: 80px;
+		background: #ffc900;
+		font-size: 22px;
+		padding:0 30px;
+	}
+	.title img {
+		float: left;
+		margin-top: 12px;
+		margin-right: 15px;
+	}
+	.login_inner {
+		overflow: hidden;
+		padding: 10px 50px;
+	}
+
+	.alert {
+		margin: 0 auto;
+		padding: 6px 10px;
+		border: 1px solid transparent;
+		text-align: left;
+		color: #a94442;
+		background-color: #f2dede;
+		border-color: #ebccd1;
+		margin-bottom: 17px;
+		font-size: 12px;
+	}
+	.login_inner form{
+		width: 100%;
+		overflow: hidden;
+		padding-bottom: 15px;
+		border-bottom: 1px solid #eee;
+	}
+	.login_inner input {
+		display: inline-block;
+		width: 246px;
+		height: 30px;
+		border: 1px solid #d8d8d8;
+		font-size: 14px;
+		color: #666;
+		line-height: 28px;
+		padding: 6px 0 6px 12px;
+		box-shadow: 0 0 5px #fff;
+		outline: none;
+		transition: box-shadow 0.25s linear 0s;
+		-webkit-transition: box-shadow 0.25s linear 0s;
+		margin-bottom: 17px;
+	}
+	.verify input {
+		width: 95px;
+		margin-right: 20px;
+		float: left;
+		margin-bottom: 0;
+	}
+
+	.submit_btn button {
+		width: 120px;
+		height: 40px;
+		border: none;
+		background-color: #ffa800;
+		text-align: center;
+		line-height: 40px;
+		color: #000;
+		font-size: 18px;
+		font-weight: bold;
+		cursor: pointer;
+		float: left;
+	}
+	.auto_login {
+		margin-top: 15px;
+	}
+	.submit_btn .checkbox {
+		float: left;
+		width: 17px;
+		margin: 7px 5px 0 54px;
+	}
+	.submit_btn  span {
+		line-height: 35px;
+	}
+
+	.reg {
+		border-top: 1px solid #eeeeee;
+		margin-top: 15px;
+		width: 100%;
+		height: 40px;
+		line-height: 40px;
+		background: #f1f1f1;
+		text-align: center;
+		font-size: 16px;
+	}
+	.reg a {
+		color: #fc7f7f;
+	}
+	.why_select {
+		overflow: hidden;
+		margin: 0 auto;
+		border-bottom: solid 1px #666;
+		padding: 10px 85px;
+		font-family: '微软雅黑';
+	}
+</style>
+<body>
+<!--引入头部-->
+
+<div id="header"></div>
+    <!-- 头部 end -->
+    <section id="login_wrap" >
+        <div id="div1" class="fullscreen-bg" style="background: url(images/login_bg.png);height: 655px;">
+        </div>
+        <div class="login-box">
+        	<div class="title">
+        		<img src="img/logo.png" style="width: 60px;height: 60px;border-radius:100%; overflow:hidden;">
+        		<span>欢迎登录旅游账户</span>
+        	</div>
+        	<div class="login_inner">
+
+				<!--登录错误提示消息-->
+        		<div id="errorMsg" class="alert alert-danger" ></div>
+				<form id="loginForm" method="post" accept-charset="utf-8">
+        			<input type="hidden" name="action" value="login"/>
+					<input name="uname" class="form-control" id="uname" type="text" placeholder="请输入账号" autocomplete="off">
+        			<input name="upwd" class="form-control"  id="upwd" type="password" placeholder="请输入密码" autocomplete="off">
+					<table align="center">
+						<img src="createImage" alt="验证码" title="点击更换" onclick="this.src='createImage?'+(new Date()).getTime();"/>
+						<input id="checkcode" class="form-control" name="checkcode" placeholder="请输入验证码" type="text" autocomplete="off"/>
+						<span id="checkcode_msg" class="required"></span>
+					</table>
+			<div class="submit_btn">
+				<button type="button"  id="submit">登录</button>
+        			</div>
+        		</form>
+        		<div class="reg">没有账户？<a href="register">立即注册</a></div>
+        	</div>
+        </div>
+    </section>
+    <!--引入尾部-->
+<!-- 尾部 start-->
+<footer id="footer">
+	<div class="why_select">
+		<dl>
+			<dt class="fl">
+				<img src="images/icon_1.jpg" alt="">
+			</dt>
+			<dd>
+				<h1>产品齐全</h1>
+				<h2>产品全自主选，随心买</h2>
+			</dd>
+		</dl>
+		<dl>
+			<dt class="fl">
+				<img src="images/icon_2.jpg" alt="">
+			</dt>
+			<dd>
+				<h1>便利快捷</h1>
+				<h2>24小时不打烊，随时买</h2>
+			</dd>
+		</dl>
+		<dl>
+			<dt class="fl">
+				<img src="images/icon_3.jpg" alt="">
+			</dt>
+			<dd>
+				<h1>安全支付</h1>
+				<h2>知名支付工具，放心买</h2>
+			</dd>
+		</dl>
+		<dl>
+			<dt class="fl">
+				<img src="images/icon_4.jpg" alt="">
+			</dt>
+			<dd style="margin-right:0px;">
+				<h1>贴心服务</h1>
+				<h2>客服全年无休，安心买</h2>
+			</dd>
+		</dl>
+	</div>
+	<div class="company">
+		<p>北京千峰教育科技股份有限公司 版权所有Copyright 2006-2018, All Rights Reserved 苏ICP备16007882</p>
+	</div>
+</footer>
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<!--导入布局js，共享header和footer-->
+<script>
+	$(function() {
+		$("#submit").click(function () {
+			var uname = $("#uname").val();
+			var upwd = $("#upwd").val();
+			var checkcode = $("#checkcode").val();
+			if (uname.length == 0 || upwd.length == 0) {
+				alert("账号或密码不能为空");
+			}
+			if (checkcode.length==0) {
+				alert("验证码不能为空");
+			} else {
+				$.post("login1", {
+					"uname": uname,
+					"upwd": upwd,
+					"checkcode": checkcode
+				}, function (data) {
+					if (data == 3) {
+						alert("验证码有误，请重新输入");
+						location.href = "login";
+					}else if (data == 1) {
+						location.href = "memberSave?uname=" + uname + "&upwd=" + upwd;
+					} else if (data == 2) {
+						location.href = "dealLogin?uname=" + uname + "&upwd=" + upwd;
+					}
+					if (data == 0) {
+						alert("账号或密码有误，请重新输入");
+						location.href = "login";
+					}
+
+				})
+			}
+		});
+	});
+</script>
+</body>
+
+</html>

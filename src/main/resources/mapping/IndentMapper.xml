@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.IndentMapper">
+    <select id="findIndent" parameterType="string" resultType="com.qf.travel.pojo.Indent">
+    SELECT
+      i.*,
+      s.Sname,
+      s.Sprice,
+      s.Simgs
+      FROM
+      indent i,
+      scenic s
+      WHERE
+      i.sid=s.Sid
+      AND
+      i.uname=#{uname}
+    </select>
+    <select id="getTotalCount" parameterType="string" resultType="int">
+        select
+        count(id)
+        from
+        indent
+        where
+        uname=#{uname}
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.ScenicMapper">
+    <!--首页显示查询所有类型是景点的数据，进行摆出-->
+    <select id="getScenicByType" parameterType="string" resultType="scenic">
+        select * from scenic where Stype=#{stype} ORDER BY Scllect DESC LIMIT 0,6
+    </select>
+    <select id="getScenicByName" parameterType="string" resultType="scenic">
+        select * from scenic where Sname like "%"#{sname}"%" or Scity like "%"#{sname}"%"
+    </select>
+    <select id="loadAll" resultType="scenic">
+        select * from scenic
+    </select>
+    <!--根据类型查询数据-->
+    <select id="loadAllByStype" parameterType="string" resultType="scenic">
+        select * from scenic where Stype=#{stype}
+    </select>
+    <!--根据类型查询数据个数-->
+    <select id="getCountBytype" parameterType="string" resultType="int">
+        select count(Sid) from scenic where Stype=#{stype}
+    </select>
+    <!--根据类型状态查询-->
+    <select id="loadByStypeSstate" parameterType="scenic" resultType="scenic">
+        select * from scenic where Stype=#{scenic.stype} and Sstate=#{scenic.sstate}
+    </select>
+    <!--根据id修改状态-->
+    <update id="updateSstateByid" parameterType="scenic">
+        update scenic set Sstate=#{scenic.sstate} where Sid=#{scenic.sid}
+    </update>
+    <!--根据id sstate查询数量-->
+    <select id="getSstateCount" parameterType="scenic" resultType="int">
+        select count(Sid) from scenic where Stype=#{scenic.stype} and Sstate=#{scenic.sstate}
+    </select>
+    <!--根据id删除数据-->
+    <delete id="deleteById" parameterType="int">
+        delete from scenic where Sid=#{sid}
+    </delete>
+    <!--根据id查询-->
+    <select id="getScenicByid" parameterType="int" resultType="scenic">
+        select * from scenic where Sid=#{sid}
+    </select>
+    <!--根据id修改信息-->
+    <update id="updateByid" parameterType="scenic">
+        update scenic set Sname=#{scenic.sname},Sindent=#{scenic.sindent},Scllect=#{scenic.scllect},Scomment=#{scenic.scomment},Scity=#{scenic.scity},Sprice=#{scenic.sprice},Simgs=#{scenic.simgs},Stype=#{scenic.stype},Stime=#{scenic.stime},Sfeature=#{scenic.sfeature} where Sid=#{scenic.sid}
+    </update>
+    <!--添加用户-->
+    <insert id="saveSecien" parameterType="scenic">
+        insert scenic values(default,#{scenic.sname},#{scenic.sindent},#{scenic.scllect},#{scenic.scomment},#{scenic.scity},#{scenic.sprice},#{scenic.simgs},#{scenic.stype},#{scenic.stime},#{scenic.sfeature},#{scenic.sstate})
+    </insert>
+</mapper>
