@@ -29,9 +29,16 @@ public class ViewController {
     public String mydata(){
         return "mydata";
     }
-
     @RequestMapping("personal_center")
     public String personal_center(){
         return "personal_center";
+    }
+    @RequestMapping("favoriterank")
+    public String favoriterank(){
+        return "favoriterank";
+    }
+    @RequestMapping("evaluate")
+    public String evaluate(){
+        return "evaluate";
     }
 }

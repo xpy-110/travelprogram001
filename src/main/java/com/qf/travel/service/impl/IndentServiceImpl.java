@@ -33,6 +33,7 @@ public class IndentServiceImpl implements IndentService {
     @Override
     public int calcMaxPage(String uname,int rows) {
         int count=indentMapper.getTotalCount(uname);
+        System.out.println(count);
         return count%rows==0?count/rows:count/rows+1;
     }
 }
