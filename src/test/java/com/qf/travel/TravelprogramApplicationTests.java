@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,21 +32,11 @@ public class TravelprogramApplicationTests {
         System.out.println(scenics);
     }
     @Test
-    public void save(){
-        Scenic scenic = new Scenic();
-        scenic.setSname("一家");
-        scenic.setSindent(2323);
-        scenic.setScllect(213);
-        scenic.setScomment(32);
-        scenic.setScity("西安");
-        scenic.setSprice(32);
-        scenic.setSimgs("1212");
-        scenic.setStype("酒店");
-        scenic.setStime("122121");
-        scenic.setSfeature("212121");
-        scenic.setSstate(1);
-        int c = scenicMapper.saveSecien(scenic);
-        System.out.println(c);
+    public void getuser(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("rid",3);
+        map.put("uuu","1");
+        List<User> users = userMapper.inquireUser(map);
+        System.out.println(users);
     }
-
 }

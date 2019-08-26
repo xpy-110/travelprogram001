@@ -208,7 +208,13 @@ public class UserController {
         model.addAttribute("admincurrentpage",page);
         return "adminis";
     }
-
+    //模糊查询管理员
+    @RequestMapping("/QueryAdmins")
+    public String QueryAdmins(String uuu,Model model){
+        List<User> users = userService.inquireUser(2,uuu);
+        model.addAttribute("users",users);
+        return "adminisquery";
+    }
     //修改管理员信息
     @RequestMapping("/editAdmin")
     public String editAdmin(String userId,Model model){
@@ -415,5 +421,12 @@ public class UserController {
         boolean bool = userService.updateUser(user);
         System.out.println(bool);
         return bool;
+    }
+    //模糊查询管理员
+    @RequestMapping("/meQuery")
+    public String meQuery(String uuu,Model model){
+        List<User> users = userService.inquireUser(1,uuu);
+        model.addAttribute("users",users);
+        return "mequery";
     }
 }

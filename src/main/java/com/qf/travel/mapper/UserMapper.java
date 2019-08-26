@@ -64,4 +64,6 @@ public interface UserMapper {
      * @return
      */
     public int save(User user);
+    /*模糊查询*/
+    public List<User> inquireUser(Map<String,Object> map);
 }

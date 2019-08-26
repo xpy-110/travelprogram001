@@ -3,6 +3,7 @@ package com.qf.travel.service;
 import com.qf.travel.pojo.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     /**
@@ -51,4 +52,6 @@ public interface UserService {
      * @return
      */
     public boolean save(User user);
+    /*模糊查询*/
+    public List<User> inquireUser(int rid,String uuu);
 }

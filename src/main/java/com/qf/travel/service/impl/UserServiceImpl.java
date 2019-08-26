@@ -126,4 +126,11 @@ public class UserServiceImpl implements UserService {
         int count = userMapper.save(user);
         return count>0?true:false;
     }
+    /*模糊查询*/
+    public List<User> inquireUser(int rid,String uuu){
+        Map<String,Object> map = new HashMap<>();
+        map.put("rid",rid);
+        map.put("uuu",uuu);
+        return userMapper.inquireUser(map);
+    }
 }

@@ -40,7 +40,7 @@
 						  <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						  <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						  <li class="divider"></li>
-						  <li><a href="loginout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						  <li><a href="logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 				  </div>
 			  </li>
@@ -64,7 +64,7 @@
 						</li>
 						<li class="list-group-item">
 							<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span>
-							<ul style="margin-top:10px;">
+							<ul style="margin-top:10px;display:none;">
 								<li style="height:30px;">
 									<a href="adminis" style="color:red;"><i class="glyphicon glyphicon-user"></i> 管理员维护</a>
 								</li>
@@ -106,7 +106,7 @@
 						</li>
 						<li class="list-group-item tree-closed">
 							<span><i class="glyphicon glyphicon-ok"></i> 路线管理 <span class="badge" style="float:right">3</span></span>
-							<ul style="margin-top:10px;display:none;">
+							<ul style="margin-top:10px;">
 								<li style="height:30px;">
 									<a href="addRoute"><i class="glyphicon glyphicon-check"></i> 新增信息</a>
 								</li>
@@ -121,31 +121,8 @@
 					<li class="list-group-item tree-closed">
 						<span><i class="glyphicon glyphicon-th-large"></i> 业务管理 <span class="badge" style="float:right">7</span></span> 
 						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="certView"><i class="glyphicon glyphicon-picture"></i> 资质维护</a>
-							</li>
-							<li style="height:30px;">
-								<a href="typeView"><i class="glyphicon glyphicon-equalizer"></i> 分类管理</a>
-							</li>
-							<li style="height:30px;">
-								<a href="processView"><i class="glyphicon glyphicon-random"></i> 流程管理</a>
-							</li>
-							<li style="height:30px;">
-								<a href="advertisementView"><i class="glyphicon glyphicon-hdd"></i> 广告管理</a>
-							</li>
-							<li style="height:30px;">
-								<a href="messageView"><i class="glyphicon glyphicon-comment"></i> 消息模板</a>
-							</li>
-							<li style="height:30px;">
-								<a href="protypeView"><i class="glyphicon glyphicon-list"></i> 项目分类</a>
-							</li>
-							<li style="height:30px;">
-								<a href="tag"><i class="glyphicon glyphicon-tags"></i> 项目标签</a>
-							</li>
+
 						</ul>
-					</li>
-					<li class="list-group-item tree-closed" >
-						<a href="param"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a>
 					</li>
 				</ul>
 			</div>
@@ -156,11 +133,11 @@
 				<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
 			  </div>
 			  <div class="panel-body">
-<form action="inquireUser" method="post" class="form-inline" role="form" style="float:left;">
+<form action="RouteQuery" method="post" class="form-inline" role="form" style="float:left;">
   <div class="form-group has-feedback">
     <div class="input-group">
       <div class="input-group-addon">查询条件</div>
-      <input name="uuu" class="form-control has-success" type="text" placeholder="请输入查询条件">
+      <input name="uuu" class="form-control has-success" type="text" placeholder="请输入查询条件" autocomplete="off">
     </div>
   </div>
   <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>

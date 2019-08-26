@@ -41,7 +41,7 @@ public class ScenicControllerTwo {
         model.addAttribute("maxPage",maxPage);
         return "Route";
     }
-    //删除酒店信息
+    //删除路线信息
     @RequestMapping("/deleteRoute")
     public String deleteRoute(int Sid){
         boolean bool = scenicService.deleteById(Sid);
@@ -85,7 +85,7 @@ public class ScenicControllerTwo {
         boolean bool = scenicService.updateSstateByid(scenic);
         return bool?"redirect:RouteMaintain":"error";
     }
-    //酒店信息审核
+    //路线信息审核
     @RequestMapping("/Routeexamine")
     public String Routeexamine(@RequestParam(required = false,defaultValue = "1")int page,
                                  @RequestParam(required = false,defaultValue = "10")int rows,
@@ -124,7 +124,7 @@ public class ScenicControllerTwo {
         boolean bool = scenicService.updateSstateByid(scenic);
         return bool?"redirect:Routeexamine":"error";
     }
-    //增加酒店信息
+    //增加路线信息
     @RequestMapping("/addRoute")
     public String addRoute(){
         return "route_2";
@@ -141,5 +141,12 @@ public class ScenicControllerTwo {
         System.out.println(scenic);
         boolean bool = scenicService.saveSecien(scenic);
         return bool;
+    }
+    //搜索路线信息
+    @RequestMapping("/RouteQuery")
+    public String RouteQuery(String uuu,Model model){
+        List<Scenic> scenics = scenicService.inquireScenic("路线",uuu);
+        model.addAttribute("scenics",scenics);
+        return "routequery";
     }
 }

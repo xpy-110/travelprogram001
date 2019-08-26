@@ -29,4 +29,6 @@ public interface ScenicMapper {
     public int saveSecien(@Param("scenic")Scenic scenic);
     //根据id查询
     public Scenic getScenicByid(int sid);
+    //
+    List<Scenic> inquireScenic(Map<String,Object> map);
 }

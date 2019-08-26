@@ -41,7 +41,7 @@ public class ScenicControllerOne {
         model.addAttribute("maxPage",maxPage);
         return "Scenic";
     }
-    //删除酒店信息
+    //删除景点信息
     @RequestMapping("/deleteScience")
     public String deleteScience(int Sid){
         boolean bool = scenicService.deleteById(Sid);
@@ -85,7 +85,7 @@ public class ScenicControllerOne {
         boolean bool = scenicService.updateSstateByid(scenic);
         return bool?"redirect:ScienceMaintain":"error";
     }
-    //酒店信息审核
+    //景点信息审核
     @RequestMapping("/Scienceexamine")
     public String Scienceexamine(@RequestParam(required = false,defaultValue = "1")int page,
                                @RequestParam(required = false,defaultValue = "10")int rows,
@@ -124,7 +124,7 @@ public class ScenicControllerOne {
         boolean bool = scenicService.updateSstateByid(scenic);
         return bool?"redirect:Scienceexamine":"error";
     }
-    //增加酒店信息
+    //增加景点信息
     @RequestMapping("/addScience")
     public String addScience(){
         return "scenic_2";
@@ -141,6 +141,13 @@ public class ScenicControllerOne {
         System.out.println(scenic);
         boolean bool = scenicService.saveSecien(scenic);
         return bool;
+    }
+    //搜索景点信息
+    @RequestMapping("/ScienceQuery")
+    public String ScienceQuery(String uuu,Model model){
+        List<Scenic> scenics = scenicService.inquireScenic("景点",uuu);
+        model.addAttribute("scenics",scenics);
+        return "sciencequery";
     }
 
 }
