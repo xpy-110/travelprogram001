@@ -24,23 +24,15 @@
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-        $(function () {
-            $("#butn1").click(function () {
-                var stype = $("#butn1").val();
-                alert(stype);
-                alert("11");
-                window.location.href = "getScenicByType?stype=jingdian";
-            })
 
             function myfun(){
                 alert("000")
             }
             window.onload = function () {
-
+                myfun();
                 getScenicByType("#sellhot","show-good-gsales");
                 getHotelScenicByType("#hotelhot");
                 getScenicByTime("#pathhot");
-                getTopsScenicByType("#topsindent")
             }
             function getScenicByType(parentDiv) {
                 $.post("getAllScenicByType",function (scenics) {
@@ -199,7 +191,7 @@
                     }
                 })
             }
-        })
+
     </script>
 </head>
 <style type="text/css">
@@ -277,16 +269,7 @@
         font-size: 10px;
     }
 </style>
-<script type="text/javascript">
-    $(function () {
-        $("#font1").onclick(function () {
-            alert("被点击了")
-        })
 
-
-    })
-
-</script>
 <body>
 	<!--引入头部-->
     <!-- 头部 start -->
