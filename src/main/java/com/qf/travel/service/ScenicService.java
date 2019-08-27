@@ -1,7 +1,6 @@
 package com.qf.travel.service;
 
 import com.qf.travel.pojo.Scenic;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,4 +32,5 @@ public interface ScenicService {
     public int getMaxpage(String type,int rows);
     //根据id查询
     public Scenic getScenicByid(int sid);
+    List<Scenic> inquireScenic(String stype,String uuu);
 }

@@ -7,7 +7,9 @@ import com.qf.travel.service.ScenicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScenicServiceImpl implements ScenicService {
@@ -93,5 +95,13 @@ public class ScenicServiceImpl implements ScenicService {
     @Override
     public Scenic getScenicByid(int sid) {
         return scenicMapper.getScenicByid(sid);
+    }
+
+    @Override
+    public List<Scenic> inquireScenic(String stype, String uuu) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("stype",stype);
+        map.put("uuu",uuu);
+        return scenicMapper.inquireScenic(map);
     }
 }

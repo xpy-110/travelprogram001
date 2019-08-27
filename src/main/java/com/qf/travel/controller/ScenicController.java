@@ -206,9 +206,12 @@ public class ScenicController {
         boolean bool = scenicService.saveSecien(scenic);
         return bool;
     }
-
-
-
-    //路线管理
+    //搜索酒店信息
+    @RequestMapping("/hotelQuery")
+    public String hotelQuery(String uuu,Model model){
+        List<Scenic> scenics = scenicService.inquireScenic("酒店",uuu);
+        model.addAttribute("scenics",scenics);
+        return "hotelquery";
+    }
 
 }

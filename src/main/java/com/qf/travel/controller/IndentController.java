@@ -18,7 +18,7 @@ public class IndentController {
     private IndentService indentService;
     @RequestMapping("/findIndent")
     public String findIndent(@RequestParam(required = false,defaultValue = "1") int page,
-                             @RequestParam(required = false,defaultValue = "2") int rows,
+                             @RequestParam(required = false,defaultValue = "6") int rows,
                              Model model, HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("currentUser");
         String uname = user.getUname();

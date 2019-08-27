@@ -63,4 +63,9 @@
     <insert id="saveSecien" parameterType="scenic">
         insert scenic values(default,#{scenic.sname},#{scenic.sindent},#{scenic.scllect},#{scenic.scomment},#{scenic.scity},#{scenic.sprice},#{scenic.simgs},#{scenic.stype},#{scenic.stime},#{scenic.sfeature},#{scenic.sstate})
     </insert>
+
+    <!--模糊查询-->
+    <select id="inquireScenic" parameterType="map" resultType="user">
+        select * from scenic where Stype=#{stype} and concat(Sname,Scity,Sprice) like "%"#{uuu}"%"
+    </select>
 </mapper>
