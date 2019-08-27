@@ -65,7 +65,7 @@
     </insert>
 
     <!--模糊查询-->
-    <select id="inquireScenic" parameterType="map" resultType="user">
+    <select id="inquireScenic" parameterType="map" resultType="scenic">
         select * from scenic where Stype=#{stype} and concat(Sname,Scity,Sprice) like "%"#{uuu}"%"
     </select>
 </mapper>
