@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public int findUR(int uid) {
-        int ur = userMapper.findUR(uid);
+    public List<Integer> findUR(int uid) {
+        List<Integer> ur = userMapper.findUR(uid);
         return ur;
     }
     @Override

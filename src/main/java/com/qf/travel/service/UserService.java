@@ -23,7 +23,7 @@ public interface UserService {
      * 查询用户角色表
      * @return
      */
-    public int findUR(int uid);
+    public List<Integer> findUR(int uid);
     //获取所有会员的信息
     List<User> loadUserId(int rid,int page,int rows);
     //根据id查询用户

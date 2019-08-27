@@ -24,13 +24,6 @@
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-        $(function () {
-            $("#butn1").click(function () {
-                var stype = $("#butn1").val();
-                alert(stype);
-                alert("11");
-                window.location.href = "getScenicByType?stype=jingdian";
-            })
 
             function myfun(){
                 alert("000")
@@ -40,7 +33,6 @@
                 getScenicByType("#sellhot","show-good-gsales");
                 getHotelScenicByType("#hotelhot");
                 getScenicByTime("#pathhot");
-                getTopsScenicByType("#topsindent")
             }
             function getScenicByType(parentDiv) {
                 $.post("getAllScenicByType",function (scenics) {
@@ -74,8 +66,7 @@
                         gooddiv.attr("id",datas[key].sid);
                         gooddiv.click(function(){
                             var sid=$(this).attr("id");
-                            alert(sid)
-                            window.open("login?sid="+sid);
+                            location.href="gotoRouteDetail?sid="+sid;
                         });
                         $(parentDiv).append(gooddiv);
                     }
@@ -114,8 +105,7 @@
                         gooddiv.attr("id",datas[key].sid);
                         gooddiv.click(function(){
                             var sid=$(this).attr("id");
-                            alert(sid)
-                            window.open("login?sid="+sid);
+                            location.href="gotoRouteDetail?sid="+sid;
                         });
                         $(parentDiv).append(gooddiv);
                     }
@@ -153,9 +143,10 @@
                         gooddiv.attr("id",datas[key].sid);
                         gooddiv.click(function(){
                             var sid=$(this).attr("id");
-                            alert(sid)
-                            window.open("login?sid="+sid);
+                            location.href="gotoRouteDetail?sid="+sid;
+
                         });
+
                         $(parentDiv).append(gooddiv);
                     }
                 })
@@ -193,13 +184,13 @@
                         gooddiv.click(function(){
                             var sid=$(this).attr("id");
                             alert(sid)
-                            window.open("login?sid="+sid);
+                            location.href="gotoRouteDetail?sid="+sid;
                         });
                         $(parentDiv).append(gooddiv);
                     }
                 })
             }
-        })
+
     </script>
 </head>
 <style type="text/css">
@@ -277,16 +268,7 @@
         font-size: 10px;
     }
 </style>
-<script type="text/javascript">
-    $(function () {
-        $("#font1").onclick(function () {
-            alert("被点击了")
-        })
 
-
-    })
-
-</script>
 <body>
 	<!--引入头部-->
     <!-- 头部 start -->
@@ -342,7 +324,7 @@
         <ul class="nav">
             <li class="nav-active"><a href="index.html">首页</a></li>
             <li><a href="route_list.html">门票</a></li>
-            <li><a href="route_list.html">酒店</a></li>
+            <li><a href="routelist">酒店</a></li>
             <li><a href="route_list.html">香港车票</a></li>
             <li><a href="route_list.html">出境游</a></li>
             <li><a href="route_list.html">国内游</a></li>
@@ -507,8 +489,8 @@
                 <div class="jx_tit">
                     <img src="images/icon_6.jpg" alt="">
                     <span id="butn1">国内游</span>
-
                 </div>
+                <a href="gotoseek"> <div >更多景点资讯</div> </a>
             </div>
             <div class="heima_gn">
                 <div class="guonei_l">
@@ -525,12 +507,13 @@
             </div>
         </section>
         <!-- 国内游 end-->
-        <!-- 境外游 start-->
+        <!-- 路线 start-->
         <section class="hemai_jx">
             <div class="jx_top">
                 <div class="jx_tit">
                     <img src="images/icon_7.jpg" alt="">
-                    <span>境外游</span>
+                    <span>更多精品酒店信息</span>
+                    <a href="gotoseek"> <div >更多路线资讯</div> </a>
                 </div>
             </div>
             <div class="heima_gn">

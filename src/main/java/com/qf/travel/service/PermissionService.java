@@ -7,7 +7,8 @@ import java.util.Map;
 
 public interface PermissionService {
     //获取所有权限
-    List<Permission> loadAll();
+    List<Permission> loadAll(int page,int rows);
+    List<Permission> loadAll1();
     //根据id获取权限
     List<Permission> loadAllById(int uid);
     /**
@@ -39,7 +40,10 @@ public interface PermissionService {
      */
     public boolean deletePermission(int id);
 
-    public boolean updatePermission(Permission permission);
-
     public List<Permission> loadPermissionByPid(int id);
+
+    public int getMaxpage(int rows);
+
+    boolean checkMname(String mname);
+    boolean checkPname(String pname);
 }

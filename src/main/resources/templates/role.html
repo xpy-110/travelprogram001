@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="utf-8" xmlns:th="http://www.thymeleaf.org">
+<html lang="UTF-8">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/doc.min.css">
+    <link rel="stylesheet" href="ztree/zTreeStyle.css">
     <style>
         .tree li {
             list-style-type: none;
@@ -24,7 +25,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="#">千锋旅游平台后台管理 - 景点信息维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="#">众筹平台 - 角色维护</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -62,8 +63,8 @@
                         <a href="main"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
                     </li>
                     <li class="list-group-item">
-                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">4</span></span>
-                        <ul style="margin-top:10px;display:none;">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span>
+                        <ul style="margin-top:10px;">
                             <li style="height:30px;">
                                 <a href="adminis" style="color:red;"><i class="glyphicon glyphicon-user"></i> 管理员维护</a>
                             </li>
@@ -80,7 +81,7 @@
                     </li>
                     <li class="list-group-item tree-closed">
                         <span><i class="glyphicon glyphicon-ok"></i> 景点管理 <span class="badge" style="float:right">3</span></span>
-                        <ul style="margin-top:10px;">
+                        <ul style="margin-top:10px;display:none;">
                             <li style="height:30px;">
                                 <a href="addScience"><i class="glyphicon glyphicon-check"></i> 新增信息</a>
                             </li>
@@ -130,54 +131,35 @@
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <ol class="breadcrumb">
-                <li><a href="main">首页</a></li>
-                <li><a href="ScienceMaintain">景点管理列表</a></li>
-                <li class="active">修改景点信息</li>
-            </ol>
+
             <div class="panel panel-default">
-                <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
+                <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> 权限菜单列表 <div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
                 <div class="panel-body">
-                    <form enctype="multipart/form-data" role="form">
-                        <div class="form-group">
-                            <label for="example1">名称</label>
-                            <input id="uid" type="hidden" th:value="${scenic.sid}"/>
-                            <input id="inputSuccess1" type="text" class="form-control" th:value="${scenic.sname}" autocomplete="off"/>
+                    <form id="dor"  method="post">
+                        <a type="button" class="btn btn-primary" style="float:right;" href="addRole"><i class="glyphicon glyphicon-plus"></i> 新增</a>
+                        <br>
+                        <hr style="clear:both;">
+                        <div class="table-responsive">
+                            <table class="table  table-bordered">
+                                <thead>
+                                <tr >
+                                    <th width="30">#</th>
+                                    <th>权限分配</th>
+                                    <th width="100">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="u:${roles}">
+                                    <td th:text="${u.rid}"></td>
+                                    <td th:text="${u.rname}"></td>
+                                    <td>
+                                        <a th:href="@{permissionRole(rid=${u.rid})}" type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></a>
+                                         <a th:href="@{deleteRole(rid=${u.rid})}" type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="form-group">
-                            <label for="example2">订单数</label>
-                            <input id="inputSuccess2" type="text" class="form-control" th:value="${scenic.sindent}" autocomplete="off"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="example3">收藏数</label>
-                            <input id="inputSuccess3" type="text" class="form-control" th:value="${scenic.scllect}" autocomplete="off"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="example4">评论条数</label>
-                            <input id="inputSuccess4" type="text" class="form-control" th:value="${scenic.scomment}" autocomplete="off"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="example5">所属城市</label>
-                            <input id="inputSuccess5" type="text" class="form-control" th:value="${scenic.scity}" autocomplete="off"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="example6">价格</label>
-                            <input id="inputSuccess6" type="text" class="form-control" th:value="${scenic.sprice}" autocomplete="off"/>
-                        </div>
-                        <div class="form-group"><!---->
-                            <label for="example7">图片</label>
-                                <input id="inputSuccess7" name="uploadfile" type="file" th:value="${scenic.simgs}" class="form-control" >
-                        </div>
-                        <div class="form-group">
-                            <label for="example8">上次修改时间</label>
-                            <input id="inputSuccess8" type="text" class="form-control" th:value="${scenic.stime}" autocomplete="off" disabled />
-                        </div>
-                        <div class="form-group">
-                            <label for="example9">特色</label>
-                            <input id="inputSuccess9" type="text" class="form-control" th:value="${scenic.sfeature}" autocomplete="off"/>
-                        </div>
-                        <button id="commit" type="button" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-                        <button type="reset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
                     </form>
                 </div>
             </div>
@@ -193,12 +175,12 @@
             </div>
             <div class="modal-body">
                 <div class="bs-callout bs-callout-info">
-                    <h4>测试标题1</h4>
-                    <p>测试内容1，测试内容1，测试内容1，测试内容1，测试内容1，测试内容1</p>
+                    <h4>没有默认类</h4>
+                    <p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
                 </div>
                 <div class="bs-callout bs-callout-info">
-                    <h4>测试标题2</h4>
-                    <p>测试内容2，测试内容2，测试内容2，测试内容2，测试内容2，测试内容2</p>
+                    <h4>没有默认类</h4>
+                    <p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
                 </div>
             </div>
         </div>
@@ -207,6 +189,7 @@
 <script src="jquery/jquery-2.1.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="script/docs.min.js"></script>
+<script src="ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript">
     $(function () {
         $(".list-group-item").click(function(){
@@ -220,45 +203,6 @@
             }
         });
 
-        $("#commit").click(function () {
-            var sname = $("#inputSuccess1").val();
-            var sindent = $("#inputSuccess2").val();
-            var scllect = $("#inputSuccess3").val();
-            var scomment = $("#inputSuccess4").val();
-            var scity = $("#inputSuccess5").val();
-            var sprice = $("#inputSuccess6").val();
-            var uploadfile = $("#inputSuccess7").val();
-            var sfeature = $("#inputSuccess9").val();
-            var sid = $("#uid").val();
-            if (sname.length==0 || sindent.length == 0 || scllect.length == 0 || scomment.length == 0 || scity.length == 0 || sprice.length == 0 || sfeature.length == 0){
-                alert("请填写完整后再提交");
-            } else {
-                var formdata = new FormData();
-                formdata.append("sname",$("#inputSuccess1").val());
-                formdata.append("sindent",$("#inputSuccess2").val());
-                formdata.append("scllect",$("#inputSuccess3").val());
-                formdata.append("scomment",$("#inputSuccess4").val());
-                formdata.append("scity",$("#inputSuccess5").val());
-                formdata.append("sprice",$("#inputSuccess6").val());
-                formdata.append("simgs",$("#inputSuccess7")[0].files[0]);
-                formdata.append("sfeature",$("#inputSuccess9").val());
-                formdata.append("sid",$("#uid").val());
-                $.ajax({
-                    url:"updateScience1",
-                    type:"post",
-                    data:formdata,
-                    contentType:false,//这两个false很关键，（设置不解析此数据）
-                    processData:false,
-                    success:function (result) {
-                        if (result == true){
-                            location.href = "ScienceMaintain";
-                        } else {
-                            alert("修改信息失败");
-                        }
-                    }
-                })
-            }
-        });
     });
 </script>
 </body>

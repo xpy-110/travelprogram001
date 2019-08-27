@@ -74,6 +74,9 @@
                             <li style="height:30px;">
                                 <a href="permission"><i class="glyphicon glyphicon-lock"></i> 权限维护</a>
                             </li>
+                            <li style="height:30px;">
+                                <a href="role"><i class="glyphicon glyphicon-lock"></i> 角色维护</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="list-group-item tree-closed">
@@ -129,42 +132,40 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
+            <ol class="breadcrumb">
+                <li><a href="main">首页</a></li>
+                <li><a href="role">角色列表</a></li>
+                <li class="active">添加角色</li>
+
+            </ol>
             <div class="panel panel-default">
-                <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> 权限分配列表<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
-                <div class="panel-body">
-                    <button id="Distribution" class="btn btn-success">分配许可</button>
-                    <br><br>
-                    <ul id="treeDemo" class="ztree"></ul>
-                </div>
+                <form role="form" class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">未分配角色列表</label><br>
+                        <select id="undistributed" class="form-control" multiple size="10" style="width:190px;overflow-y:auto;" >
+                            <option th:each="N:${rolesNo}">
+                                <div style="text-align: center" th:text="${N.rname}"></div>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <ul>
+                            <input type="hidden" id="inId" th:value="${uid}"/>
+                            <li id="right" class="btn btn-default glyphicon glyphicon-chevron-right"></li>
+                            <br>
+                            <li id="left" class="btn btn-default glyphicon glyphicon-chevron-left" style="margin-top:20px;"></li>
+                        </ul>
+                    </div>
+                    <div class="form-group" style="margin-left:40px;">
+                        <label for="exampleInputPassword2">已分配角色列表</label><br>
+                        <select id="allocated" class="form-control" multiple size="10" style="width:190px;overflow-y:auto;" >
+                            <option th:each="Y:${roleYes}">
+                                <div style="text-align: center" th:text="${Y.rname}"></div>
+                            </option>
+                        </select>
+                    </div>
+                </form>
             </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">帮助</h4>
-            </div>
-            <div class="modal-body">
-                <div class="bs-callout bs-callout-info">
-                    <h4>没有默认类</h4>
-                    <p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
-                </div>
-                <div class="bs-callout bs-callout-info">
-                    <h4>没有默认类</h4>
-                    <p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
-                </div>
-            </div>
-            <!--
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-            -->
-            <input id="inp" type="hidden" th:value="${aId}"/>
-        </div>
     </div>
 </div>
 <script src="jquery/jquery-2.1.1.min.js"></script>
@@ -183,52 +184,40 @@
                 }
             }
         });
-        var aId = $("#inp").val();
-        var setting = {
-            check : {
-                enable : true
-            },
-            view: {
-                selectedMulti: false,
-                addDiyDom: function(treeId, treeNode){
-                    var icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
-                    if ( treeNode.icon ) {
-                        icoObj.removeClass("button ico_docu ico_open").addClass("fa fa-fw " + treeNode.icon).css("background","");
-                    }
-                },
-            },
-            async: {
-                enable: true,
-                url:"permissionroleid?aId="+aId,
-                autoParam:["id"]
-            },
-            data:{
-                simpleData:{
-                    enable:true,
-                    idKey:"id",
-                    pidKey:"pId"
-                },
-                key:{
-                    name:"pname"
+        $("#left").click(function () {
+            var value = $("#allocated").val();
+            var rid = $("#inId").val();
+            var rnames = "";
+            for (var i = 0; i < value.length; i++) {
+                rnames+=i==value.length-1?value[i]:value[i]+"=";
+            }
+            $.post("delUserRole",{"rnames":rnames,"rid":rid},function (data) {
+                for (var i = 0; i < value.length; i++) {
+                    var op = $("<option>");
+                    op.text(value[i]);
+                    $("#undistributed").append(op);
                 }
-            },
-            callback: {
-                onClick : function(event, treeId, json) {
+                $(":selected").remove();
+                alert(data==true?"授权成功":"授权失败");
+            })
+        });
 
+        $("#right").click(function () {
+            var value = $("#undistributed").val();
+            var rid = $("#inId").val();
+            var rnames = "";
+            for (var i = 0; i < value.length; i++) {
+                rnames+=i==value.length-1?value[i]:value[i]+"=";
+            }
+            $.post("addUserRole",{"rnames":rnames,"rid":rid},function (data) {
+                for (var i = 0; i < value.length; i++) {
+                    var op = $("<option>");
+                    op.text(value[i]);
+                    $("#allocated").append(op);
                 }
-            }
-        };
-        $.fn.zTree.init($("#treeDemo"), setting); //异步访问数据
-        $("#Distribution").click(function () {
-            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
-            var nodes = treeObj.getCheckedNodes(true);
-            var pids="";
-            alert(nodes);
-            for(var i=0; i<nodes.length;i++){
-                pids+=i==nodes.length-1?nodes[i].id:nodes[i].id+"-";
-            }
-            $.post("savePermission",{"pids":pids,"aId":aId},function (data) {
-                alert(data==true?"授权成功！":"授权失败！");
+                $(":selected").remove();
+                alert(data==true?"授权成功":"授权失败");
+
             })
         });
     });

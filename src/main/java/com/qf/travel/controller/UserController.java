@@ -87,16 +87,20 @@ public class UserController {
         if (b!=null) {
             System.out.println(b);
             User user=userService.findUserByUname(uname);
-            int rid=userService.findUR(user.getUid());
+            List<Integer> rids=userService.findUR(user.getUid());
             request.getSession().setAttribute("user", b);
             if(!code.equalsIgnoreCase(checkcode)){
                 a=3;
-            }else if(rid!=1){
-                a = 2;
             }else {
-                a = 1;
+                for (int i = 0; i < rids.size(); i++) {
+                    if(rids.get(i)!=1){
+                        a = 2;
+                    }else {
+                        a = 1;
+                        break;
+                    }
+                }
             }
-
         }
         return a;
     }

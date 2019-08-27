@@ -12,7 +12,7 @@ public interface PermissionMapper {
     //获取所有权限
     List<Permission> loadAll();
     //根据id获取权限
-    List<Permission> loadAllById(int uid);
+    List<Permission> loadAllById(int rid);
     /**
      * 根据用户名查询该用户已分配的权限集合
      * @param uname  登录名（用户名）
@@ -34,17 +34,14 @@ public interface PermissionMapper {
      * @param
      * @return  int
      */
-    public int addPermission(Permission permission);
+    public int addPermission(@Param("permission") Permission permission);
 
-    public int deletePermission(int id/**
-     * 删除权限信息
-     * @param id
-     * @return  int
-     */);
-
-    public int updatePermission(Permission permission);
+    public int deletePermission(int id);
 
     public List<Permission> loadPermissionByPid(int id);
 
-    public int deleteUserPermission(int id);
+    public int getCount();
+    int deleteRolePermission(int pid);
+    Permission checkMname(String mname);
+    Permission checkPname(String pname);
 }

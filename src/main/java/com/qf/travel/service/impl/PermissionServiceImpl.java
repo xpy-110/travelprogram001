@@ -1,5 +1,6 @@
 package com.qf.travel.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.qf.travel.mapper.PermissionMapper;
 import com.qf.travel.pojo.Permission;
 import com.qf.travel.service.PermissionService;
@@ -16,7 +17,13 @@ public class PermissionServiceImpl implements PermissionService {
     @Resource
     private PermissionMapper permissionMapper;
     @Override
-    public List<Permission> loadAll() {
+    public List<Permission> loadAll(int page,int rows) {
+        PageHelper.startPage(page, rows);
+        return permissionMapper.loadAll();
+    }
+
+    @Override
+    public List<Permission> loadAll1() {
         return permissionMapper.loadAll();
     }
 
@@ -71,24 +78,43 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public boolean deletePermission(int id) {
         boolean bool = false;
-        int a = permissionMapper.deleteUserPermission(id);
-        bool = a>0?true:false;
-        if (bool){
+        int a = permissionMapper.deleteRolePermission(id);
             int c = permissionMapper.deletePermission(id);
             bool = c>0?true:false;
+        return bool;
+    }
+
+
+    @Override
+    public List<Permission> loadPermissionByPid(int id) {
+        return permissionMapper.loadPermissionByPid(id);
+    }
+
+    @Override
+    public int getMaxpage(int rows) {
+        int c = permissionMapper.getCount();
+        int maxpage = c%rows==0?c/rows:c/rows+1;
+        return maxpage;
+    }
+
+    @Override
+    public boolean checkMname(String mname) {
+        Permission p = permissionMapper.checkMname(mname);
+        boolean bool = false;
+        if(p == null){
+            bool = true;
         }
         return bool;
     }
 
     @Override
-    public boolean updatePermission(Permission permission) {
-        int c = permissionMapper.updatePermission(permission);
-        return c>0?true:false;
-    }
-
-    @Override
-    public List<Permission> loadPermissionByPid(int id) {
-        return permissionMapper.loadPermissionByPid(id);
+    public boolean checkPname(String pname) {
+        Permission p = permissionMapper.checkPname(pname);
+        boolean bool = false;
+        if(p == null){
+            bool = true;
+        }
+        return bool;
     }
 
 }
