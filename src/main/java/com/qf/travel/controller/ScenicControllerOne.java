@@ -3,6 +3,7 @@ package com.qf.travel.controller;
 import com.qf.travel.pojo.Scenic;
 import com.qf.travel.service.ScenicService;
 import com.qf.travel.utils.ScienceUtiles;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ public class ScenicControllerOne {
     //景点管理
     @Autowired
     private ScenicService scenicService;
+    @RequiresPermissions(value = {"sceManage"})
     @RequestMapping("/ScienceMaintain")
     public String ScienceMaintain(@RequestParam(required = false,defaultValue = "1")int page,
                                 @RequestParam(required = false,defaultValue = "10")int rows,
@@ -42,12 +44,14 @@ public class ScenicControllerOne {
         return "Scenic";
     }
     //删除景点信息
+    @RequiresPermissions(value = {"scedelete"})
     @RequestMapping("/deleteScience")
     public String deleteScience(int Sid){
         boolean bool = scenicService.deleteById(Sid);
         return bool?"redirect:ScienceMaintain":"error";
     }
     //批量删除
+    @RequiresPermissions(value = {"scedelete"})
     @RequestMapping("/deleteSciences")
     public String deleteSciences(String ids){
         String[] sids = ids.split("-");
@@ -58,12 +62,14 @@ public class ScenicControllerOne {
         return bool?"redirect:ScienceMaintain":"error";
     }
     //修改
+    @RequiresPermissions(value = {"sceupdate"})
     @RequestMapping("/updateScience")
     public String updateScience(int Sid,Model model){
         Scenic scenic = scenicService.getScenicByid(Sid);
         model.addAttribute("scenic",scenic);
         return "scenic_1";
     }
+    @RequiresPermissions(value = {"sceupdate"})
     @ResponseBody
     @RequestMapping("/updateScience1")
     public boolean updateScience1(int sid, String sname, int sindent, int scllect, int scomment,
@@ -76,6 +82,7 @@ public class ScenicControllerOne {
         return bool;
     }
     //是否下架
+    @RequiresPermissions(value = {"sceManage"})
     @RequestMapping("/isScience")
     public String isScience(int Sid){
         int sstate = 0;
@@ -86,6 +93,7 @@ public class ScenicControllerOne {
         return bool?"redirect:ScienceMaintain":"error";
     }
     //景点信息审核
+    @RequiresPermissions(value = {"sceAud"})
     @RequestMapping("/Scienceexamine")
     public String Scienceexamine(@RequestParam(required = false,defaultValue = "1")int page,
                                @RequestParam(required = false,defaultValue = "10")int rows,
@@ -109,12 +117,14 @@ public class ScenicControllerOne {
         return "scenic_3";
     }
     //删除
+    @RequiresPermissions(value = {"sceAud"})
     @RequestMapping("/deleteScienceexamine")
     public String deleteScienceexamine(int Sid){
         boolean bool = scenicService.deleteById(Sid);
         return bool?"redirect:Scienceexamine":"error";
     }
     //是否上架
+    @RequiresPermissions(value = {"sceAud"})
     @RequestMapping("/updateScienceexamine")
     public String updateScienceexamine(int Sid){
         int sstate = 1;
@@ -125,6 +135,7 @@ public class ScenicControllerOne {
         return bool?"redirect:Scienceexamine":"error";
     }
     //增加景点信息
+    @RequiresPermissions(value = {"addSce"})
     @RequestMapping("/addScience")
     public String addScience(){
         return "scenic_2";
@@ -143,6 +154,7 @@ public class ScenicControllerOne {
         return bool;
     }
     //搜索景点信息
+    @RequiresPermissions(value = {"sceAud"})
     @RequestMapping("/ScienceQuery")
     public String ScienceQuery(String uuu,Model model){
         List<Scenic> scenics = scenicService.inquireScenic("景点",uuu);

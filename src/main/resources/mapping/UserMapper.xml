@@ -18,8 +18,6 @@
         user u
         where
         u.uname=#{uname}
-        and
-        u.upwd=#{upwd}
     </select>
     <select id="findUR" resultType="int" parameterType="int">
         select
@@ -70,6 +68,9 @@
     <select id="getUserCount" resultType="int" parameterType="int">
         select count(uid) from user where uid in (select uid from user_role where rid=#{rid})
     </select>
+    <select id="getCount" resultType="int">
+        select count(uid) from user
+    </select>
     <!--根据名字,电话，邮箱 判断查看是否含有user-->
     <select id="getUserByName" parameterType="string" resultType="user">
         select * from user where uname = #{uname}
@@ -86,6 +87,9 @@
     <!--模糊查询-->
     <select id="inquireUser" parameterType="map" resultType="user">
         select * from user where uid in (select uid from user_role where rid=#{rid}) and concat(uid,uname,realname) like "%"#{uuu}"%"
+    </select>
+    <select id="loadAdmin" resultType="user">
+        select * from user where uid in (select uid from user_role where rid=2 or rid>3)
     </select>
 
 </mapper>

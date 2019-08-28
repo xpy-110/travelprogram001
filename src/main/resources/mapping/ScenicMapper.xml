@@ -45,6 +45,12 @@
     <select id="getAllScenicCount" resultType="int">
         SELECT COUNT(sid) FROM scenic
     </select>
+    <!--模糊查询所有-->
+    <select id="queryAllScenic" parameterType="string" resultType="scenic">
+        select * from scenic where concat(Sname,Scity,Sprice) like "%"#{xxx}"%"
+    </select>
+
+
     <!--scenic 首页显示-->
 
     <select id="loadAll" resultType="scenic">

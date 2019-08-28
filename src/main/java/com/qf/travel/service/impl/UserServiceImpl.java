@@ -52,7 +52,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> loadUserId(int rid,int page,int rows) {
         PageHelper.startPage(page,rows);
-        return userMapper.loadUserId(rid);
+        if (rid != 1){
+            List<User> users = userMapper.loadAdmin();
+            return users;
+        }else {
+            return userMapper.loadUserId(rid);
+        }
     }
 
     @Override
@@ -95,7 +100,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int getMaxPage(int rows,int rid) {
-        int c = userMapper.getUserCount(rid);
+        int c = 0;
+        if (rid == 1){
+            c = userMapper.getUserCount(rid);
+        } else {
+            c = userMapper.getCount()-userMapper.getUserCount(1)-1;
+        }
         int MaxPage = c%rows==0?c/rows:c/rows+1;
         return MaxPage;
     }
@@ -124,7 +134,16 @@ public class UserServiceImpl implements UserService {
     public boolean save(User user) {
         System.out.println("user = " + user);
         int count = userMapper.save(user);
-        return count>0?true:false;
+        boolean bool = count>0?true:false;
+        if (bool){
+            int uid = userMapper.getUidByName(user.getUname());
+            Map<String,Integer> map = new HashMap<>();
+            map.put("rid",1);
+            map.put("uid",uid);
+            int n = userMapper.saveRoleUser(map);
+            bool = n>0?true:false;
+        }
+        return bool;
     }
     /*模糊查询*/
     public List<User> inquireUser(int rid,String uuu){

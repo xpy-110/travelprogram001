@@ -2,6 +2,7 @@ package com.qf.travel.controller;
 
 import com.qf.travel.pojo.Role;
 import com.qf.travel.service.RoleService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +16,19 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService roleService;
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/role")
     public String role(Model model){
         List<Role> roles = roleService.loadAll();
         model.addAttribute("roles",roles);
         return "role";
     }
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/addRole")
     public String addRole(){
         return "roleAdd";
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/checkrname")
     public boolean checkrname(String rname){
@@ -37,6 +41,7 @@ public class RoleController {
         }
         return bool;
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/saveRole")
     public boolean saveRole(String rname){
@@ -45,11 +50,13 @@ public class RoleController {
         boolean bool = roleService.addRole(role);
         return bool;
     }
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/deleteRole")
     public String deleteRole(int rid){
         boolean bool = roleService.deleteRole(rid);
         return bool?"redirect:role":"error";
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/delRolePermission")
     public boolean delRolePermission(String rnames,int rid){
@@ -61,6 +68,7 @@ public class RoleController {
         boolean bool = roleService.delRolePer(rid,list);
         return bool;
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/addRolePermission")
     public boolean addRolePermission(String rnames,int rid){
@@ -73,6 +81,7 @@ public class RoleController {
         return bool;
     }
     //管理员角色维护
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/adminpermission")
     public String adminpermission(int userId,Model model){
         List<Role> roles1 = roleService.loadAll();
@@ -90,6 +99,7 @@ public class RoleController {
         model.addAttribute("roleYes",roles2);
         return "assignPermission";
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/delUserRole")
     public boolean delUserRole(String rnames,int rid){
@@ -101,6 +111,7 @@ public class RoleController {
         boolean bool = roleService.delUserRole(rid,list);
         return bool;
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/addUserRole")
     public boolean addUserRole(String rnames,int rid){

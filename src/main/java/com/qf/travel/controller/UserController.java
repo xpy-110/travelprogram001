@@ -2,9 +2,11 @@ package com.qf.travel.controller;
 
 import com.qf.travel.pojo.User;
 import com.qf.travel.service.UserService;
+import com.qf.travel.utils.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,9 +46,11 @@ public class UserController {
      * 登录处理
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/dealLogin")
-    public String dealLogin(@RequestParam("uname")String uname,
+    public boolean dealLogin(@RequestParam("uname")String uname,
                             @RequestParam("upwd")String upwd , HttpServletRequest request) {
+        boolean bool = false;
         try {
             User User=userService.findUserByUname(uname);
             Subject subject = SecurityUtils.getSubject();//从安全管理器中获取主体对象
@@ -57,13 +61,14 @@ public class UserController {
                 //用户信息与权限信息存储
                 System.out.println("登陆成功");
                 request.getSession().setAttribute("user",User);
-                return "main";
+                bool = true;
+                return bool;
             }
         }catch (AuthenticationException e){
             e.printStackTrace();
             System.out.println("登录失败");
         }
-        return "login";
+        return bool;
     }
     /**
      * 登录判断
@@ -81,11 +86,10 @@ public class UserController {
         String code =(String) session.getAttribute("number");
         User u = new User();
         u.setUname(uname);
-        u.setUpwd(password);
         User b=userService.findUser(u);
         int a=0;
         if (b!=null) {
-            System.out.println(b);
+            System.out.println("login1111"+b);
             User user=userService.findUserByUname(uname);
             List<Integer> rids=userService.findUR(user.getUid());
             request.getSession().setAttribute("user", b);
@@ -107,15 +111,13 @@ public class UserController {
     /**
      * 登录前台
      * @param uname
-     * @param upwd
      * @param request
      * @return
      */
     @RequestMapping("memberSave")
-    public Object memberSave(String uname,String upwd,HttpServletRequest request){
+    public Object memberSave(String uname,HttpServletRequest request){
         User u=new User();
         u.setUname(uname);
-        u.setUpwd(upwd);
         User b=userService.findUser(u);
         request.getSession().setAttribute("currentUser",b);
         boolean bool=true;
@@ -124,7 +126,6 @@ public class UserController {
         }
         request.getSession().setAttribute("islogin",bool);
         return "member";
-
     }
 
     /**
@@ -195,6 +196,7 @@ public class UserController {
         return "main";
     }
     //管理员管理
+    @RequiresPermissions(value = {"admManage"})
     @RequestMapping("/adminis")
     public String adminis(@RequestParam(required = false,defaultValue = "1")int page,
                           @RequestParam(required = false,defaultValue = "10")int rows,
@@ -213,6 +215,7 @@ public class UserController {
         return "adminis";
     }
     //模糊查询管理员
+    @RequiresPermissions(value = {"admManage"})
     @RequestMapping("/QueryAdmins")
     public String QueryAdmins(String uuu,Model model){
         List<User> users = userService.inquireUser(2,uuu);
@@ -220,6 +223,7 @@ public class UserController {
         return "adminisquery";
     }
     //修改管理员信息
+    @RequiresPermissions(value = {"updateAdmin"})
     @RequestMapping("/editAdmin")
     public String editAdmin(String userId,Model model){
         int uid = Integer.parseInt(userId);
@@ -228,9 +232,10 @@ public class UserController {
         return "Adminedit";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"updateAdmin"})
     @RequestMapping("/admedited")
     public boolean admedited(int uid,String uname,String upwd,String email,String realname,
-                             String tel,String birth){
+                             String tel){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -240,13 +245,13 @@ public class UserController {
         user.setEmail(email);
         user.setRealname(realname);
         user.setTel(tel);
-        user.setBirth(birth);
         user.setCreatetime(date);
         boolean bool = userService.updateUser(user);
         System.out.println(bool);
         return bool;
     }
     //删除管理员信息
+    @RequiresPermissions(value = {"deleteAdm"})
     @RequestMapping("/deleteAdmin")
     public String deleteAdmin(String userId){
         int uid = Integer.parseInt(userId);
@@ -256,6 +261,7 @@ public class UserController {
         return bool?"redirect:adminis":"error";
     }
     //批量删除管理员信息
+    @RequiresPermissions(value = {"deleteAdm"})
     @ResponseBody
     @RequestMapping("/deleteAdmins")
     public boolean deleteAdmins(String ids){
@@ -269,6 +275,7 @@ public class UserController {
         return bool;
     }
     //增加管理员
+    @RequiresPermissions(value = {"addAdm"})
     @RequestMapping("/addAdmin")
     public String addAdmin(){
         return "Adminadd";
@@ -276,7 +283,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/addadmed")
     public boolean addadmed(String uname,String upwd,String email,String realname,
-                            String tel,String birth){
+                            String tel,String birth,String sex){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -287,7 +294,8 @@ public class UserController {
         user.setTel(tel);
         user.setBirth(birth);
         user.setCreatetime(date);
-        boolean bool = userService.saveUser(user,2);
+        user.setSex(sex);
+        boolean bool = userService.saveUser(user,9);
         System.out.println(bool);
         return bool;
     }
@@ -297,7 +305,8 @@ public class UserController {
     public boolean registerUser (String uname, String upwd, String email, String realname, String tel, String sex,String birth){
         User user = new User();
         user.setUname(uname);
-        user.setUpwd(upwd);
+        String password = Md5Utils.getpawd(upwd);
+        user.setUpwd(password);
         user.setEmail(email);
         user.setRealname(realname);
         user.setTel(tel);
@@ -336,6 +345,7 @@ public class UserController {
 
 
     //会员管理
+    @RequiresPermissions(value = {"memManage"})
     @RequestMapping("/meManager")
     public String meManager(@RequestParam(required = false,defaultValue = "1")int page,
                             @RequestParam(required = false,defaultValue = "10")int rows,
@@ -354,6 +364,7 @@ public class UserController {
         return "meManager";
     }
     //删除会员信息
+    @RequiresPermissions(value = {"deleteMe"})
     @RequestMapping("/deleteMem")
     public String deleteMem(String userId){
         int uid = Integer.parseInt(userId);
@@ -364,6 +375,7 @@ public class UserController {
     }
     //批量删除会员信息
     @ResponseBody
+    @RequiresPermissions(value = {"deleteMe"})
     @RequestMapping("/deleteMems")
     public boolean deleteMems(String ids){
         String[] uids = ids.split("-");
@@ -377,14 +389,16 @@ public class UserController {
         return bool;
     }
     //增加会员
+    @RequiresPermissions(value = {"addMem"})
     @RequestMapping("/addMem")
     public String addMem(){
         return "addMem";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"addMen"})
     @RequestMapping("/addMems")
     public boolean addMems(String uname,String upwd,String email,String realname,
-                            String tel,String birth){
+                            String tel,String birth,String sex){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -395,11 +409,13 @@ public class UserController {
         user.setTel(tel);
         user.setBirth(birth);
         user.setCreatetime(date);
+        user.setSex(sex);
         boolean bool = userService.saveUser(user,1);
         System.out.println(bool);
         return bool;
     }
     //修改会员信息
+    @RequiresPermissions(value = {"updateMem"})
     @RequestMapping("/editMem")
     public String editMem(String userId,Model model){
         int uid = Integer.parseInt(userId);
@@ -408,9 +424,10 @@ public class UserController {
         return "Meminedit";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"updateMem"})
     @RequestMapping("/Memdited")
     public boolean Memdited(int uid,String uname,String upwd,String email,String realname,
-                             String tel,String birth){
+                             String tel){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -420,13 +437,13 @@ public class UserController {
         user.setEmail(email);
         user.setRealname(realname);
         user.setTel(tel);
-        user.setBirth(birth);
         user.setCreatetime(date);
         boolean bool = userService.updateUser(user);
         System.out.println(bool);
         return bool;
     }
     //模糊查询管理员
+    @RequiresPermissions(value = {"memManage"})
     @RequestMapping("/meQuery")
     public String meQuery(String uuu,Model model){
         List<User> users = userService.inquireUser(1,uuu);

@@ -163,7 +163,7 @@
 						<span id="checkcode_msg" class="required"></span>
 					</table>
 			<div class="submit_btn">
-				<button type="button"  id="submit" >登录</button>
+				<button type="button"  id="submit">登录</button>
         			</div>
         		</form>
         		<div class="reg">没有账户？<a href="register">立即注册</a></div>
@@ -234,7 +234,7 @@
 			if (uname.length == 0 || upwd.length == 0) {
 				alert("账号或密码不能为空");
 			}
-			if (checkcode.length == 0) {
+			if (checkcode.length==0) {
 				alert("验证码不能为空");
 			} else {
 				$.post("login1", {
@@ -244,24 +244,34 @@
 				}, function (data) {
 					if (data == 3) {
 						alert("验证码有误，请重新输入");
-						location.href = "login";
-					} else if (data == 1) {
-						location.href = "memberSave?uname=" + uname + "&upwd=" + upwd;
-					} else if (data == 2) {
-						location.href = "dealLogin?uname=" + uname + "&upwd=" + upwd;
+						$("#checkcode").val("");
 					}
-					if (data == 0) {
+					else if (data == 0) {
 						alert("账号或密码有误，请重新输入");
-						location.href = "login";
+						$("#uname").val("");
+						$("#upwd").val("");
+					}else {
+						var aaa = data;
+						$.post("dealLogin",{"uname":uname,"upwd":upwd},function (data) {
+							if (data == true){
+								if (aaa == 1){
+									location.href = "memberSave?uname=" + uname;
+								}
+								if(aaa == 2){
+									location.href = "main";
+								}
+							} else {
+								alert("账号或密码有误，请重新输入");
+								$("#uname").val("");
+								$("#upwd").val("");
+							}
+						})
 					}
 
 				})
 			}
 		});
 	});
-
-
-
 </script>
 </body>
 
