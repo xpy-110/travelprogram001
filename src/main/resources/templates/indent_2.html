@@ -20,10 +20,10 @@
 </head>
 <style type="text/css">
     .login{
-          width: 400px;
-          font-size: 12px;
-          position:absolute;right:10px;top:122px;
-      }
+        width: 400px;
+        font-size: 12px;
+        position:absolute;right:10px;top:122px;
+    }
     .login_out{
         width: 400px;
         font-size: 12px;
@@ -337,10 +337,10 @@
 <!-- 首页导航 -->
 <div class="navitem">
     <ul class="nav">
-        <li ><a href="memberSave">首页</a></li>
-        <li class="nav-active"><a href="findIndent">所有订单</a></li>
-        <li><a th:href="@{findIndent1(istate='待付款')}">待付款</a></li>
-        <li><a th:href="@{findIndent1(istate='已付款')}">已付款</a></li>
+        <li><a href="memberSave">首页</a></li>
+        <li><a href="findIndent">所有订单</a></li>
+        <li ><a th:href="@{findIndent1(istate='待付款')}">待付款</a></li>
+        <li class="nav-active"><a th:href="@{findIndent1(istate='已付款')}">已付款</a></li>
         <li><a href="evaluate">评价</a></li>
     </ul>
 </div>
@@ -389,18 +389,18 @@
             <a id="del1" type="button" ><img src="images/del.jpg" alt="delete"/></a>
         </div>
         <div>
-        <tfoot>
-        <tr>
-            <td colspan="8" align="center" >
-                <ul class="pagination">
-                    <a class="btn btn-default" th:href="@{findIndent(page=1)}">首页</a>
-                    <a class="btn btn-default" th:href="@{findIndent(page=${currentPage+(-1)})}">上一页</a>
-                    <a class="btn btn-default" th:href="@{findIndent(page=${currentPage+1})}">下一页</a>
-                    <a class="btn btn-default" th:href="@{findIndent(page=${maxPage})}">末页</a>
-                </ul>
-            </td>
-        </tr>
-        </tfoot>
+            <tfoot>
+            <tr>
+                <td colspan="8" align="center" >
+                    <ul class="pagination">
+                        <a class="btn btn-default" th:href="@{findIndent1(page=1)}">首页</a>
+                        <a class="btn btn-default" th:href="@{findIndent1(page=${currentPage+(-1)})}">上一页</a>
+                        <a class="btn btn-default" th:href="@{findIndent1(page=${currentPage+1})}">下一页</a>
+                        <a class="btn btn-default" th:href="@{findIndent1(page=${maxPage})}">末页</a>
+                    </ul>
+                </td>
+            </tr>
+            </tfoot>
         </div>
     </div>
 </div>
@@ -452,58 +452,58 @@
             })
         }
     });
-      /*删除确定*/
+    /*删除确定*/
     function del() {
-       alert("你确定要删除么？");
+        alert("你确定要删除么？");
     }
 </script>
-        <div class="right" style="text-align:center;right: 7%;position:absolute;">
-            <div class="top">
-                <div class="hot">HOT</div>
-                <span>热门推荐</span>
+<div class="right" style="text-align:center;right: 7%;position:absolute;">
+    <div class="top">
+        <div class="hot">HOT</div>
+        <span>热门推荐</span>
+    </div>
+    <ul>
+        <li>
+            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
+            <div class="right">
+                <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                <p>网付价<span>&yen;<span>899</span>起</span>
+                </p>
             </div>
-            <ul>
-                <li>
-                    <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                    <div class="right">
-                        <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                        <p>网付价<span>&yen;<span>899</span>起</span>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                    <div class="right">
-                        <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                        <p>网付价<span>&yen;<span>899</span>起</span>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                    <div class="right">
-                        <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                        <p>网付价<span>&yen;<span>899</span>起</span>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                    <div class="right">
-                        <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                        <p>网付价<span>&yen;<span>899</span>起</span>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                    <div class="right">
-                        <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                        <p>网付价<span>&yen;<span>899</span>起</span>
-                        </p>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        </li>
+        <li>
+            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
+            <div class="right">
+                <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                <p>网付价<span>&yen;<span>899</span>起</span>
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
+            <div class="right">
+                <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                <p>网付价<span>&yen;<span>899</span>起</span>
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
+            <div class="right">
+                <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                <p>网付价<span>&yen;<span>899</span>起</span>
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
+            <div class="right">
+                <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                <p>网付价<span>&yen;<span>899</span>起</span>
+                </p>
+            </div>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

@@ -29,13 +29,24 @@ public class IndentServiceImpl implements IndentService {
         return indent;
     }
     /**
-     * 得出总页数
+     * 得出总订单数
      * @param rows
      * @return
      */
     @Override
     public int calcMaxPage(String uname,int rows) {
         int count=indentMapper.getTotalCount(uname);
+        System.out.println(count);
+        return count%rows==0?count/rows:count/rows+1;
+    }
+    /**
+     * 得出总订单数
+     * @param rows
+     * @return
+     */
+    @Override
+    public int calcMaxPage1(String uname, String istate, int rows) {
+        int count=indentMapper.getTotalCount1(uname,istate);
         System.out.println(count);
         return count%rows==0?count/rows:count/rows+1;
     }
@@ -51,5 +62,32 @@ public class IndentServiceImpl implements IndentService {
         map.put("uname",uname);
         map.put("uuu",uuu);
         return indentMapper.queryAllByUname(map);
+    }
+
+    @Override
+    public int deleteById(int id) {
+        int i = indentMapper.deleteById(id);
+        return i;
+    }
+
+    @Override
+    public boolean deleteIds(List<Integer> list) {
+        int c = indentMapper.deleteIds(list);
+        boolean bool= c>0?true:false;
+        return bool;
+    }
+    /**
+     * 根据不同状态查出不同订单
+     *
+     */
+    @Override
+    public List<Indent> findIndent1(String istate,String uname, int page, int rows) {
+        PageHelper.startPage(page, rows);
+        Map<String,String> map=new HashMap<>();
+        map.put("istate",istate);
+        map.put("uname",uname);
+        List<Indent> indent = indentMapper.findIndent1(map);
+        System.out.println("indent = " + indent);
+        return indent;
     }
 }

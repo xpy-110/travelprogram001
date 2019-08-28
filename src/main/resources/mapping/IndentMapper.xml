@@ -23,6 +23,16 @@
       WHERE
     uname=#{uname}
     </select>
+    <select id="findIndent1" parameterType="map" resultMap="resultAllScenic">
+    SELECT
+      *
+      FROM
+      indent
+      WHERE
+    uname=#{uname}
+    and
+    istate=#{istate}
+    </select>
     <select id="getTotalCount" parameterType="string" resultType="int">
         select
         count(id)
@@ -30,6 +40,16 @@
         indent
         where
         uname=#{uname}
+    </select>
+    <select id="getTotalCount1" parameterType="string" resultType="int">
+        select
+        count(id)
+        from
+        indent
+        where
+        uname=#{uname}
+        and
+        istate=#{istate}
     </select>
     <!--模糊查询全部-->
     <select id="queryAll" parameterType="string" resultMap="resultAllScenic">
