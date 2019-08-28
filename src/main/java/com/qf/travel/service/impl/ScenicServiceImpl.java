@@ -7,13 +7,14 @@ import com.qf.travel.service.ScenicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class ScenicServiceImpl implements ScenicService {
-    @Autowired
+    @Resource
     private ScenicMapper scenicMapper;
     @Override
     public List<Scenic> getScenicByType(String stype) {
@@ -39,6 +40,43 @@ public class ScenicServiceImpl implements ScenicService {
         List<Scenic> scenics = scenicMapper.getScenicByType(sname);
         System.out.println("scenics = " + scenics);
         return scenics;
+    }
+
+    @Override
+    public List<Scenic> getRouteScenicBySprice(String stype, int page, int rows) {
+        PageHelper.startPage(page,rows);
+        return scenicMapper.getRouteScenicBySprice(stype);
+    }
+
+    @Override
+    public List<Scenic> getRouteScenicByScllect(String stype, int page, int rows) {
+        PageHelper.startPage(page,rows);
+        return scenicMapper.getRouteScenicByScllect(stype);
+    }
+
+    @Override
+    public List<Scenic> getRouteScenicByStime(String stype, int page, int rows) {
+        PageHelper.startPage(page,rows);
+        return scenicMapper.getRouteScenicByStime(stype);
+    }
+
+    @Override
+    public List<Scenic> getRouteScenicBySindent(String stype, int page, int rows) {
+        return scenicMapper.getRouteScenicBySindent(stype);
+    }
+
+    @Override
+    public List<Scenic> getScenicByScllect(int page, int rows) {
+        PageHelper.startPage(page,rows);
+        return scenicMapper.getScenicByScllect();
+    }
+
+    @Override
+    public int getAllScenicMaxPage(int rows) {
+        int c = scenicMapper.getAllScenicCount();
+        int maxPage = c%rows==0?c/rows:c/rows+1;
+        System.out.println("maxPage = " + maxPage);
+        return maxPage;
     }
 
 

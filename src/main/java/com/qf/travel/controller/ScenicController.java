@@ -98,13 +98,142 @@ public class ScenicController {
         return "seek";
     }
 
-    /*跳往seek界面*/
+    /*跳往route_list界面*/
     @RequestMapping("/routelist")
-    public String route_list(){
-
+    public String route_list(@RequestParam(required = false,defaultValue = "1")int page,
+                             @RequestParam(required = false,defaultValue = "8")int rows,
+                             Model model){
+        String stype = "酒店";
+        int maxPage = scenicService.getMaxpage(stype,rows);
+        if (page > maxPage){
+            page = 1;
+        }
+        if (page < 1){
+            page = maxPage;
+        }
+        String sign = "1";
+        System.out.println("maxPage = " + maxPage);
+        System.out.println("page = " + page);
+        List<Scenic> scenics = scenicService.loadAllByStype(stype, page, rows);
+        model.addAttribute("scenics",scenics);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("sign",sign);
         return "route_list";
     }
+    /*route_list 价格排行*/
 
+    @RequestMapping("/routelistByPrice")
+    public String route_listByPrice(@RequestParam(required = false,defaultValue = "1")int page,
+                             @RequestParam(required = false,defaultValue = "8")int rows,
+                             Model model){
+        String stype = "酒店";
+        int maxPage = scenicService.getMaxpage(stype,rows);
+        if (page > maxPage){
+            page = 1;
+        }
+        if (page < 1){
+            page = maxPage;
+        }
+        String sign = "2";
+        System.out.println("maxPage = " + maxPage);
+        System.out.println("page = " + page);
+        List<Scenic> scenics = scenicService.getRouteScenicBySprice(stype, page, rows);
+        model.addAttribute("scenics",scenics);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("sign",sign);
+        return "route_list";
+    }
+    /*route_list 收藏排行*/
+    @RequestMapping("/routelistByScllect")
+    public String route_listByScllect(@RequestParam(required = false,defaultValue = "1")int page,
+                                    @RequestParam(required = false,defaultValue = "8")int rows,
+                                    Model model){
+        String stype = "酒店";
+        int maxPage = scenicService.getMaxpage(stype,rows);
+        if (page > maxPage){
+            page = 1;
+        }
+        if (page < 1){
+            page = maxPage;
+        }
+        String sign = "3";
+        System.out.println("maxPage = " + maxPage);
+        System.out.println("page = " + page);
+        List<Scenic> scenics = scenicService.getRouteScenicByScllect(stype, page, rows);
+        model.addAttribute("scenics",scenics);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("sign",sign);
+        return "route_list";
+    }
+    /*route_list 最新排行*/
+    @RequestMapping("/routelistByStime")
+    public String route_listByStime(@RequestParam(required = false,defaultValue = "1")int page,
+                                      @RequestParam(required = false,defaultValue = "8")int rows,
+                                      Model model){
+        String stype = "酒店";
+        int maxPage = scenicService.getMaxpage(stype,rows);
+        if (page > maxPage){
+            page = 1;
+        }
+        if (page < 1){
+            page = maxPage;
+        }
+        String sign = "4";
+        System.out.println("maxPage = " + maxPage);
+        System.out.println("page = " + page);
+        List<Scenic> scenics = scenicService.getRouteScenicByStime(stype, page, rows);
+        model.addAttribute("scenics",scenics);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("sign",sign);
+        return "route_list";
+    }
+    /*route_list 销量排行*/
+    @RequestMapping("/routelistBySindent")
+    public String route_listBySindent(@RequestParam(required = false,defaultValue = "1")int page,
+                                    @RequestParam(required = false,defaultValue = "8")int rows,
+                                    Model model){
+        String stype = "酒店";
+        int maxPage = scenicService.getMaxpage(stype,rows);
+        if (page > maxPage){
+            page = 1;
+        }
+        if (page < 1){
+            page = maxPage;
+        }
+        String sign = "5";
+        System.out.println("maxPage = " + maxPage);
+        System.out.println("page = " + page);
+        List<Scenic> scenics = scenicService.getRouteScenicBySindent(stype, page, rows);
+        model.addAttribute("scenics",scenics);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("sign",sign);
+        return "route_list";
+    }
+    /*favoriterank 收藏排行*/
+    @RequestMapping("/getScenicByScllect")
+    public String getScenicByScllect(@RequestParam(required = false,defaultValue = "1")int page,
+                                      @RequestParam(required = false,defaultValue = "8")int rows,
+                                      Model model){
+        int size = 1;
+        int maxPage = scenicService.getAllScenicMaxPage(rows);
+        if (page > maxPage){
+            page = 1;
+        }
+        if (page < 1){
+            page = maxPage;
+        }
+        List<Scenic> scenics = scenicService.getScenicByScllect(page, rows);
+        model.addAttribute("scenics",scenics);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("size",size);
+        return "favoriterank";
+    }
 
 
     //酒店管理
