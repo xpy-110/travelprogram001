@@ -5,6 +5,7 @@ import com.qf.travel.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -195,6 +196,7 @@ public class UserController {
         return "main";
     }
     //管理员管理
+    @RequiresPermissions(value = {"admManage"})
     @RequestMapping("/adminis")
     public String adminis(@RequestParam(required = false,defaultValue = "1")int page,
                           @RequestParam(required = false,defaultValue = "10")int rows,
@@ -213,6 +215,7 @@ public class UserController {
         return "adminis";
     }
     //模糊查询管理员
+    @RequiresPermissions(value = {"admManage"})
     @RequestMapping("/QueryAdmins")
     public String QueryAdmins(String uuu,Model model){
         List<User> users = userService.inquireUser(2,uuu);
@@ -220,6 +223,7 @@ public class UserController {
         return "adminisquery";
     }
     //修改管理员信息
+    @RequiresPermissions(value = {"updateAdmin"})
     @RequestMapping("/editAdmin")
     public String editAdmin(String userId,Model model){
         int uid = Integer.parseInt(userId);
@@ -228,6 +232,7 @@ public class UserController {
         return "Adminedit";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"updateAdmin"})
     @RequestMapping("/admedited")
     public boolean admedited(int uid,String uname,String upwd,String email,String realname,
                              String tel,String birth){
@@ -247,6 +252,7 @@ public class UserController {
         return bool;
     }
     //删除管理员信息
+    @RequiresPermissions(value = {"deleteAdm"})
     @RequestMapping("/deleteAdmin")
     public String deleteAdmin(String userId){
         int uid = Integer.parseInt(userId);
@@ -256,6 +262,7 @@ public class UserController {
         return bool?"redirect:adminis":"error";
     }
     //批量删除管理员信息
+    @RequiresPermissions(value = {"deleteAdm"})
     @ResponseBody
     @RequestMapping("/deleteAdmins")
     public boolean deleteAdmins(String ids){
@@ -269,6 +276,7 @@ public class UserController {
         return bool;
     }
     //增加管理员
+    @RequiresPermissions(value = {"addAdm"})
     @RequestMapping("/addAdmin")
     public String addAdmin(){
         return "Adminadd";
@@ -336,6 +344,7 @@ public class UserController {
 
 
     //会员管理
+    @RequiresPermissions(value = {"memManage"})
     @RequestMapping("/meManager")
     public String meManager(@RequestParam(required = false,defaultValue = "1")int page,
                             @RequestParam(required = false,defaultValue = "10")int rows,
@@ -354,6 +363,7 @@ public class UserController {
         return "meManager";
     }
     //删除会员信息
+    @RequiresPermissions(value = {"deleteMe"})
     @RequestMapping("/deleteMem")
     public String deleteMem(String userId){
         int uid = Integer.parseInt(userId);
@@ -364,6 +374,7 @@ public class UserController {
     }
     //批量删除会员信息
     @ResponseBody
+    @RequiresPermissions(value = {"deleteMe"})
     @RequestMapping("/deleteMems")
     public boolean deleteMems(String ids){
         String[] uids = ids.split("-");
@@ -377,11 +388,13 @@ public class UserController {
         return bool;
     }
     //增加会员
+    @RequiresPermissions(value = {"addMem"})
     @RequestMapping("/addMem")
     public String addMem(){
         return "addMem";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"addMen"})
     @RequestMapping("/addMems")
     public boolean addMems(String uname,String upwd,String email,String realname,
                             String tel,String birth){
@@ -400,6 +413,7 @@ public class UserController {
         return bool;
     }
     //修改会员信息
+    @RequiresPermissions(value = {"updateMem"})
     @RequestMapping("/editMem")
     public String editMem(String userId,Model model){
         int uid = Integer.parseInt(userId);
@@ -408,6 +422,7 @@ public class UserController {
         return "Meminedit";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"updateMem"})
     @RequestMapping("/Memdited")
     public boolean Memdited(int uid,String uname,String upwd,String email,String realname,
                              String tel,String birth){
@@ -427,6 +442,7 @@ public class UserController {
         return bool;
     }
     //模糊查询管理员
+    @RequiresPermissions(value = {"memManage"})
     @RequestMapping("/meQuery")
     public String meQuery(String uuu,Model model){
         List<User> users = userService.inquireUser(1,uuu);

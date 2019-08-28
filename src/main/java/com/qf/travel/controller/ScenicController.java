@@ -3,6 +3,7 @@ package com.qf.travel.controller;
 import com.qf.travel.pojo.Scenic;
 import com.qf.travel.service.ScenicService;
 import com.qf.travel.utils.ScienceUtiles;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -238,6 +239,7 @@ public class ScenicController {
 
     //酒店管理
     //酒店维护
+    @RequiresPermissions(value = {"groMamage"})
     @RequestMapping("/hotelMaintain")
     public String hotelMaintain(@RequestParam(required = false,defaultValue = "1")int page,
                                 @RequestParam(required = false,defaultValue = "10")int rows,
@@ -261,12 +263,14 @@ public class ScenicController {
         return "hotel";
     }
     //删除酒店信息
+    @RequiresPermissions(value = {"hoteldelete"})
     @RequestMapping("/deleteHodel")
     public String deleteHodel(int Sid){
         boolean bool = scenicService.deleteById(Sid);
         return bool?"redirect:hotelMaintain":"error";
     }
     //批量删除
+    @RequiresPermissions(value = {"hoteldelete"})
     @RequestMapping("/deleteHodels")
     public String deleteHodels(String ids){
         String[] sids = ids.split("-");
@@ -277,6 +281,7 @@ public class ScenicController {
         return bool?"redirect:hotelMaintain":"error";
     }
     //修改
+    @RequiresPermissions(value = {"hotelupdate"})
     @RequestMapping("/updateHodel")
     public String updateHodel(int Sid,Model model){
         Scenic scenic = scenicService.getScenicByid(Sid);
@@ -284,6 +289,7 @@ public class ScenicController {
         return "hodel_1";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"hotelupdate"})
     @RequestMapping("/updateHodel1")
     public boolean updateHodel1(int sid,String sname,int sindent,int scllect,int scomment,
                                 String scity,double sprice,MultipartFile simgs,
@@ -295,6 +301,7 @@ public class ScenicController {
         return bool;
     }
     //是否下架
+    @RequiresPermissions(value = {"groMamage"})
     @RequestMapping("/ishotel")
     public String ishotel(int Sid){
         int sstate = 0;
@@ -305,6 +312,7 @@ public class ScenicController {
         return bool?"redirect:hotelMaintain":"error";
     }
     //酒店信息审核
+    @RequiresPermissions(value = {"groAud"})
     @RequestMapping("/hotelexamine")
     public String hotelexamine(@RequestParam(required = false,defaultValue = "1")int page,
                                 @RequestParam(required = false,defaultValue = "10")int rows,
@@ -328,12 +336,14 @@ public class ScenicController {
         return "hotel_3";
     }
     //删除
+    @RequiresPermissions(value = {"groAud"})
     @RequestMapping("/deletehotelexamine")
     public String deletehotelexamine(int Sid){
         boolean bool = scenicService.deleteById(Sid);
         return bool?"redirect:hotelexamine":"error";
     }
     //是否上架
+    @RequiresPermissions(value = {"groAud"})
     @RequestMapping("/updatehotelexamine")
     public String updatehotelexamine(int Sid){
         int sstate = 1;
@@ -344,11 +354,13 @@ public class ScenicController {
         return bool?"redirect:hotelexamine":"error";
     }
     //增加酒店信息
+    @RequiresPermissions(value = {"addGro"})
     @RequestMapping("/addHotel")
     public String addScience(){
         return "hodel_2";
     }
     @ResponseBody
+    @RequiresPermissions(value = {"addGro"})
     @RequestMapping("/addHotel1")
     public boolean addScience1(String sname,int sindent,int scllect,int scomment,
                                String scity,double sprice,MultipartFile simgs,
@@ -362,6 +374,7 @@ public class ScenicController {
         return bool;
     }
     //搜索酒店信息
+    @RequiresPermissions(value = {"groMamage"})
     @RequestMapping("/hotelQuery")
     public String hotelQuery(String uuu,Model model){
         List<Scenic> scenics = scenicService.inquireScenic("酒店",uuu);

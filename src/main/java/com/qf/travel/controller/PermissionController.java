@@ -4,6 +4,7 @@ import com.qf.travel.pojo.Permission;
 import com.qf.travel.pojo.Role;
 import com.qf.travel.service.PermissionService;
 import com.qf.travel.service.RoleService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class PermissionController {
     private RoleService roleService;
     @Autowired
     private PermissionService permissionService;
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/permission")
     public String permission(@RequestParam(required = false,defaultValue = "1")int page,
                              @RequestParam(required = false,defaultValue = "10")int rows,
@@ -37,6 +39,7 @@ public class PermissionController {
         model.addAttribute("permission",permissions);
         return "permission";
     }
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/deletePermi")
     public String deletePermi(int pid){
         System.out.println(pid);
@@ -44,10 +47,12 @@ public class PermissionController {
         System.out.println(bool);
         return bool?"redirect:permission":"error";
     }
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/addPer")
     public String addPer(){
         return "PermissionAdd_1";
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/savePer")
     public boolean savePer(String pname,String mname){
@@ -57,11 +62,13 @@ public class PermissionController {
         boolean bool = permissionService.addPermission(permission);
         return bool;
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/checkpname")
     public boolean checkpname(String pname){
         return permissionService.checkPname(pname);
     }
+    @RequiresPermissions(value = {"superManage"})
     @ResponseBody
     @RequestMapping("/checkmname")
     public boolean checkmname(String mname){
@@ -69,7 +76,7 @@ public class PermissionController {
     }
 
 
-
+    @RequiresPermissions(value = {"superManage"})
     @RequestMapping("/permissionRole")
     public String permissionRole(int rid,Model model){
         List<Permission> permissions = permissionService.loadAll1();
