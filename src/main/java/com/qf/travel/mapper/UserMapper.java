@@ -26,7 +26,7 @@ public interface UserMapper {
      * 查询用户角色
      * @return
      */
-    public int findUR(int uid);
+    public List<Integer> findUR(int uid);
     //根据角色id获取所有用户的信息
     List<User> loadUserId(int rid);
     //根据id查询用户
