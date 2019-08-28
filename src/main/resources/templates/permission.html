@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="UTF-8">
+<html lang="utf-8" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/doc.min.css">
-    <link rel="stylesheet" href="ztree/zTreeStyle.css">
     <style>
         .tree li {
             list-style-type: none;
             cursor:pointer;
         }
+        table tbody tr:nth-child(odd){background:#F4F4F4;}
+        table tbody td:nth-child(even){color:#C00;}
     </style>
 </head>
 
@@ -25,7 +25,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="#">众筹平台 - 权限维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="#">千锋旅游平台后台管理 - 权限管理</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -73,6 +73,9 @@
                             </li>
                             <li style="height:30px;">
                                 <a href="permission"><i class="glyphicon glyphicon-lock"></i> 权限维护</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="role"><i class="glyphicon glyphicon-lock"></i> 角色维护</a>
                             </li>
                         </ul>
                     </li>
@@ -128,31 +131,50 @@
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
             <div class="panel panel-default">
-                <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> 权限菜单列表 <div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
+                </div>
                 <div class="panel-body">
-                    <ul id="treeDemo" class="ztree"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">帮助</h4>
-            </div>
-            <div class="modal-body">
-                <div class="bs-callout bs-callout-info">
-                    <h4>没有默认类</h4>
-                    <p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
-                </div>
-                <div class="bs-callout bs-callout-info">
-                    <h4>没有默认类</h4>
-                    <p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
+                    <form id="dor"  method="post">
+                        <a type="button" class="btn btn-primary" style="float:right;" href="addPer"><i class="glyphicon glyphicon-plus"></i> 新增</a>
+                        <br>
+                        <hr style="clear:both;">
+                        <div class="table-responsive">
+                            <table class="table  table-bordered">
+                                <thead>
+                                <tr >
+                                    <th width="30">#</th>
+                                    <th>权限名称</th>
+                                    <th>权限</th>
+                                    <th width="100">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="p:${permission}">
+                                    <td th:text="${p.pid}"></td>
+                                    <td th:text="${p.pname}"></td>
+                                    <td th:text="${p.mname}"></td>
+                                    <td>
+                                       <a th:href="@{deletePermi(pid=${p.pid})}" type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr >
+                                    <td colspan="3" align="center">
+                                        <ul class="pagination">
+                                            <li><a th:href="@{permission(page=1)}">首页</a></li>
+                                            <li><a th:href="@{permission(page=${currentpage+(-1)})}">上一页</a></li>
+                                            <li><a th:href="@{permission(page=${currentpage+1})}">下一页</a></li>
+                                            <li><a th:href="@{permission(page=${maxpage})}">尾页</a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -161,7 +183,6 @@
 <script src="jquery/jquery-2.1.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="script/docs.min.js"></script>
-<script src="ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript">
     $(function () {
         $(".list-group-item").click(function(){
@@ -174,66 +195,36 @@
                 }
             }
         });
-
-        var setting = {
-            view: {
-                selectedMulti: false,
-                addDiyDom: function(treeId, treeNode){
-                    var icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
-                    if ( treeNode.icon ) {
-                        icoObj.removeClass("button ico_docu ico_open").addClass("fa fa-fw " + treeNode.icon).css("background","");
+        $("#all").click(function () {
+            var bool = this.checked;
+            $("input[name='ids']").each(function () {
+                this.checked=bool;
+            })
+        });
+        $("#deleteAdmins").click(function () {
+            var checkID=[];
+            $("input[name='ids']:checked").each(function(i){
+                checkID[i] = $(this).val();
+            });
+            if (checkID.length==0){
+                alert("请选择要删除的用户");
+            }else {
+                var ids = "";
+                for(var i=0; i<checkID.length;i++){
+                    ids+=i==checkID.length-1?checkID[i]:checkID[i]+"-";
+                }
+                $.post("deleteAdmins",{"ids":ids},function (data) {
+                    if (data==true){
+                        location.href="adminis";
+                    } else {
+                        alert("删除失败");
                     }
-
-                },
-                addHoverDom: function(treeId, treeNode){
-                    //   <a><span></span></a>
-                    var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
-                    if (treeNode.editNameFlag || $("#btnGroup"+treeNode.tId).length>0) return;
-                    var s = '<span id="btnGroup'+treeNode.tId+'">';
-
-                    if ( treeNode.level == 0 ) {
-                        s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="PermissionAdd">&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
-                    } else if ( treeNode.level == 1 ) {
-                        s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
-                        if (treeNode.children.length == 0) {
-                            s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
-                        }
-                        s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
-                    } else if ( treeNode.level == 2 ) {
-                        s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
-                        s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
-                    }
-
-                    s += '</span>';
-                    aObj.after(s);
-                },
-                removeHoverDom: function(treeId, treeNode){
-                    $("#btnGroup"+treeNode.tId).remove();
-                }
-            },
-            async: {
-                enable: true,
-                url:"loadAllpermission",
-                autoParam:["id"]
-            },
-            callback: {
-                onClick : function(event, treeId, json) {
-
-                }
-            },
-            data:{
-                simpleData:{
-                    enable:true,
-                    idKey:"id",
-                    pidKey:"pId"
-                },
-                key:{
-                    name:"pname"
-                }
+                })
             }
-        };
-        $.fn.zTree.init($("#treeDemo"), setting);
+        });
     });
+
 </script>
+
 </body>
 </html>

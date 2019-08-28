@@ -3,50 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.travel.mapper.PermissionMapper">
-    <resultMap id="resultPermission" type="com.qf.travel.pojo.Permission">
-        <id property="id" column="pid"></id>
-        <result property="pId" column="mcode"></result>
-        <result property="pname" column="pname"></result>
-        <result property="mname" column="mname"></result>
-        <result property="check" column="check"></result>
-    </resultMap>
-    <select id="loadAll" resultMap="resultPermission">
+    <select id="loadAll" resultType="permission">
         select * from permission
     </select>
-    <select id="loadAllById" resultMap="resultPermission" parameterType="int">
-        select * from permission where pid in (select pid from user_permission where uid=#{uid})
+    <select id="getCount" resultType="int">
+        select count(pid) from permission
     </select>
-    <select id="findPermissionsByUname" parameterType="string" resultMap="resultPermission">
+    <select id="loadAllById" resultType="permission" parameterType="int">
+        select * from permission where pid in (select pid from role_permission where rid=#{rid})
+    </select>
+    <select id="findPermissionsByUname" parameterType="string" resultType="permission">
        SELECT p.*
         FROM
          user        u,
         permission  p,
-         user_permission up
+        role r,
+         user_role ur,
+         role_permission rp
     WHERE
-       u.uid = up.uid
-       AND up.pid = p.pid
+       u.uid = ur.uid
+       AND ur.rid = r.rid
+       and r.rid = rp.rid
+       and rp.pid = p.pid
          AND u.uname=#{uname}
     </select>
-    <delete id="deletePermissionByuid" parameterType="int">
-        delete from user_permission where uid=#{uid}
-    </delete>
-    <insert id="savePermissionByuid" parameterType="map">
-        insert user_permission values(#{uid},#{pid})
-    </insert>
+
     <insert id="addPermission" parameterType="permission">
-        insert permission values(default,#{permission.pname},#{permission.mname},#{permission.pId},#{permission.check})
+        insert permission values(default,#{permission.pname},#{permission.mname},null,null)
     </insert>
     <delete id="deletePermission" parameterType="int">
         delete from permission where pid=#{id}
     </delete>
-    <update id="updatePermission" parameterType="permission">
-        update permission set pname=#{permission.pname},mname=#{permission.mname},mcode=#{permission.pId} where pid=#{permission.pid}
-    </update>
     <select id="loadPermissionByPid" parameterType="int">
         select * from permission where pid=#{id}
     </select>
-    <delete id="deleteUserPermission" parameterType="int">
-        delete from user_permission where pid=#{id}
+    <select id="checkMname" resultType="permission" parameterType="string">
+        select * from permission where mname=#{mname}
+    </select>
+    <select id="checkPname" resultType="permission" parameterType="string">
+        select * from permission where pname=#{pname}
+    </select>
+    <delete id="deleteRolePermission" parameterType="int">
+        delete from role_permission where pid=#{pid}
     </delete>
-
 </mapper>

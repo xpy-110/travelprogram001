@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.RoleMapper">
+    <!--查询所有-->
+    <select id="loadAll" resultType="role">
+        select * from role
+    </select>
+    <!--根据rid查询所有信息-->
+    <select id="loadByRid" parameterType="int" resultType="role">
+        select * from role where rid=#{rid}
+    </select>
+    <!--根据pname查询拥有的权限-->
+    <select id="loadByRname" parameterType="string" resultType="int">
+        select pid from permission where pname=#{pname}
+    </select>
+    <!--删除某个角色所拥有的某一个权限-->
+    <delete id="delRolePer" parameterType="map">
+        delete from role_permission where rid=#{rid} and pid=#{pid}
+    </delete>
+    <!--给角色添加权限-->
+    <insert id="addRolePer" parameterType="map">
+        insert role_permission values(#{rid},#{pid})
+    </insert>
+    <!--删除角色-->
+    <delete id="deleteRole" parameterType="int">
+        delete from role where rid=#{rid}
+    </delete>
+    <!--删除某一角色拥有的所有权限-->
+    <delete id="deleteRoP" parameterType="int">
+        delete from role_permission where rid=#{rid}
+    </delete>
+    <!--添加角色-->
+    <insert id="addRole" parameterType="role">
+        insert role values(default,#{role.rname})
+    </insert>
+    <!--查询某个管理员拥有的角色-->
+    <select id="loadUserRole" parameterType="int" resultType="role">
+        select * from role where rid in (select rid from user_role where uid=#{uid})
+    </select>
+    <!--给某个管理员添加角色-->
+    <insert id="saveUserRole" parameterType="map">
+        insert user_role values(#{rid},#{uid})
+    </insert>
+    <!--删除某个管理员的某个权限-->
+    <delete id="delUserRole" parameterType="map">
+        delete from user_role where uid=#{uid} and rid=#{rid}
+    </delete>
+    <!--通过角色名查询角色id-->
+    <select id="getRidByName" resultType="int" parameterType="string">
+        select rid from role where rname=#{rname}
+    </select>
+</mapper>
