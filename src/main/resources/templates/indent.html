@@ -160,8 +160,8 @@
                 <tr th:each="i:${indents}" >
                     <td th:text="${i.id}"></td>
                     <td><input type="checkbox" name="ids" ></td>
-                    <td><img class="img-responsive" th:src="${i.Simgs}" style="width: 230px;height: 200px;">
-                        <a th:text="${i.Sname}"></a></td>
+                    <td><img class="img-responsive" th:src="${i.scenic.simgs}" style="width: 230px;height: 200px;">
+                        <a th:text="${i.scenic.sname}"></a></td>
                     <td th:text="${i.icount}"></td>
                     <td th:text="${i.iprice}"></td>
                     <td th:text="${i.itime}"></td>
