@@ -57,7 +57,7 @@ public class ScenicController {
     @ResponseBody
     @RequestMapping("/getPathScenicByType")
     public List<Scenic> getPathScenicByType(){
-        String stypes = "酒店";
+        String stypes = "路线";
         List<Scenic> scenics = scenicService.getScenicByType(stypes);
         System.out.println("Scontroller:: scenics = " + scenics);
         return scenics;
@@ -80,6 +80,32 @@ public class ScenicController {
         List<Scenic> scenics = scenicService.getTopScenicBySindent(stypes);
         return scenics;
     }
+    /*根据id查询scenic信息发送至详情界面*/
+    @RequestMapping("/gotoRouteDetail")
+    public String gotoIndent_detail(String sid ,Model model){
+        int i = Integer.parseInt(sid);
+        System.out.println("i = " + i);
+        Scenic scenic = scenicService.getScenicByid(i);
+        System.out.println("scenic = " + scenic);
+        model.addAttribute(scenic);
+        return "route_detail";
+    }
+
+    /*跳往seek界面*/
+    @RequestMapping("/gotoseek")
+    public String gotoSeek(){
+
+        return "seek";
+    }
+
+    /*跳往seek界面*/
+    @RequestMapping("/routelist")
+    public String route_list(){
+
+        return "route_list";
+    }
+
+
 
     //酒店管理
     //酒店维护
