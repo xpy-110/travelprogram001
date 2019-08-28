@@ -147,7 +147,7 @@ public class ScenicControllerOne {
     public String ScienceQuery(String uuu,Model model){
         List<Scenic> scenics = scenicService.inquireScenic("景点",uuu);
         model.addAttribute("scenics",scenics);
-        return "sciencequery";
+        return "scenicquery";
     }
 
 }
