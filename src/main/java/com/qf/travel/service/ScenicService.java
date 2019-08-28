@@ -13,7 +13,18 @@ public interface ScenicService {
     public List<Scenic> getTopScenicBySindent(String stype);
     // 模糊查询
     public List<Scenic> getScenicByName(String sname);
-
+    // route——list 进行价格排行
+    public List<Scenic> getRouteScenicBySprice(String stype,int page,int rows);
+    // route——list 进行收藏排行
+    public List<Scenic> getRouteScenicByScllect(String stype,int page,int rows);
+    // route——list 进行时间排行
+    public List<Scenic> getRouteScenicByStime(String stype,int page,int rows);
+    // route——list 进行销量排行
+    public List<Scenic> getRouteScenicBySindent(String stype,int page,int rows);
+    // favoriterank 收藏排行
+    public List<Scenic> getScenicByScllect(int page,int rows);
+    //  查询snice所有数量、
+    public int getAllScenicMaxPage(int rows);
 
     //根据类型查询数据
     public List<Scenic> loadAllByStype(String type,int page,int rows);
@@ -32,5 +43,6 @@ public interface ScenicService {
     public int getMaxpage(String type,int rows);
     //根据id查询
     public Scenic getScenicByid(int sid);
+    // 模糊查询
     List<Scenic> inquireScenic(String stype,String uuu);
 }

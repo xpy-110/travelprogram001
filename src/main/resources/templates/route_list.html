@@ -6,67 +6,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>千峰旅游-搜索</title>
-    <link rel="stylesheet" type="text/css" href="css/common.css">
-    <link rel="stylesheet" href="css/search.css">
+
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/route-detail.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" href="css/search.css">
+    <script type="text/javascript" src="js/include.js"></script>
+
     <script src="js/jquery-3.3.1.js"></script>
 </head>
+<style type="text/css">
+    .login{
+        width: 400px;
+        font-size: 12px;
+        position:absolute;right:10px;top:122px;
+    }
+    .login_out{
+        width: 400px;
+        font-size: 12px;
+        position:absolute;right:10px;top:122px;
+    }
+    .left{
+        float: left;
+    }
+</style>
 <body>
 <!--引入头部-->
-<div>
-    <div class="top_banner">
-        <img src="images/top_banner.jpg" alt="">
-    </div>
-    <div class="shortcut">
-        <!-- 未登录状态  -->
-        <div  class="login_out" th:if="${session.islogin==true}">
-                <span  class="label label-danger" style="cursor:pointer;" onclick="window.location.href='login'">登录
-                </span>&nbsp; &nbsp;
-            <a href="register">注册</a>&nbsp; &nbsp;
-            <a href="login">我的订单</a>&nbsp; &nbsp;
-            <a href="login">个人中心 </a>&nbsp; &nbsp;
-            <a href="login" class="collection">我的收藏</a>&nbsp; &nbsp;
-        </div>
-        <!-- 登录状态  -->
-        <div class="login" th:if="${session.islogin==false}">
-                <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
-                    <a href="findIndent">我的订单</a>&nbsp; &nbsp;
-                    <a href="indent">个人中心 </a>&nbsp; &nbsp;
-                  <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
-                <a href="logout">退出</a>
-                </span>
 
+    <header>
+        <div class="top_banner">
+            <img src="images/top_banner.jpg" alt="">
         </div>
-    </div>
-    <div class="header_wrap">
-        <div class="topbar">
-            <div class="logo">
-                <img src="images/logo1.png" style="height: 60px;width: 220px;">
+        <div class="shortcut">
+            <!-- 未登录状态  -->
+            <div  class="login_out" th:if="${session.islogin==true}">
+                    <span  class="label label-danger" style="cursor:pointer;" onclick="window.location.href='login'">登录
+                    </span>&nbsp; &nbsp;
+                <a href="register">注册</a>&nbsp; &nbsp;
+                <a href="login">我的订单</a>&nbsp; &nbsp;
+                <a href="login">个人中心 </a>&nbsp; &nbsp;
+                <a href="login" class="collection">我的收藏</a>&nbsp; &nbsp;
             </div>
-            <div class="search">
-                <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
-                <a href="javascript:;" class="search-button">搜索</a>
+            <!-- 登录状态  -->
+            <div class="login" th:if="${session.islogin==false}">
+                    <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
+                        <a href="findIndent">我的订单</a>&nbsp; &nbsp;
+                        <a href="indent">个人中心 </a>&nbsp; &nbsp;
+                      <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
+                    <a href="logout">退出</a>
+                    </span>
             </div>
-            <div class="hottel">
-                <div class="hot_pic">
-                    <img src="images/hot_tel.jpg" alt="">
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <img src="images/logo1.png" style="height: 60px;width: 220px;">
                 </div>
-                <div class="hot_tel">
-                    <p class="hot_time">客服热线(9:00-6:00)</p>
-                    <p class="hot_num">400-618-9090</p>
+                <div class="search">
+                    <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                    <a href="javascript:;" class="search-button">搜索</a>
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <img src="images/hot_tel.jpg" alt="">
+                    </div>
+                    <div class="hot_tel">
+                        <p class="hot_time">客服热线(9:00-6:00)</p>
+                        <p class="hot_num">400-618-9090</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </header>
     <!-- 头部 end -->
-</div>
+    <!-- 首页导航 -->
+    <div class="navitem">
+        <ul class="nav">
+            <li class="nav-active"><a href="member">首页</a></li>
+            <li><a href="route_list.html">门票</a></li>
+            <li><a href="routelist">酒店</a></li>
+            <li><a href="route_list.html">香港车票</a></li>
+            <li><a href="route_list.html">出境游</a></li>
+            <li><a href="route_list.html">国内游</a></li>
+            <li><a href="route_list.html">港澳游</a></li>
+            <li><a href="route_list.html">抱团定制</a></li>
+            <li><a href="route_list.html">全球自由行</a></li>
+            <li><a href="getScenicByScllect">收藏排行榜</a></li>
+        </ul>
+    </div>
     <div class="page_one">
         <div class="contant">
             <div class="crumbs">
                 <img src="images/search.png" alt="">
                 <p>黑马旅行<span>搜索结果</span></p>
+            </div>
+            <div class="shaixuan">
+                <a href="routelist">评价排行</a>
+                <a href="routelistByScllect">收藏排行</a>
+                <a href="routelistBySindent">销量排行</a>
+                <a href="routelistByPrice">价格排行</a>
+                <a href="routelistByStime">最新特色</a>
+
             </div>
             <div class="xinxi clearfix">
                 <div class="left">
@@ -75,155 +115,71 @@
                         <span class="jg">价格</span>
                     </div>
                     <ul>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
+                        <li th:each="s:${scenics}">
+                            <div class="img"><img th:src="${s.simgs}" alt=""></div>
                             <div class="text1">
-                                <p>【减100元 含除夕/春节出发】广州增城三英温泉度假酒店/自由行套票</p>
+                                <p th:text="${s.sname}"></p>
                                 <br/>
                                 <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
+                                主要特色：<font style="color: red" th:text="${s.sfeature}"></font>
                             </div>
                             <div class="price">
                                 <p class="price_num">
                                     <span>&yen;</span>
-                                    <span>299</span>
+                                    <span th:text="${s.sprice}"></span>
                                     <span>起</span>
                                 </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>浪花朵朵旅行普吉岛丛林飞跃空中飞人探险游中文服务泰国旅游</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>899</span>
-                                    <span>起</span>
+                                <p>
+                                    <span>已被收藏</span>
+                                    <span th:text="${s.scllect}"></span>
+                                    <span>次</span>
                                 </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>黑妞皇家旅行普吉岛攀牙湾大船星光之旅皮划艇日落休闲特色体验</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>999</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>浪花朵朵旅行普吉岛皇帝岛珊瑚岛香蕉船拖拽伞水上项目</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>99</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>环游记 泰国清迈Lila massage女子监狱spa 丽菈泰式按摩马杀鸡</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>199</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>【减100元 含除夕/春节出发】广州增城三英温泉度假酒店/自由行套票</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>899</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>【减100元 含除夕/春节出发】广州增城三英温泉度假酒店/自由行套票</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>1199</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>泰国芭提雅三合一日游芭提雅蒂芬妮人妖秀成人门票bigeye含接送</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>1589</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
+                                <p><a th:href="@{gotoRouteDetail(sid=${s.sid})}">查看详情</a></p>
                             </div>
                         </li>
                     </ul>
                     <div class="page_num_inf">
                         <i></i> 共
-                        <span>12</span>页<span>132</span>条
+                        <span th:text="${maxPage}"></span>页,第<span th:text="${currentPage}"></span>页
                     </div>
-                    <div class="pageNum">
+                    <div class="pageNum" th:if="${sign}==1">
                         <ul>
-                            <li><a href="">首页</a></li>
-                            <li class="threeword"><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li><a href="#">7</a></li>
-                            <li><a href="#">8</a></li>
-                            <li><a href="#">9</a></li>
-                            <li><a href="#">10</a></li>
-                            <li class="threeword"><a href="javascript:;">下一页</a></li>
-                            <li class="threeword"><a href="javascript:;">末页</a></li>
+                            <a class="btn btn-default" th:href="@{routelist(page=1)}">首页</a>
+                            <a class="btn btn-default" th:href="@{routelist(page=${currentPage+(-1)})}">上一页</a>
+                            <a class="btn btn-default" th:href="@{routelist(page=${currentPage+1})}">下一页</a>
+                            <a class="btn btn-default" th:href="@{routelist(page=${maxPage})}">末页</a>
+                        </ul>
+                    </div>
+                    <div class="pageNum" th:if="${sign}==2">
+                        <ul>
+                            <a class="btn btn-default" th:href="@{routelistByPrice(page=1)}">首页</a>
+                            <a class="btn btn-default" th:href="@{routelistByPrice(page=${currentPage+(-1)})}">上一页</a>
+                            <a class="btn btn-default" th:href="@{routelistByPrice(page=${currentPage+1})}">下一页</a>
+                            <a class="btn btn-default" th:href="@{routelistByPrice(page=${maxPage})}">末页</a>
+                        </ul>
+                    </div>
+                    <div class="pageNum" th:if="${sign}==3">
+                        <ul>
+                            <a class="btn btn-default" th:href="@{routelistByScllect(page=1)}">首页</a>
+                            <a class="btn btn-default" th:href="@{routelistByScllect(page=${currentPage+(-1)})}">上一页</a>
+                            <a class="btn btn-default" th:href="@{routelistByScllect(page=${currentPage+1})}">下一页</a>
+                            <a class="btn btn-default" th:href="@{routelistByScllect(page=${maxPage})}">末页</a>
+                        </ul>
+                    </div>
+                    <div class="pageNum" th:if="${sign}==4">routelistBySindent
+                        <ul>
+                            <a class="btn btn-default" th:href="@{routelistByStime(page=1)}">首页</a>
+                            <a class="btn btn-default" th:href="@{routelistByStime(page=${currentPage+(-1)})}">上一页</a>
+                            <a class="btn btn-default" th:href="@{routelistByStime(page=${currentPage+1})}">下一页</a>
+                            <a class="btn btn-default" th:href="@{routelistByStime(page=${maxPage})}">末页</a>
+                        </ul>
+                    </div>
+                    <div class="pageNum" th:if="${sign}==5">
+                        <ul>
+                            <a class="btn btn-default" th:href="@{routelistBySindent(page=1)}">首页</a>
+                            <a class="btn btn-default" th:href="@{routelistBySindent(page=${currentPage+(-1)})}">上一页</a>
+                            <a class="btn btn-default" th:href="@{routelistBySindent(page=${currentPage+1})}">下一页</a>
+                            <a class="btn btn-default" th:href="@{routelistBySindent(page=${maxPage})}">末页</a>
                         </ul>
                     </div>
                 </div>

@@ -20,8 +20,31 @@
     <select id="getTopScenicBySindent" resultType="scenic" parameterType="string">
         select * from scenic where stype=#{stype} order by sindent desc limit 0,4;
     </select>
+    <!--// route——list 进行价格排行-->
+    <select id="getRouteScenicBySprice" resultType="scenic" parameterType="string">
+        select * from scenic where stype=#{stype} order by sprice desc
+    </select>
+   <!-- // route——list 进行收藏排行-->
+    <select id="getRouteScenicByScllect" resultType="scenic" parameterType="string">
+        select * from scenic where stype=#{stype} order by scllect desc
+    </select>
+  <!--  // route——list 进行时间排行-->
+    <select id="getRouteScenicByStime" resultType="scenic" parameterType="string">
+        select * from scenic where stype=#{stype} order by stime desc
+    </select>
+    <!--  // route——list 进行时间排行-->
+    <select id="getRouteScenicBySindent" resultType="scenic" parameterType="string">
+        select * from scenic where stype=#{stype} order by sindent desc
+    </select>
 
-
+    <!--// favoriterank 收藏排行-->
+    <select id="getScenicByScllect" resultType="scenic">
+        select * from scenic order by scllect desc
+    </select>
+    <!--查询all scenic数量-->
+    <select id="getAllScenicCount" resultType="int">
+        SELECT COUNT(sid) FROM scenic
+    </select>
     <!--scenic 首页显示-->
 
     <select id="loadAll" resultType="scenic">
