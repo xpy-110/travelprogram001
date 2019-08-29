@@ -1,6 +1,7 @@
 package com.qf.travel.config;
 
 import com.qf.travel.shiro.MyShiroRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class ShiroConfig {
     //创建安全过滤器
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager){
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager defaultWebSecurityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //给过滤器装配安全策略
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
@@ -40,21 +41,19 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
     //    配置安全管理器（注入Realm对象）
-    @Bean(name="defaultWebSecurityManager")
-    public DefaultWebSecurityManager  defaultWebSecurityManager(@Qualifier("myShiroRealm") MyShiroRealm myShiroRealm){
-        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        //组装realm到securityManager中
-        defaultWebSecurityManager.setRealm(myShiroRealm);
-        return defaultWebSecurityManager;
+    @Bean("securityManager")
+    public DefaultWebSecurityManager securityManager(@Qualifier("myRealm")MyShiroRealm myRealm){
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(myRealm);
+        return securityManager;
     }
-
-    @Bean(name="myShiroRealm")  //使用该注解是的Realm对象由spring容器管理
-    public MyShiroRealm  myShiroRealm(){
-        MyShiroRealm shiroRealm = new MyShiroRealm();
-        return shiroRealm;
+    @Bean("myRealm")
+    public MyShiroRealm myRealm(@Qualifier("matcher")HashedCredentialsMatcher matcher){
+        MyShiroRealm myRealm = new MyShiroRealm();
+        myRealm.setCredentialsMatcher(matcher);
+        myRealm.setAuthorizationCachingEnabled(false);
+        return myRealm;
     }
-
-    //    通过aop代理拦截权限设定
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
         DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
@@ -64,12 +63,19 @@ public class ShiroConfig {
     //设置注解拦截源码中的权限设定
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
-            @Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager webSecurityManager
+            @Qualifier("securityManager") DefaultWebSecurityManager webSecurityManager
     ){
         AuthorizationAttributeSourceAdvisor sourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         sourceAdvisor.setSecurityManager(webSecurityManager);
         return sourceAdvisor;
     }
-
+    @Bean("matcher")
+    public HashedCredentialsMatcher matcher(){
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setStoredCredentialsHexEncoded(true);
+        matcher.setHashAlgorithmName("MD5");
+        matcher.setHashIterations(1024);
+        return matcher;
+    }
 }
 

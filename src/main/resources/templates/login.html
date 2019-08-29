@@ -238,15 +238,28 @@
 				}, function (data) {
 					if (data == 3) {
 						alert("验证码有误，请重新输入");
-						location.href = "login";
-					}else if (data == 1) {
-						location.href = "memberSave?uname=" + uname + "&upwd=" + upwd;
-					} else if (data == 2) {
-						location.href = "dealLogin?uname=" + uname + "&upwd=" + upwd;
+						$("#checkcode").val("");
 					}
-					if (data == 0) {
+					else if (data == 0) {
 						alert("账号或密码有误，请重新输入");
-						location.href = "login";
+						$("#uname").val("");
+						$("#upwd").val("");
+					}else {
+						var aaa = data;
+						$.post("dealLogin",{"uname":uname,"upwd":upwd},function (data) {
+							if (data == true){
+								if (aaa == 1){
+									location.href = "memberSave?uname=" + uname;
+								}
+								if(aaa == 2){
+									location.href = "main";
+								}
+							} else {
+								alert("账号或密码有误，请重新输入");
+								$("#uname").val("");
+								$("#upwd").val("");
+							}
+						})
 					}
 
 				})

@@ -16,7 +16,9 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -53,13 +55,16 @@ public class MyShiroRealm extends AuthorizingRealm {
     }
     //用户认证
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String username=(String)authenticationToken.getPrincipal();//获取用户信息
-        //根据用户信息查询数据库获取后端的用户身份，转交到secrityManager判断
-        User user=userService.findUserByUname(username);
-        if(user!=null){
-            SimpleAuthenticationInfo simpleAuthenticationInfo=new SimpleAuthenticationInfo(user.getUname(),user.getUpwd(),getName());
-            return simpleAuthenticationInfo;
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        Object principal = token.getPrincipal();
+        if (!StringUtils.isEmpty(principal)){
+            String userName = (String) principal;
+            System.out.println(userName);
+            User user=userService.findUserByUname(userName);
+            System.out.println(user);
+            ByteSource byteSource = ByteSource.Util.bytes("abc");
+            SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName,user.getUpwd(),byteSource,getName());
+            return info;
         }
         return null;
     }
