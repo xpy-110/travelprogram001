@@ -79,6 +79,11 @@ public class ScenicServiceImpl implements ScenicService {
         return maxPage;
     }
 
+    @Override
+    public List<Scenic> queryAllScenic(String xxx) {
+        return scenicMapper.queryAllScenic(xxx);
+    }
+
 
     @Override
     public List<Scenic> loadAllByStype(String type,int page,int rows) {

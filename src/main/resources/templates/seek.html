@@ -22,6 +22,29 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <style type="text/css">
+        #bodyDiv{
+            width: 100%;
+            float: left;
+            text-align: center;
+        }
+        #childDiv2{
+            width: 90%;
+            margin: 20px;
+            float: left;
+
+        }
+        .smallDiv{
+            height: 300px;
+            width: 288px;
+            float: left;
+            margin-top: 10px;
+            margin-left: 20px;
+            border: 1px solid palegoldenrod;
+        }
+        .smallDiv:hover{
+            border: 1px solid red;
+            background-color: #00CCFF;
+        }
         .login{
             width: 400px;
             font-size: 12px;
@@ -33,6 +56,16 @@
             position:absolute;right:10px;top:122px;
         }
     </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#butt1").on('click',function(){
+                var xxx = $("#input1").val();
+                alert(xxx);
+                location.href ="queryAllScenic?xxx="+xxx;
+            });
+        })
+    </script>
+
 </head>
 <body>
 <header>
@@ -66,8 +99,8 @@
                 <img src="images/logo1.png" style="height: 60px;width: 220px;">
             </div>
             <div class="search">
-                <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
-                <a href="javascript:;" class="search-button">搜索</a>
+                <input name="" id="input1" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                <button id="butt1" class="search-button">搜索</button>
             </div>
             <div class="hottel">
                 <div class="hot_pic">
@@ -82,50 +115,37 @@
     </div>
 </header>
 <!-- 头部 end -->
-
+<div>
+    <div id="bodyDiv" style="background-color: #c4e3f3">
+        <div id="childDiv1" th:if="${mess} == 2">
+            <h1><span th:text="${awarm}"></span></h1>
+        </div>
+        <div id="childDiv2" th:if="${mess} == 1">
+            <div th:each="s:${scenics}" class="smallDiv">
+                <a th:href="@{gotoRouteDetail(sid=${s.sid})}">
+                <div class="img"><img th:src="${s.simgs}" alt=""></div>
+                <div class="text1">
+                    <p th:text="${s.sname}"></p><br/>
+                    <input th:value="${s.sid}" id="getsid" type="hidden"/>
+                    主要特色：<font style="color: red" th:text="${s.sfeature}"></font>
+                    <p class="price_num">
+                        <span>&yen;</span>
+                        <span th:text="${s.sprice}"></span>
+                        <span>起</span>
+                    </p>
+                    类型：<span th:text="${s.stype}"></span>
+                    <p>
+                        <span>已被收藏</span>
+                        <span th:text="${s.scllect}"></span>
+                        <span>次</span>
+                    </p>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 <!--导入底部-->
-<footer>
-    <div class="why_select">
-        <dl>
-            <dt class="fl">
-                <img src="images/icon_1.jpg" alt="">
-            </dt>
-            <dd>
-                <h1>产品齐全</h1>
-                <h2>产品全自主选，随心买</h2>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="fl">
-                <img src="images/icon_2.jpg" alt="">
-            </dt>
-            <dd>
-                <h1>便利快捷</h1>
-                <h2>24小时不打烊，随时买</h2>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="fl">
-                <img src="images/icon_3.jpg" alt="">
-            </dt>
-            <dd>
-                <h1>安全支付</h1>
-                <h2>知名支付工具，放心买</h2>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="fl">
-                <img src="images/icon_4.jpg" alt="">
-            </dt>
-            <dd style="margin-right:0px;">
-                <h1>贴心服务</h1>
-                <h2>客服全年无休，安心买</h2>
-            </dd>
-        </dl>
-    </div>
-    <div class="company">
-        <p>北京千峰教育科技股份有限公司 版权所有Copyright 2006-2018, All Rights Reserved 苏ICP备16007882</p>
-    </div>
-</footer>
+
 </body>
 </html>
