@@ -2,6 +2,7 @@ package com.qf.travel.controller;
 
 import com.qf.travel.pojo.User;
 import com.qf.travel.service.UserService;
+import com.qf.travel.utils.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -45,9 +46,11 @@ public class UserController {
      * 登录处理
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/dealLogin")
-    public String dealLogin(@RequestParam("uname")String uname,
+    public boolean dealLogin(@RequestParam("uname")String uname,
                             @RequestParam("upwd")String upwd , HttpServletRequest request) {
+        boolean bool = false;
         try {
             User User=userService.findUserByUname(uname);
             Subject subject = SecurityUtils.getSubject();//从安全管理器中获取主体对象
@@ -58,13 +61,14 @@ public class UserController {
                 //用户信息与权限信息存储
                 System.out.println("登陆成功");
                 request.getSession().setAttribute("user",User);
-                return "main";
+                bool = true;
+                return bool;
             }
         }catch (AuthenticationException e){
             e.printStackTrace();
             System.out.println("登录失败");
         }
-        return "login";
+        return bool;
     }
     /**
      * 登录判断
@@ -82,11 +86,10 @@ public class UserController {
         String code =(String) session.getAttribute("number");
         User u = new User();
         u.setUname(uname);
-        u.setUpwd(password);
         User b=userService.findUser(u);
         int a=0;
         if (b!=null) {
-            System.out.println(b);
+            System.out.println("login1111"+b);
             User user=userService.findUserByUname(uname);
             List<Integer> rids=userService.findUR(user.getUid());
             request.getSession().setAttribute("user", b);
@@ -108,15 +111,13 @@ public class UserController {
     /**
      * 登录前台
      * @param uname
-     * @param upwd
      * @param request
      * @return
      */
     @RequestMapping("memberSave")
-    public Object memberSave(String uname,String upwd,HttpServletRequest request){
+    public Object memberSave(String uname,HttpServletRequest request){
         User u=new User();
         u.setUname(uname);
-        u.setUpwd(upwd);
         User b=userService.findUser(u);
         request.getSession().setAttribute("currentUser",b);
         boolean bool=true;
@@ -125,7 +126,6 @@ public class UserController {
         }
         request.getSession().setAttribute("islogin",bool);
         return "member";
-
     }
 
     /**
@@ -235,7 +235,7 @@ public class UserController {
     @RequiresPermissions(value = {"updateAdmin"})
     @RequestMapping("/admedited")
     public boolean admedited(int uid,String uname,String upwd,String email,String realname,
-                             String tel,String birth){
+                             String tel){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -245,7 +245,6 @@ public class UserController {
         user.setEmail(email);
         user.setRealname(realname);
         user.setTel(tel);
-        user.setBirth(birth);
         user.setCreatetime(date);
         boolean bool = userService.updateUser(user);
         System.out.println(bool);
@@ -284,7 +283,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/addadmed")
     public boolean addadmed(String uname,String upwd,String email,String realname,
-                            String tel,String birth){
+                            String tel,String birth,String sex){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -295,7 +294,8 @@ public class UserController {
         user.setTel(tel);
         user.setBirth(birth);
         user.setCreatetime(date);
-        boolean bool = userService.saveUser(user,2);
+        user.setSex(sex);
+        boolean bool = userService.saveUser(user,9);
         System.out.println(bool);
         return bool;
     }
@@ -305,7 +305,8 @@ public class UserController {
     public boolean registerUser (String uname, String upwd, String email, String realname, String tel, String sex,String birth){
         User user = new User();
         user.setUname(uname);
-        user.setUpwd(upwd);
+        String password = Md5Utils.getpawd(upwd);
+        user.setUpwd(password);
         user.setEmail(email);
         user.setRealname(realname);
         user.setTel(tel);
@@ -397,7 +398,7 @@ public class UserController {
     @RequiresPermissions(value = {"addMen"})
     @RequestMapping("/addMems")
     public boolean addMems(String uname,String upwd,String email,String realname,
-                            String tel,String birth){
+                            String tel,String birth,String sex){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -408,6 +409,7 @@ public class UserController {
         user.setTel(tel);
         user.setBirth(birth);
         user.setCreatetime(date);
+        user.setSex(sex);
         boolean bool = userService.saveUser(user,1);
         System.out.println(bool);
         return bool;
@@ -425,7 +427,7 @@ public class UserController {
     @RequiresPermissions(value = {"updateMem"})
     @RequestMapping("/Memdited")
     public boolean Memdited(int uid,String uname,String upwd,String email,String realname,
-                             String tel,String birth){
+                             String tel){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(new Date());
         User user = new User();
@@ -435,7 +437,6 @@ public class UserController {
         user.setEmail(email);
         user.setRealname(realname);
         user.setTel(tel);
-        user.setBirth(birth);
         user.setCreatetime(date);
         boolean bool = userService.updateUser(user);
         System.out.println(bool);

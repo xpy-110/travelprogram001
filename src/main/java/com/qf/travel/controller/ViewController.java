@@ -18,9 +18,16 @@ public class ViewController {
 
     @RequestMapping("indent")
     public String indent(){
-        return "indent";
+        return "redirect:findIndent";
     }
-
+    @RequestMapping("indent_1")
+    public String indent_1(){
+        return "redirect:findIndent1";
+    }
+    @RequestMapping("indent_2")
+    public String indent_2(){
+        return "redirect:findIndent1";
+    }
     @RequestMapping("indent_detail")
     public String indent_detail(){
         return "indent_detail";
@@ -42,4 +49,5 @@ public class ViewController {
     public String evaluate(){
         return "evaluate";
     }
+
 }

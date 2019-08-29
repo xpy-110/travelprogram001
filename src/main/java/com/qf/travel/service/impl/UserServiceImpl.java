@@ -53,23 +53,13 @@ public class UserServiceImpl implements UserService {
     public List<User> loadUserId(int rid,int page,int rows) {
         PageHelper.startPage(page,rows);
         if (rid != 1){
-            return getUser();
+            List<User> users = userMapper.loadAdmin();
+            return users;
         }else {
             return userMapper.loadUserId(rid);
         }
     }
-    private List<User> getUser(){
-        List<User> users = userMapper.loadAll();
-        List<User> u = userMapper.loadUserId(1);
-        for (int i = 0; i < users.size(); i++) {
-            for (int j = 0; j < u.size(); j++) {
-                if(users.get(i).equals(u.get(j))){
-                    users.remove(users.get(i));
-                }
-            }
-        }
-        return users;
-    }
+
     @Override
     public User getUserById(int uid) {
         return userMapper.getUserById(uid);
@@ -114,7 +104,7 @@ public class UserServiceImpl implements UserService {
         if (rid == 1){
             c = userMapper.getUserCount(rid);
         } else {
-            c = userMapper.getCount()-userMapper.getUserCount(1);
+            c = userMapper.getCount()-userMapper.getUserCount(1)-1;
         }
         int MaxPage = c%rows==0?c/rows:c/rows+1;
         return MaxPage;
@@ -144,7 +134,16 @@ public class UserServiceImpl implements UserService {
     public boolean save(User user) {
         System.out.println("user = " + user);
         int count = userMapper.save(user);
-        return count>0?true:false;
+        boolean bool = count>0?true:false;
+        if (bool){
+            int uid = userMapper.getUidByName(user.getUname());
+            Map<String,Integer> map = new HashMap<>();
+            map.put("rid",1);
+            map.put("uid",uid);
+            int n = userMapper.saveRoleUser(map);
+            bool = n>0?true:false;
+        }
+        return bool;
     }
     /*模糊查询*/
     public List<User> inquireUser(int rid,String uuu){

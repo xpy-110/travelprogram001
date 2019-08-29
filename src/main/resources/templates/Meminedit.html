@@ -161,10 +161,6 @@
 						<label for="exampleInputPassword1">电话</label>
 						<input id="inputSuccess5" name="tel" type="text" class="form-control" th:value="${meminadit.tel}">
 					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1">出生日期</label>
-						<input id="inputSuccess6" name="birth" type="text" class="form-control" th:value="${meminadit.birth}">
-					</div>
 
 				  <button id="commit" type="button" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
 				  <button type="reset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
@@ -269,9 +265,8 @@
 					var email = $("#inputSuccess3").val();
 					var realname = $("#inputSuccess4").val();
 					var tel = $("#inputSuccess5").val();
-					var birth = $("#inputSuccess6").val();
 					var uid = $("#uid").val();
-					if (uname.length==0 || upwd.length == 0 || email.length == 0 || realname.length == 0 || tel.length == 0 || birth.length == 0){
+					if (uname.length==0 || upwd.length == 0 || email.length == 0 || realname.length == 0 || tel.length == 0){
 						alert("请填写完整后再提交");
 					} else {
 						$.post("Memdited", {
@@ -281,7 +276,6 @@
 							"email": email,
 							"realname": realname,
 							"tel": tel,
-							"birth": birth
 						}, function (data) {
 							alert(data);
 							if (data == true) {

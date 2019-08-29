@@ -161,6 +161,14 @@
 						<input id="inputSuccess5" name="tel" type="text" class="form-control" autocomplete="off">
 					</div>
 					<div class="form-group">
+						<label for="exampleInputsex">性别</label>
+						<div id="sex">
+							<input type="radio" name="sex" value="男" checked> 男
+							<input type="radio" name="sex" value="女"> 女
+						</div>
+
+					</div>
+					<div class="form-group">
 						<label for="exampleInputBirth">出生日期</label>
 						<input id="inputSuccess6" name="birth" type="text" class="form-control" autocomplete="off">
 					</div>
@@ -269,10 +277,11 @@
 					var realname = $("#inputSuccess4").val();
 					var tel = $("#inputSuccess5").val();
 					var birth = $("#inputSuccess6").val();
-					if (uname.length==0 || upwd.length == 0 || email.length == 0 || realname.length == 0 || tel.length == 0 || birth.length == 0){
+					var sex = $(":checked").val();
+					if (sex.length == 0 || uname.length==0 || upwd.length == 0 || email.length == 0 || realname.length == 0 || tel.length == 0 || birth.length == 0){
 						alert("请填写完整后再提交");
 					} else {
-						$.post("addMems",{"uname":uname,"upwd":upwd,"email":email,"realname":realname,"tel":tel,"birth":birth},function(data) {
+						$.post("addMems",{"uname":uname,"upwd":upwd,"email":email,"realname":realname,"tel":tel,"birth":birth,"sex":sex},function(data) {
 							alert(data);
 							if (data == true) {
 								location.href = "meManager";

@@ -14,13 +14,18 @@ public interface IndentMapper {
      * 查出所有订单信息
      * @return
      */
-    public List<Indent> findIndent(String uname);
+     List<Indent> findIndent(String uname);
 
     /**
      * 查询订单总个数
      * @return
      */
-    public int getTotalCount(String uname);
+    int getTotalCount(String uname);
+    /**
+     * 查询订单总个数
+     * @return
+     */
+    int getTotalCount1(String uname,String istate);
     /**
     * 模糊查询所有信息
     * */
@@ -37,4 +42,11 @@ public interface IndentMapper {
     * 批量删除
     * */
     int deleteIds(List<Integer> list);
+
+    /**
+     * 根据不同状态查出不同订单
+     * @param istate
+     * @return
+     */
+    List<Indent> findIndent1(Map<String,String> map);
 }
