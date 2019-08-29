@@ -28,7 +28,7 @@ public class ViewController {
     public String indent_2(){
         return "redirect:findIndent1";
     }
-    @RequestMapping("indent_detail")
+    @RequestMapping("indent_detailview")
     public String indent_detail(){
         return "indent_detail";
     }

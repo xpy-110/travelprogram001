@@ -49,4 +49,15 @@ public interface IndentMapper {
      * @return
      */
     List<Indent> findIndent1(Map<String,String> map);
+    /*添加新的 订单*/
+    public int saveindent(Indent indent);
+    /*根据uname 和 下单时间 得查出 订单*/
+    public Indent getindent(Map<String,String> map);
+    //根据itime查询id
+    public int getByItime(String itime);
+    //  根据id 获取indent数据
+    public Indent getIndentById(int id);
+    //  根据id修改istate
+    public int updateIstateById(int id);
+
 }

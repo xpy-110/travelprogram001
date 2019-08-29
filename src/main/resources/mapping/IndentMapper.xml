@@ -92,4 +92,19 @@
         </where>
     </delete>
 
+    <!--添加订单-->
+    <insert id="saveindent" parameterType="indent">
+        INSERT INTO indent VALUES (DEFAULT, #{sid},#{uname},#{icount},#{iprice},#{itime} ,DEFAULT );
+    </insert>
+    <select id="getByItime" parameterType="string" resultType="int">
+        select id from indent where itime=#{itime}
+    </select>
+    <!--根据id 获取订单-->
+    <select id="getIndentById" resultType="indent" parameterType="int">
+        select * from indent where id=#{id}
+    </select>
+    <!--根据id改变state-->
+    <update id="updateIstateById" parameterType="int">
+        update indent set istate="已付款" where id =#{id}
+    </update>
 </mapper>
