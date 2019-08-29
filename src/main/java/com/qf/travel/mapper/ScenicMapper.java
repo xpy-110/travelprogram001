@@ -29,6 +29,8 @@ public interface ScenicMapper {
     public List<Scenic> queryAllScenic(String xxx);
     //  查询snice所有数量、
     public int getAllScenicCount();
+    //  跳往我的收藏
+    public List<Scenic> getScenicByUname(String uname);
 
     //根据类型查询数据
     public List<Scenic> loadAllByStype(String type);

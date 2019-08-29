@@ -27,6 +27,9 @@ public interface ScenicService {
     public int getAllScenicMaxPage(int rows);
     //  模糊查询所有
     public List<Scenic> queryAllScenic(String xxx);
+    //  我的收藏查询
+    public List<Scenic> getScenicByUname(String uname,int page ,int rows);
+
 
     //根据类型查询数据
     public List<Scenic> loadAllByStype(String type,int page,int rows);

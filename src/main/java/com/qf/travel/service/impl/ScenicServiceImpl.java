@@ -84,6 +84,12 @@ public class ScenicServiceImpl implements ScenicService {
         return scenicMapper.queryAllScenic(xxx);
     }
 
+    @Override
+    public List<Scenic> getScenicByUname(String uname, int page, int rows) {
+        PageHelper.startPage(page,rows);
+        return scenicMapper.getScenicByUname(uname);
+    }
+
 
     @Override
     public List<Scenic> loadAllByStype(String type,int page,int rows) {
