@@ -115,7 +115,6 @@ public class IndentController {
     @ResponseBody
     @RequestMapping("/delIndent")
     public boolean delIndent(String ids){
-        System.out.println(ids);
         String[] uids = ids.split("-");
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < uids.length; i++) {

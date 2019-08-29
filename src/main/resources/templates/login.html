@@ -233,8 +233,7 @@
 			var checkcode = $("#checkcode").val();
 			if (uname.length == 0 || upwd.length == 0) {
 				alert("账号或密码不能为空");
-			}
-			if (checkcode.length==0) {
+			}else if (checkcode.length==0) {
 				alert("验证码不能为空");
 			} else {
 				$.post("login1", {
