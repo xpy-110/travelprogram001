@@ -18,15 +18,18 @@ public class ViewController {
 
     @RequestMapping("indent")
     public String indent(){
-        return "redirect:findIndent";
+        String istate="已完成订单";
+        return "redirect:findIndent?istate="+istate;
     }
     @RequestMapping("indent_1")
     public String indent_1(){
-        return "redirect:findIndent1";
+        String istate="待付款";
+        return "redirect:findIndent1?istate="+istate;
     }
     @RequestMapping("indent_2")
     public String indent_2(){
-        return "redirect:findIndent1";
+        String istate="已付款";
+        return "redirect:findIndent1?istate="+istate;
     }
     @RequestMapping("indent_detail")
     public String indent_detail(){

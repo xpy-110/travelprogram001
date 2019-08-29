@@ -14,7 +14,7 @@ public interface IndentMapper {
      * 查出所有订单信息
      * @return
      */
-     List<Indent> findIndent(String uname);
+    List<Indent> findIndent(Map<String,String> map);
 
     /**
      * 查询订单总个数

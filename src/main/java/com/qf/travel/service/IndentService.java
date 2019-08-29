@@ -10,7 +10,7 @@ public interface IndentService {
      * 查出所有订单信息
      * @return
      */
-    public List<Indent> findIndent(String uname,int page, int rows);
+    List<Indent> findIndent(String istate,String uanme,int page, int rows);
 
     /**
      * 查询总的订单数

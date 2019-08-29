@@ -15,13 +15,15 @@
                      select="com.qf.travel.mapper.ScenicMapper.getScenicByid" column="sid">
         </association>
     </resultMap>
-    <select id="findIndent" parameterType="string" resultMap="resultAllScenic">
+    <select id="findIndent" parameterType="map" resultMap="resultAllScenic">
     SELECT
       *
       FROM
       indent
       WHERE
     uname=#{uname}
+    and
+    istate=#{istate}
     </select>
     <select id="findIndent1" parameterType="map" resultMap="resultAllScenic">
     SELECT
@@ -41,7 +43,7 @@
         where
         uname=#{uname}
     </select>
-    <select id="getTotalCount1" parameterType="string" resultType="int">
+    <select id="getTotalCount1" parameterType="map" resultType="int">
         select
         count(id)
         from
