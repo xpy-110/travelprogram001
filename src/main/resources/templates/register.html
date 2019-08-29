@@ -65,7 +65,8 @@
 					var tel = $("#telephone").val();
 					var sex = $(":checked").val();
 					var birth = $("#birthday").val();
-					if (uname != null && upwd!= null && email != null && realname != null && tel != null && birth != null){
+                    var checkcode = $("#checkcode").val();
+					if (uname.length != 0 && upwd.length!= 0 && email.length != 0 && realname.length != 0 && tel.length != 0 && birth.length != 0){
 						$.post("zhuce",{
 							"uname":uname,
 							"upwd":upwd,
@@ -73,9 +74,15 @@
 							"realname":realname,
 							"tel":tel,
 							"sex":sex,
-							"birth":birth
+							"birth":birth,
+                            "checkcode": checkcode
 						},function (data) {
-							if (data == true){
+                            if (checkcode.length==0) {
+                                alert("验证码不能为空");
+                            }else if (data == 1) {
+                                alert("验证码有误，请重新输入");
+                                $("#checkcode").val("");
+                            }else if (data == 2){
 								alert("注册成功");
 								window.location.href="memberSave?uname="+uname+"&upwd="+upwd;
 							} else {
