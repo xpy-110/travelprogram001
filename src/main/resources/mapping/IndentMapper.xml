@@ -3,19 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.travel.mapper.IndentMapper">
-    <select id="findIndent" parameterType="string" resultType="com.qf.travel.pojo.Indent">
+    <resultMap id="resultAllScenic" type="com.qf.travel.pojo.Indent">
+        <id property="id" column="id"></id>
+        <result property="sid" column="sid"></result>
+        <result property="uname" column="uname"></result>
+        <result property="icount" column="icount"></result>
+        <result property="iprice" column="iprice"></result>
+        <result property="itime" column="itime"></result>
+        <result property="istate" column="istate"></result>
+        <association property="scenic" javaType="scenic"
+                     select="com.qf.travel.mapper.ScenicMapper.getScenicByid" column="sid">
+        </association>
+    </resultMap>
+    <select id="findIndent" parameterType="string" resultMap="resultAllScenic">
     SELECT
-      i.*,
-      s.Sname,
-      s.Sprice,
-      s.Simgs
+      *
       FROM
-      indent i,
-      scenic s
+      indent
       WHERE
-      i.sid=s.Sid
-      AND
-      i.uname=#{uname}
+    uname=#{uname}
     </select>
     <select id="getTotalCount" parameterType="string" resultType="int">
         select
@@ -25,4 +31,45 @@
         where
         uname=#{uname}
     </select>
+    <!--模糊查询全部-->
+    <select id="queryAll" parameterType="string" resultMap="resultAllScenic">
+    SELECT
+      *
+      FROM
+      indent i,
+      scenic s
+      WHERE
+      s.Sid=i.sid
+      and
+      concat(s.Sname,s.Sprice,s.Scity,s.Stype,i.istate) like "%"#{uuu}"%"
+    </select>
+    <!--根据用户查询-->
+    <select id="queryAllByUname" parameterType="map" resultMap="resultAllScenic">
+    SELECT
+      *
+      FROM
+      indent i,
+      scenic s
+      WHERE
+      s.Sid=i.sid
+      and
+      i.uname=#{uname}
+      and
+      concat(s.Sname,s.Sprice,s.Scity,s.Stype,i.istate) like "%"#{uuu}"%"
+    </select>
+    <!--根据id删除-->
+    <delete id="deleteById" parameterType="int">
+        delete from indent where id=#{id}
+    </delete>
+    <!--批量删除-->
+    <delete id="deleteIds" parameterType="list">
+        delete from indent
+        <where>
+            id in
+            <foreach collection="list" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
 </mapper>

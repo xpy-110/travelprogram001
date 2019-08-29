@@ -3,6 +3,7 @@ package com.qf.travel.controller;
 import com.qf.travel.pojo.Scenic;
 import com.qf.travel.service.ScenicService;
 import com.qf.travel.utils.ScienceUtiles;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ public class ScenicControllerTwo {
     //路线管理
     @Autowired
     private ScenicService scenicService;
+    @RequiresPermissions(value = {"pathManage"})
     @RequestMapping("/RouteMaintain")
     public String RouteMaintain(@RequestParam(required = false,defaultValue = "1")int page,
                                   @RequestParam(required = false,defaultValue = "10")int rows,
@@ -42,12 +44,14 @@ public class ScenicControllerTwo {
         return "Route";
     }
     //删除路线信息
+    @RequiresPermissions(value = {"pathdelete"})
     @RequestMapping("/deleteRoute")
     public String deleteRoute(int Sid){
         boolean bool = scenicService.deleteById(Sid);
         return bool?"redirect:RouteMaintain":"error";
     }
     //批量删除
+    @RequiresPermissions(value = {"pathdelete"})
     @RequestMapping("/deleteRoute1")
     public String deleteRoute1(String ids){
         String[] sids = ids.split("-");
@@ -58,12 +62,14 @@ public class ScenicControllerTwo {
         return bool?"redirect:RouteMaintain":"error";
     }
     //修改
+    @RequiresPermissions(value = {"pathupdate"})
     @RequestMapping("/updateRoute")
     public String updateRoute(int Sid,Model model){
         Scenic scenic = scenicService.getScenicByid(Sid);
         model.addAttribute("scenic",scenic);
         return "route_1";
     }
+    @RequiresPermissions(value = {"pathupdate"})
     @ResponseBody
     @RequestMapping("/updateRoute1")
     public boolean updateRoute1(int sid, String sname, int sindent, int scllect, int scomment,
@@ -76,6 +82,7 @@ public class ScenicControllerTwo {
         return bool;
     }
     //是否下架
+    @RequiresPermissions(value = {"pathManage"})
     @RequestMapping("/isRoute")
     public String isRoute(int Sid){
         int sstate = 0;
@@ -86,6 +93,7 @@ public class ScenicControllerTwo {
         return bool?"redirect:RouteMaintain":"error";
     }
     //路线信息审核
+    @RequiresPermissions(value = {"pathAud"})
     @RequestMapping("/Routeexamine")
     public String Routeexamine(@RequestParam(required = false,defaultValue = "1")int page,
                                  @RequestParam(required = false,defaultValue = "10")int rows,
@@ -109,12 +117,14 @@ public class ScenicControllerTwo {
         return "route_3";
     }
     //删除
+    @RequiresPermissions(value = {"pathAud"})
     @RequestMapping("/deleteRouteexamine")
     public String deleteRouteexamine(int Sid){
         boolean bool = scenicService.deleteById(Sid);
         return bool?"redirect:Routeexamine":"error";
     }
     //是否上架
+    @RequiresPermissions(value = {"pathAud"})
     @RequestMapping("/updateRouteexamine")
     public String updateRouteexamine(int Sid){
         int sstate = 1;
@@ -125,6 +135,7 @@ public class ScenicControllerTwo {
         return bool?"redirect:Routeexamine":"error";
     }
     //增加路线信息
+    @RequiresPermissions(value = {"addPath"})
     @RequestMapping("/addRoute")
     public String addRoute(){
         return "route_2";
@@ -143,6 +154,7 @@ public class ScenicControllerTwo {
         return bool;
     }
     //搜索路线信息
+    @RequiresPermissions(value = {"pathAud"})
     @RequestMapping("/RouteQuery")
     public String RouteQuery(String uuu,Model model){
         List<Scenic> scenics = scenicService.inquireScenic("路线",uuu);

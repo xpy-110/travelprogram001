@@ -23,8 +23,6 @@ public class IndentController {
         User user = (User) request.getSession().getAttribute("currentUser");
         String uname = user.getUname();
         int maxPage=indentService.calcMaxPage(uname,rows);
-        System.out.println(page);
-        System.out.println(maxPage);
         if(page<1){
             page=maxPage;
         }

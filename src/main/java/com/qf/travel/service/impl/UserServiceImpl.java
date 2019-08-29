@@ -52,9 +52,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> loadUserId(int rid,int page,int rows) {
         PageHelper.startPage(page,rows);
-        return userMapper.loadUserId(rid);
+        if (rid != 1){
+            return getUser();
+        }else {
+            return userMapper.loadUserId(rid);
+        }
     }
-
+    private List<User> getUser(){
+        List<User> users = userMapper.loadAll();
+        List<User> u = userMapper.loadUserId(1);
+        for (int i = 0; i < users.size(); i++) {
+            for (int j = 0; j < u.size(); j++) {
+                if(users.get(i).equals(u.get(j))){
+                    users.remove(users.get(i));
+                }
+            }
+        }
+        return users;
+    }
     @Override
     public User getUserById(int uid) {
         return userMapper.getUserById(uid);
@@ -95,7 +110,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int getMaxPage(int rows,int rid) {
-        int c = userMapper.getUserCount(rid);
+        int c = 0;
+        if (rid == 1){
+            c = userMapper.getUserCount(rid);
+        } else {
+            c = userMapper.getCount()-userMapper.getUserCount(1);
+        }
         int MaxPage = c%rows==0?c/rows:c/rows+1;
         return MaxPage;
     }

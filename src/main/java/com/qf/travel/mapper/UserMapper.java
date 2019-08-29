@@ -66,4 +66,9 @@ public interface UserMapper {
     public int save(User user);
     /*模糊查询*/
     public List<User> inquireUser(Map<String,Object> map);
+    /*
+    * 查询所有
+    * */
+    List<User> loadAll();
+    int getCount();
 }

@@ -1,7 +1,9 @@
 package com.qf.travel;
 
+import com.qf.travel.mapper.IndentMapper;
 import com.qf.travel.mapper.ScenicMapper;
 import com.qf.travel.mapper.UserMapper;
+import com.qf.travel.pojo.Indent;
 import com.qf.travel.pojo.Scenic;
 import com.qf.travel.pojo.User;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,6 +24,8 @@ public class TravelprogramApplicationTests {
     private UserMapper userMapper;
     @Autowired
     private ScenicMapper scenicMapper;
+    @Autowired
+    private IndentMapper indentMapper;
     @Test
     public void selectUserTest(){
         User user = userMapper.getUserById(1);
@@ -38,5 +43,23 @@ public class TravelprogramApplicationTests {
         map.put("uuu","1");
         List<User> users = userMapper.inquireUser(map);
         System.out.println(users);
+    }
+    @Test
+    public void loadall(){
+        List<Indent> indents = indentMapper.findIndent("test");
+        System.out.println(indents);
+    }
+    @Test
+    public void queryAll(){
+        List<Indent> indents = indentMapper.queryAll("北京");
+        System.out.println(indents);
+    }
+    @Test
+    public void queryAllByUname(){
+        Map<String,String> map = new HashMap<>();
+        map.put("uname","test");
+        map.put("uuu","路线");
+        List<Indent> indents = indentMapper.queryAllByUname(map);
+        System.out.println(indents);
     }
 }

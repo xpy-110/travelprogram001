@@ -11,8 +11,8 @@ public class Indent {
     private double iprice;//订单价格
     private String itime;//订单提交时间
     private String istate;//订单状态
-
-    private String Sname;//景点名称
+    private Scenic scenic = new Scenic();
+    /*private String Sname;//景点名称
     private String Simgs;//景点图片
-    private String Sprice;//景点价格
+    private String Sprice;//景点价格*/
 }
