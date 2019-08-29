@@ -344,7 +344,7 @@
         <li><a href="evaluate">评价</a></li>
     </ul>
 </div>
-<div class="xinxi clearfix" id="shopping">
+<div class="xinxi clearfix" id="shopping" >
     <div class="left" style="text-align:center;left: 6%;position:absolute;vertical-align:middle">
         <div class="header">
             <span style="margin-right: 130px;"><input id="allCheckBox" type="checkbox"/>全选</span>
@@ -365,7 +365,7 @@
                 </div>
                 <div class="text2" style="margin-top: 40px;">
                     <img src="images/sub.jpg" alt="minus"  id="sum" th:onclick="|minus(${i.id},'minus')|"  class="hand" style="border:0px;width: 20px;height: 20px;float: left;"/>
-                    <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 22px;height: 22px;color: #0f0f0f;font-size: 22px;"/>
+                    <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 24px;height: 22x;color: #0f0f0f;font-size: 22px;"/>
                     <img src="images/add.jpg" alt="add" id="add"  th:onclick="|add(${i.id},'add')|" class="hand" style="border:0px;width: 20px;height: 20px;float: right;"/>
                 </div>
                 <div class="price">
@@ -389,7 +389,7 @@
         <div style="float: left">
             <a id="del1" type="button" ><img src="images/del.jpg" alt="delete"/></a>
         </div>
-        <div>
+        <div style="width: 300px;text-align: center; position:relative;left: 300px;">
             <tfoot>
             <tr>
                 <td colspan="8" align="center" >
@@ -403,6 +403,28 @@
             </tr>
             </tfoot>
         </div>
+        <div style="float: right; position:relative;left: -30px;top: -100px;">
+            <p style="line-height: 1;
+                font-size: 23px;
+                color: #ff4848;">
+                <span>&yen;</span>
+                <input id="inp2" type="hidden" value="500">
+                <span  id="iprice1" >0</span>
+            </p>
+            <button style=" background-color: #6f5499; /* Green */
+                    border: none;
+                    color: white;
+                    padding: 15px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    -webkit-transition-duration: 0.4s; /* Safari */
+                    transition-duration: 0.4s;">立即付款</button>
+        </div>
+
     </div>
 </div>
 <script>
@@ -519,7 +541,7 @@
         });
     });
 </script>
-<div class="right" style="text-align:center;right: 7%;position:absolute;">
+<div class="right" style="text-align:center;position:relative;left: 1px;">
     <div class="top">
         <div class="hot">HOT</div>
         <span>热门推荐</span>
