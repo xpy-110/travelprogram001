@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/travel?characterEncoding=utf-8&serverTimezone=UTC
     username: root
-    password: 123
+    password: 348215
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.qf.travel.pojo
