@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.qf.travel.mapper.IndentMapper;
 import com.qf.travel.pojo.Indent;
+import com.qf.travel.pojo.Scenic;
 import com.qf.travel.service.IndentService;
 import org.springframework.stereotype.Service;
 
@@ -117,5 +118,11 @@ public class IndentServiceImpl implements IndentService {
     public boolean updateIstateById(int id) {
         int i = indentMapper.updateIstateById(id);
         return i>0?true:false;
+    }
+
+    @Override
+    public Scenic getScenicBySid(int sid) {
+        Scenic scenic = indentMapper.getScenicBySid(sid);
+        return scenic;
     }
 }

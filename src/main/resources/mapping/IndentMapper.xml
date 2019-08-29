@@ -109,4 +109,8 @@
     <update id="updateIstateById" parameterType="int">
         update indent set istate="已付款" where id =#{id}
     </update>
+    <!--根据sid查询scenic-->
+    <select id="getScenicBySid" parameterType="int" resultType="scenic">
+        select * from scenic where sid=#{sid}
+    </select>
 </mapper>
