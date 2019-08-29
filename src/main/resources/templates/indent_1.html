@@ -337,7 +337,7 @@
 <!-- 首页导航 -->
 <div class="navitem">
     <ul class="nav">
-        <li ><a href="memberSave">首页</a></li>
+        <li ><a th:href="@{memberSave(uname=${session.currentUser.uname})}">首页</a></li>
         <li ><a href="findIndent">已完成订单</a></li>
         <li class="nav-active"><a href="findIndent1">待付款</a></li>
         <li><a href="findIndent2">已付款</a></li>
@@ -362,6 +362,9 @@
                     <p th:text="${i.scenic.sname}"></p>
                     <br/>
                     <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
+                    <br/>
+                    <b style="color: #8c8c8c;font-size: 10px;">订单提交时间:</b>
+                    <b th:text="${i.itime}" style="color: #8c8c8c;font-size: 10px;"></b>
                 </div>
                 <div class="text2" style="margin-top: 40px;">
                     <img src="images/sub.jpg" alt="minus"  id="sum" th:onclick="|minus(${i.id},'minus')|"  class="hand" style="border:0px;width: 20px;height: 20px;float: left;"/>
@@ -374,7 +377,7 @@
                         <input id="inp1" type="hidden" th:value="${i.scenic.sprice}">
                         <span th:text="${i.iprice}" id="iprice"></span>
                     </p>
-                    <p><a href="route_detail">订单详情</a></p>
+                    <p><a th:href="@{indent_detail(id=${i.id})}">订单详情</a></p>
                 </div>
                 <div style="float: left;margin-top: 70px;">
                     <p>
