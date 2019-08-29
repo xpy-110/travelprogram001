@@ -75,7 +75,7 @@
     <!-- 首页导航 -->
     <div class="navitem">
         <ul class="nav">
-            <li class="nav-active"><a href="member">首页</a></li>
+            <li><a href="@{memberSave(uname=${session.currentUser.uname})}">首页</a></li>
             <li><a href="route_list.html">门票</a></li>
             <li><a href="routelist">酒店</a></li>
             <li><a href="route_list.html">香港车票</a></li>
@@ -84,7 +84,7 @@
             <li><a href="route_list.html">港澳游</a></li>
             <li><a href="route_list.html">抱团定制</a></li>
             <li><a href="route_list.html">全球自由行</a></li>
-            <li><a href="getScenicByScllect">收藏排行榜</a></li>
+            <li class="nav-active"><a href="getScenicByScllect">收藏排行榜</a></li>
         </ul>
     </div>
         <div class="contant">
