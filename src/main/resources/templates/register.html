@@ -13,7 +13,6 @@
 				var rname = /^[a-z0-9_-]{3,16}$/;
 				var rpwd = /^[a-zA-Z0-9]{6,18}$/;
 				var remail = /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/;
-
 				$("#username").blur(function () {
 					var u = $("#username").val();
 
@@ -65,6 +64,8 @@
 					var tel = $("#telephone").val();
 					var sex = $(":checked").val();
 					var birth = $("#birthday").val();
+					var checkcode = $("#checkcode").val();
+					alert(checkcode);
 					if (uname != null && upwd!= null && email != null && realname != null && tel != null && birth != null){
 						$.post("zhuce",{
 							"uname":uname,
@@ -73,9 +74,15 @@
 							"realname":realname,
 							"tel":tel,
 							"sex":sex,
-							"birth":birth
+							"birth":birth,
+							"checkcode": checkcode
 						},function (data) {
-							if (data == true){
+							if (checkcode.length==0) {
+								alert("验证码不能为空");
+							}else if (data == 1) {
+								alert("验证码有误，请重新输入");
+								$("#checkcode").val("");
+							}else if (data == 2){
 								alert("注册成功");
 								window.location.href="memberSave?uname="+uname+"&upwd="+upwd;
 							} else {
@@ -114,6 +121,7 @@
 
 		</script>
     </head>
+
 	<body>
 	<!--引入头部-->
 	<div id="header"></div>
@@ -194,26 +202,32 @@
     								<input type="date" id="birthday" name="birthday" placeholder="年/月/日">
     							</td>
     						</tr>
-    						<tr>
-    							<td class="td_left">
-    								<label for="check">验证码</label>
-    							</td>
-    							<td class="td_right check">
-    								<input type="text" id="check" name="check" class="check">
-    								<img src="checkCode" height="32px" alt="" onclick="changeCheckCode(this)">
-									<script type="text/javascript">
-										//图片点击事件
-										function changeCheckCode(img) {
-											img.src="checkCode?"+new Date().getTime();
-                                        }
-									</script>
-    							</td>
-    						</tr>
+							<tr align="center">
+									<td class="td_left">
+									<label for="sex" style="margin:60px 0px;">验证码</label>
+									</td>
+								<td class="td_right">
+									<input id="checkcode" class="form-control" name="checkcode" placeholder="请输入验证码" type="text" autocomplete="off" style="float: left;margin-left: 36px;width: 173px;"/>
+									<img src="createImage" alt="验证码" title="点击更换" onclick="this.src='createImage?'+(new Date()).getTime();" style=";float: right"/>
+									<span id="checkcode_msg" class="required"></span>
+									</td>
+							</tr>
     						<tr>
     							<td class="td_left">
     							</td>
     							<td class="td_right check">
-    								<button type="button" id="butt1" value="注册">注册</button>
+    								<button type="button" id="butt1" value="注册" style="
+														background-color: #4CAF50;
+														border: none;
+														color: white;
+														padding: 10px 20px;
+														text-align: center;
+														border-radius: 8px;
+														text-decoration: none;
+														display: inline-block;
+														font-size: 15px;
+														margin: 15px 15px;
+														cursor: pointer;">注册</button>
 									<span id="msg" style="color: red;"></span>
     							</td>
     						</tr>
@@ -275,6 +289,5 @@
 		<!--导入布局js，共享header和footer-->
 	<!--导入布局js，共享header和footer-->
 	<script type="text/javascript" src="js/include.js"></script>
-    	
     </body>
 </html>

@@ -302,7 +302,7 @@ public class UserController {
     //注册
     @ResponseBody
     @RequestMapping("/zhuce")
-    public boolean registerUser (String uname, String upwd, String email, String realname, String tel, String sex,String birth){
+    public int registerUser (HttpSession session,String checkcode,String uname, String upwd, String email, String realname, String tel, String sex,String birth){
         User user = new User();
         user.setUname(uname);
         String password = Md5Utils.getpawd(upwd);
@@ -316,9 +316,16 @@ public class UserController {
         String createtime = dateFormat.format(new Date());
         user.setCreatetime(createtime);
         System.out.println("user = " + user);
-        boolean b = userService.save(user);
-        System.out.println("b = " + b);
-        return b;
+        String code =(String) session.getAttribute("number");
+        System.out.println("code = " + code);
+        System.out.println("checkcode = " + checkcode);
+        int aa=0;
+        if(!code.equalsIgnoreCase(checkcode)){
+            aa=1;
+        }else if(userService.save(user)==true){
+            aa=2;
+        }
+        return aa;
     }
 
     @ResponseBody
