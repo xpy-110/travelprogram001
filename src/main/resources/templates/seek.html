@@ -123,7 +123,7 @@
         <div id="childDiv2" th:if="${mess} == 1">
             <div th:each="s:${scenics}" class="smallDiv">
                 <a th:href="@{gotoRouteDetail(sid=${s.sid})}">
-                <div class="img"><img th:src="${s.simgs}" alt=""></div>
+                <div class="img"><img th:src="${s.simgs}" alt="" class="img"></div>
                 <div class="text1">
                     <p th:text="${s.sname}"></p><br/>
                     <input th:value="${s.sid}" id="getsid" type="hidden"/>
