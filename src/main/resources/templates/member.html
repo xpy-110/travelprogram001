@@ -33,6 +33,8 @@
                 getScenicByType("#sellhot","show-good-gsales");
                 getHotelScenicByType("#hotelhot");
                 getScenicByTime("#pathhot");
+                getPathScenicByType("#hotpath")
+
             }
             function getScenicByType(parentDiv) {
                 $.post("getAllScenicByType",function (scenics) {
@@ -111,6 +113,46 @@
                     }
                 })
             }
+
+            function getPathScenicByType(parentDiv) {
+                $.post("getPathScenicByType",function (scenics) {
+                    var datas = eval(scenics);
+                    for (var key in datas){
+                        var gooddiv =$("<div></div>");
+                        gooddiv.attr("class","childDiv");
+                        var img = $("<img/>");
+                        img.attr("src",datas[key].simgs);
+                        img.attr("class","goodimg");
+                        var gnamefont = $("<font></font>")
+                        gnamefont.text(datas[key].sname);
+                        gnamefont.attr("class","goodname");
+                        var gpricefont=$("<font></font>");
+                        gpricefont.text("￥"+datas[key].sprice);
+                        gpricefont.attr("class","goodprice");
+                        var gindentfont = $("<font style='border-color: #0f0f0f'></font>")
+                        gindentfont.text("热度:"+datas[key].sindent);
+                        gindentfont.attr("class","goodindent");
+                        var gfeature = $("<font style='border-color: #5a5a5a'></font>")
+                        gfeature.text("此条线路的特色有："+datas[key].sfeature);
+                        gfeature.attr("class","goodfeature");
+                        gooddiv.append(img);
+                        gooddiv.append(gnamefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gpricefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gindentfont);
+                        gooddiv.append("<br>")
+
+                        gooddiv.attr("id",datas[key].sid);
+                        gooddiv.click(function(){
+                            var sid=$(this).attr("id");
+                            location.href="gotoRouteDetail?sid="+sid;
+                        });
+                        $(parentDiv).append(gooddiv);
+                    }
+                })
+            }
+
             function getScenicByTime(parentDiv) {
                 $.post("getTopScenicByTime",function (scenics) {
                     var datas = eval(scenics);
@@ -152,8 +194,52 @@
                 })
             }
             function getTopsScenicByType(parentDiv) {
-                $.post("getTopScenicByType",function (scenic) {
+                $.post("getTopScenicByType",function (scenics) {
                     var datas = eval(scenics);
+                    $(parentDiv).empty();
+                    for (var key in datas){
+                        var gooddiv =$("<div></div>");
+                        gooddiv.attr("class","top_childDiv");
+                        gooddiv.attr("name","topSindent")
+                        var img = $("<img/>");
+                        img.attr("src",datas[key].simgs);
+                        img.attr("class","topgoodimg");
+                        var gnamefont = $("<font></font>")
+                        gnamefont.text(datas[key].sname);
+                        gnamefont.attr("class","goodname");
+                        var gpricefont=$("<font></font>");
+                        gpricefont.text("￥"+datas[key].sprice);
+                        gpricefont.attr("class","goodprice");
+                        var gindentfont = $("<font style='border-color: #0f0f0f'></font>")
+                        gindentfont.text("热度:"+datas[key].sindent);
+                        gindentfont.attr("class","goodindent");
+                        var gfeature = $("<font style='border-color: #5a5a5a'></font>")
+                        gfeature.text("此处景点的特色："+datas[key].sfeature);
+                        gfeature.attr("class","goodfeature");
+                        gooddiv.append(img);
+                        gooddiv.append(gnamefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gpricefont);
+                        gooddiv.append("<br>");
+                        gooddiv.append(gindentfont);
+                        gooddiv.append("<br>")
+                        gooddiv.append(gfeature)
+                        gooddiv.attr("id",datas[key].sid);
+                        gooddiv.click(function(){
+                            var sid=$(this).attr("id");
+                            alert(sid)
+                            location.href="gotoRouteDetail?sid="+sid;
+                        });
+
+                        $(parentDiv).append(gooddiv);
+                    }
+                })
+            }
+
+            function getTopPathScenicByType(parentDiv) {
+                $.post("getTopPathScenicByType",function (scenics) {
+                    var datas = eval(scenics);
+                    $(parentDiv).empty();
                     for (var key in datas){
                         var gooddiv =$("<div></div>");
                         gooddiv.attr("class","top_childDiv");
@@ -170,7 +256,7 @@
                         gindentfont.text("热度:"+datas[key].sindent);
                         gindentfont.attr("class","goodindent");
                         var gfeature = $("<font style='border-color: #5a5a5a'></font>")
-                        gfeature.text("此酒店的特色有："+datas[key].sfeature);
+                        gfeature.text("此处路线的特色："+datas[key].sfeature);
                         gfeature.attr("class","goodfeature");
                         gooddiv.append(img);
                         gooddiv.append(gnamefont);
@@ -183,14 +269,27 @@
                         gooddiv.attr("id",datas[key].sid);
                         gooddiv.click(function(){
                             var sid=$(this).attr("id");
-                            alert(sid)
                             location.href="gotoRouteDetail?sid="+sid;
                         });
                         $(parentDiv).append(gooddiv);
                     }
                 })
             }
-
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#butt1").on('click',function(){
+                var xxx = $("#input1").val();
+                alert(xxx);
+                location.href ="queryAllScenic?xxx="+xxx;
+            });
+            $("#topclick2").on('click',function () {
+                getTopsScenicByType("#topsindent")
+            });
+            $("#topclick3").on('click',function () {
+                getTopPathScenicByType("#toppathplus")
+            })
+        })
     </script>
 </head>
 <style type="text/css">
@@ -205,6 +304,12 @@
         position:absolute;right:10px;top:122px;
     }
     #sellhot{
+        width:88%;
+        height:990px;
+        float:left;
+        margin-left:6%;
+    }
+    #hotpath{
         width:88%;
         height:990px;
         float:left;
@@ -303,8 +408,8 @@
                     <img src="images/logo1.png" style="height: 60px;width: 220px;">
                 </div>
                 <div class="search">
-                    <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
-                    <a href="javascript:;" class="search-button">搜索</a>
+                    <input name="" type="text"  id="input1"  placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                    <button id="butt1" class="search-button">搜索</button>
                 </div>
                 <div class="hottel">
                     <div class="hot_pic">
@@ -379,15 +484,15 @@
                 <ul class="jx_tabs" role="tablist">
                     <li role="presentation" class="active">
                         <span></span>
-                        <a href="#popularity" aria-controls="popularity" role="tab" data-toggle="tab">最新旅游</font></a>
+                        <a href="#popularity" id="topclick1" aria-controls="popularity" role="tab" data-toggle="tab">最新旅游</font></a>
                     </li>
                     <li role="presentation">
                         <span></span>
-                        <a href="#newest" aria-controls="newest" role="tab" data-toggle="tab" id="sindent">人气旅游</a>
+                        <a href="#newest" id="topclick2" aria-controls="newest" role="tab" data-toggle="tab">人气旅游</a>
                     </li>
                     <li role="presentation">
                         <span></span>
-                        <a href="#theme" aria-controls="theme" role="tab" data-toggle="tab" id="spath">特色路线</a>
+                        <a href="#theme" id="topclick3" aria-controls="theme" role="tab" data-toggle="tab">特色路线</a>
                     </li>
                 </ul>
             </div>
@@ -401,82 +506,12 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="newest">
                         <div class="row" id="topsindent">
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_1.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_1.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_1.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_1.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
+
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="theme">
-                        <div class="row" id="top-path">
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_2.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_2.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_2.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="javascript:;">
-                                    <img src="images/jiangxuan_2.jpg" alt="">
-                                    <div class="has_border">
-                                        <h3>上海直飞三亚5天4晚自由行(春节预售+亲子/蜜月/休闲游首选+豪华酒店任选+接送机)</h3>
-                                        <div class="price">网付价<em>￥</em><strong>889</strong><em>起</em></div>
-                                    </div>
-                                </a>
-                            </div>
+                        <div class="row" id="toppathplus">
+
                         </div>
                     </div>
                 </div>
@@ -507,13 +542,13 @@
             </div>
         </section>
         <!-- 国内游 end-->
-        <!-- 路线 start-->
+        <!-- 酒店 start-->
         <section class="hemai_jx">
             <div class="jx_top">
                 <div class="jx_tit">
                     <img src="images/icon_7.jpg" alt="">
                     <span>更多精品酒店信息</span>
-                    <a href="gotoseek"> <div >更多路线资讯</div> </a>
+                    <a href="routelist"> <div >更多路线资讯</div> </a>
                 </div>
             </div>
             <div class="heima_gn">
@@ -529,7 +564,30 @@
                 </div>
             </div>
         </section>
-        <!-- 境外游 end-->
+        <!-- 酒店 end-->
+        <!-- 路线 start-->
+        <section class="hemai_jx">
+            <div class="jx_top">
+                <div class="jx_tit">
+                    <img src="images/icon_7.jpg" alt="">
+                    <span>更多酒店信息</span>
+                    <a href="#"> <div >更多路线资讯</div> </a>
+                </div>
+            </div>
+            <div class="heima_gn">
+                <div class="guonei_l">
+                    <img src="images/jiangwai_1.jpg" alt="">
+                </div>
+                <div class="guone_r">
+                    <div class="row">
+                        <div class="col-md-4" id="hotpath">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- l路线 end-->
     </section>
         <!-- 精选end-->
         <!-- 国内游 start-->

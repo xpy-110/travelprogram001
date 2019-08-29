@@ -71,13 +71,25 @@ public class ScenicController {
         return scenics;
     }
 
-    /*动态生成top信息，最新旅游*/
+    /*动态生成top信息，人气旅游*/
     @ResponseBody
     @RequestMapping("/getTopScenicByType")
     public List<Scenic> getTopScenicByType(String stype){
         System.out.println("人气stype = " + stype);
         String stypes = "景点";
         List<Scenic> scenics = scenicService.getTopScenicBySindent(stypes);
+        System.out.println("scenics = " + scenics);
+        return scenics;
+    }
+
+    /*动态生成top信息，路线旅游*/
+    @ResponseBody
+    @RequestMapping("/getTopPathScenicByType")
+    public List<Scenic> getTopPathScenicByType(String stype){
+        String stypes = "路线";
+        System.out.println("stypes = " + stypes);
+        List<Scenic> scenics = scenicService.getTopScenicBySindent(stypes);
+        System.out.println("scenics = " + scenics);
         return scenics;
     }
     /*根据id查询scenic信息发送至详情界面*/
@@ -92,7 +104,7 @@ public class ScenicController {
     }
 
     /*跳往seek界面*/
-    @RequestMapping("/gotoseek")
+    @RequestMapping("/seek")
     public String gotoSeek(){
 
         return "seek";
@@ -234,7 +246,37 @@ public class ScenicController {
         model.addAttribute("size",size);
         return "favoriterank";
     }
-
+    //  seek 模糊查询
+    @RequestMapping("/queryAllScenic")
+    public String queryAllScenic(String xxx,Model model){
+        int mess;
+        String awarm;
+        System.out.println("xxx = " + xxx);
+        if (xxx != null){
+            List<Scenic> scenics = scenicService.queryAllScenic(xxx);
+            if (scenics.size() == 0){
+                mess = 2;
+                awarm = "没有找到需要的信息";
+                System.out.println("mess = " + mess);
+                System.out.println("awarm = " + awarm);
+                model.addAttribute("awarm",awarm);
+                model.addAttribute("mess",mess);
+            }else {
+                mess = 1;
+                System.out.println("mess = " + mess);
+                System.out.println("模糊查出的scenics = " + scenics);
+                model.addAttribute("mess",mess);
+                model.addAttribute("scenics",scenics);
+            }
+            return "seek";
+        }else {
+            mess =2 ;
+            awarm = "请不要输入空的信息就搜索";
+            model.addAttribute("awarm",awarm);
+            model.addAttribute("mess",mess);
+            return "seek";
+        }
+    }
 
     //酒店管理
     //酒店维护

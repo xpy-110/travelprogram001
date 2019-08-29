@@ -26,7 +26,7 @@ public interface ScenicMapper {
     // favoriterank 收藏排行
     public List<Scenic> getScenicByScllect();
     //  根据名称、城市模糊查询出所有的选项
-    public List<Scenic> getScenicByName(String sname);
+    public List<Scenic> queryAllScenic(String xxx);
     //  查询snice所有数量、
     public int getAllScenicCount();
 
