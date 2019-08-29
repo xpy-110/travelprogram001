@@ -11,7 +11,8 @@ public class ViewController {
     }
 
     @RequestMapping("myfavorite")
-    public String myfavorite(){
+    public String myfavorite(String uname){
+        System.out.println("uname = " + uname);
         return "myfavorite";
     }
 

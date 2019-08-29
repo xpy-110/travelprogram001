@@ -26,9 +26,7 @@ public class ScenicController {
     /*首页显示景点*/
     @RequestMapping("getScenicByType")
     public String getScenicByType(String stype, Model model){
-        System.out.println("stype = " + stype);
         List<Scenic> scenics = scenicService.getScenicByType(stype);
-        System.out.println("conrtroller:: scenics = " + scenics);
         model.addAttribute("scenics",scenics);
         return "memeber";
     }
@@ -36,10 +34,8 @@ public class ScenicController {
     @ResponseBody
     @RequestMapping("/getAllScenicByType")
     public List<Scenic> getAllScenicByType(String stype, Model model){
-        System.out.println("stype = " + stype);
         String stypes = "景点";
         List<Scenic> scenics = scenicService.getScenicByType(stypes);
-        System.out.println("Scontroller:: scenics = " + scenics);
         model.addAttribute("scenics",scenics);
         return scenics;
     }
@@ -50,7 +46,6 @@ public class ScenicController {
         System.out.println("stype = " + stype);
         String stypes = "酒店";
         List<Scenic> scenics = scenicService.getScenicByType(stypes);
-        System.out.println("Scontroller:: scenics = " + scenics);
         model.addAttribute("scenics",scenics);
         return scenics;
     }
@@ -60,7 +55,6 @@ public class ScenicController {
     public List<Scenic> getPathScenicByType(){
         String stypes = "路线";
         List<Scenic> scenics = scenicService.getScenicByType(stypes);
-        System.out.println("Scontroller:: scenics = " + scenics);
         return scenics;
     }
     /*动态生成top信息，最新旅游*/
@@ -79,7 +73,7 @@ public class ScenicController {
         System.out.println("人气stype = " + stype);
         String stypes = "景点";
         List<Scenic> scenics = scenicService.getTopScenicBySindent(stypes);
-        System.out.println("scenics = " + scenics);
+
         return scenics;
     }
 
@@ -88,18 +82,14 @@ public class ScenicController {
     @RequestMapping("/getTopPathScenicByType")
     public List<Scenic> getTopPathScenicByType(String stype){
         String stypes = "路线";
-        System.out.println("stypes = " + stypes);
         List<Scenic> scenics = scenicService.getTopScenicBySindent(stypes);
-        System.out.println("scenics = " + scenics);
         return scenics;
     }
     /*根据id查询scenic信息发送至详情界面*/
     @RequestMapping("/gotoRouteDetail")
     public String gotoIndent_detail(String sid ,Model model){
         int i = Integer.parseInt(sid);
-        System.out.println("i = " + i);
         Scenic scenic = scenicService.getScenicByid(i);
-        System.out.println("scenic = " + scenic);
         model.addAttribute(scenic);
         return "route_detail";
     }
@@ -125,8 +115,6 @@ public class ScenicController {
             page = maxPage;
         }
         String sign = "1";
-        System.out.println("maxPage = " + maxPage);
-        System.out.println("page = " + page);
         List<Scenic> scenics = scenicService.loadAllByStype(stype, page, rows);
         model.addAttribute("scenics",scenics);
         model.addAttribute("currentPage",page);
@@ -149,8 +137,6 @@ public class ScenicController {
             page = maxPage;
         }
         String sign = "2";
-        System.out.println("maxPage = " + maxPage);
-        System.out.println("page = " + page);
         List<Scenic> scenics = scenicService.getRouteScenicBySprice(stype, page, rows);
         model.addAttribute("scenics",scenics);
         model.addAttribute("currentPage",page);
@@ -172,8 +158,6 @@ public class ScenicController {
             page = maxPage;
         }
         String sign = "3";
-        System.out.println("maxPage = " + maxPage);
-        System.out.println("page = " + page);
         List<Scenic> scenics = scenicService.getRouteScenicByScllect(stype, page, rows);
         model.addAttribute("scenics",scenics);
         model.addAttribute("currentPage",page);
@@ -195,8 +179,6 @@ public class ScenicController {
             page = maxPage;
         }
         String sign = "4";
-        System.out.println("maxPage = " + maxPage);
-        System.out.println("page = " + page);
         List<Scenic> scenics = scenicService.getRouteScenicByStime(stype, page, rows);
         model.addAttribute("scenics",scenics);
         model.addAttribute("currentPage",page);
@@ -218,8 +200,6 @@ public class ScenicController {
             page = maxPage;
         }
         String sign = "5";
-        System.out.println("maxPage = " + maxPage);
-        System.out.println("page = " + page);
         List<Scenic> scenics = scenicService.getRouteScenicBySindent(stype, page, rows);
         model.addAttribute("scenics",scenics);
         model.addAttribute("currentPage",page);
@@ -278,6 +258,18 @@ public class ScenicController {
             return "seek";
         }
     }
+    //  我的收藏 通过名字获取此人的收藏夹信息
+    @RequestMapping("myfavoriteview")
+    public String myfavoriteview(String uname,@RequestParam(required = false,defaultValue = "1")int page,
+                                 @RequestParam(required = false,defaultValue = "8")int rows,
+                                 Model model){
+        System.out.println("uname = " + uname);
+        List<Scenic> scenics = scenicService.getScenicByUname(uname,page,rows);
+        System.out.println("scenics(收藏) = " + scenics);
+        model.addAttribute("scenics",scenics);
+        return "myfavorite";
+    }
+
 
     //酒店管理
     //酒店维护
