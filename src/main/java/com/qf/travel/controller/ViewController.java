@@ -31,7 +31,7 @@ public class ViewController {
         String istate="已付款";
         return "redirect:findIndent1?istate="+istate;
     }
-    @RequestMapping("indent_detail")
+    @RequestMapping("indent_detailview")
     public String indent_detail(){
         return "indent_detail";
     }

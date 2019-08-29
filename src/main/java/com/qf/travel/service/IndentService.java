@@ -46,4 +46,11 @@ public interface IndentService {
      *
      */
     List<Indent> findIndent1(String istate,String uanme,int page, int rows);
+    public boolean saveIndent(Indent indent);
+    //根据itime查询id
+    public int getByItime(String itime);
+    //  根据id查数据
+    public Indent getIndentById(int id);
+    // 根据id改变state
+    public boolean updateIstateById(int id);
 }

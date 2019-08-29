@@ -70,5 +70,6 @@ public interface UserMapper {
     * 查询所有
     * */
     List<User> loadAdmin();
+    List<User> loadMem();
     int getCount();
 }

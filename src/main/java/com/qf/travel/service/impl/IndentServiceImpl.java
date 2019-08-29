@@ -94,4 +94,28 @@ public class IndentServiceImpl implements IndentService {
         System.out.println("indent = " + indent);
         return indent;
     }
+
+    @Override
+    public boolean saveIndent(Indent indent) {
+
+        int count= indentMapper.saveindent(indent);
+        return count>0?true:false;
+    }
+
+    @Override
+    public int getByItime(String itime) {
+        return indentMapper.getByItime(itime);
+    }
+
+    @Override
+    public Indent getIndentById(int id) {
+        Indent indent = indentMapper.getIndentById(id);
+        return indent;
+    }
+
+    @Override
+    public boolean updateIstateById(int id) {
+        int i = indentMapper.updateIstateById(id);
+        return i>0?true:false;
+    }
 }

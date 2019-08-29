@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class IndentController {
@@ -123,4 +125,43 @@ public class IndentController {
         return bool;
     }
 
+    /*新增订单的方法*/
+    @ResponseBody
+    @RequestMapping("/saveIndent")
+    public int saveIndent(String sid, String uname , String icount, String iprice){
+        int sids = Integer.parseInt(sid);
+        int icounts = Integer.parseInt(icount);
+        int iprices = Integer.parseInt(iprice);
+        System.out.println("sids = " + sids);
+        Indent indent = new Indent();
+        indent.setSid(sids);
+        indent.setIcount(icounts);
+        indent.setUname(uname);
+        indent.setIprice(iprices);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = dateFormat.format(new Date());
+        System.out.println("date = " + date);
+        indent.setItime(date);
+        System.out.println("indent = " + indent);
+        boolean b = indentService.saveIndent(indent);
+        int id = 0;
+        if (b){
+            id = indentService.getByItime(date);
+        }
+        return id;
+    }
+
+    @RequestMapping("indent_detail")
+    public String indent_detail(int id , Model model){
+        System.out.println("id = " + id);
+        Indent indent = indentService.getIndentById(id);
+        int sid =indent.getSid();
+        model.addAttribute("indent",indent);
+        return "indent_detail";
+    }
+    @RequestMapping("/updateIstateById")
+    public String updateIstateById(int id ,Model model){
+        boolean b = indentService.updateIstateById(id);
+        return "indent";
+    }
 }
