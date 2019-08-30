@@ -117,6 +117,7 @@ public class UserController {
      */
     @RequestMapping("memberSave")
     public Object memberSave(String uname,HttpServletRequest request){
+        System.out.println("uname="+uname);
         User u=new User();
         u.setUname(uname);
         User b=userService.findUser(u);
@@ -174,8 +175,10 @@ public class UserController {
      * @return
      */
     @RequestMapping("/member")
-    public String member(HttpServletRequest request){
-        request.getSession().setAttribute("islogin",true);
+    public String member(HttpServletRequest request,HttpSession session){
+        if(request.getSession().getAttribute("islogin")==null){
+            request.getSession().setAttribute("islogin",true);
+        }
         return "member";
     }
     //权限不足时，响应的页面
@@ -303,7 +306,7 @@ public class UserController {
     //注册
     @ResponseBody
     @RequestMapping("/zhuce")
-    public boolean registerUser (String uname, String upwd, String email, String realname, String tel, String sex,String birth){
+    public int registerUser (String checkcode,String uname, String upwd, String email, String realname, String tel, String sex,String birth,HttpSession session){
         User user = new User();
         user.setUname(uname);
         String password = Md5Utils.getpawd(upwd);
@@ -316,8 +319,14 @@ public class UserController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String createtime = dateFormat.format(new Date());
         user.setCreatetime(createtime);
-        boolean b = userService.save(user);
-        return b;
+        String code =(String) session.getAttribute("number");
+        int aa=0;
+        if(!code.equalsIgnoreCase(checkcode)){
+            aa=1;
+        }else if(userService.save(user)==true){
+            aa=2;
+        }
+        return aa;
     }
 
     @ResponseBody
@@ -330,7 +339,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/regemail")
     public boolean registerEmail(String email){
-        boolean b = userService.getUserByName(email);
+        boolean b = userService.getUserByEmail(email);
         return b;
     }
 

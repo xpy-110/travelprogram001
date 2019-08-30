@@ -337,7 +337,7 @@
 <!-- 首页导航 -->
 <div class="navitem">
     <ul class="nav">
-        <li><a href="memberSave">首页</a></li>
+        <li><a href="member">首页</a></li>
         <li><a href="findIndent">已完成订单</a></li>
         <li ><a href="findIndent1">待付款</a></li>
         <li class="nav-active"><a href="findIndent2">已付款</a></li>
@@ -362,6 +362,9 @@
                     <p th:text="${i.scenic.sname}"></p>
                     <br/>
                     <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
+                    <br/>
+                    <b style="color: #8c8c8c;font-size: 10px;">订单提交时间:</b>
+                    <b th:text="${i.itime}" style="color: #8c8c8c;font-size: 10px;"></b>
                 </div>
                 <div class="text2" style="margin-top: 40px;">
                     <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 24px;height: 22px;font-size: 22px;color: #262626;"/>
@@ -424,10 +427,9 @@
             for(var i=0; i<checkID.length;i++){
                 ids+=i==checkID.length-1?checkID[i]:checkID[i]+"-";
             }
-            alert(ids);
             $.post("delIndent",{"ids":ids},function (data) {
-                if (data==true){
-                    location.href="indent";
+                if (data!=false){
+                    location.href="findIndent2";
                 } else {
                     alert("取消失败");
                 }
@@ -438,40 +440,6 @@
     function del() {
         alert("您已经取消这个订单,退款将在一到三个工作日内退还您的账户");
     }
-    $(function () {
-        //加
-        $("#add").click(function () {
-            var count = $("#icount").val();
-            if(count<10){
-                count++;
-                var price = $("#inp1").val();
-                price*=count
-                $("#icount").val(count);
-                $("#iprice").empty();
-                $("#iprice").append(price);
-            }else{
-                alert("订单数量不能大于10");
-            }
-
-
-        });
-        //减
-        $("#sum").click(function () {
-            var count = $("#icount").val();
-            if(count>1){
-                count--;
-                var price = $("#inp1").val();
-                price*=count
-                $("#iprice").empty();
-                $("#iprice").append(price);
-                $("#icount").val(count);
-            }else{
-                alert("订单数量不能小于1");
-            }
-
-        });
-    });
-
 </script>
 <div class="right" style="text-align:center;position:relative;left: 1px;">
     <div class="top">

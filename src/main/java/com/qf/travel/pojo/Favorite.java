@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Favorite {
     private int fid;
-    private String username;
+    private String uname;
     private int sid;
     private String ftime;
 

@@ -52,7 +52,7 @@
                     <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
                         <a href="findIndent">我的订单</a>&nbsp; &nbsp;
                         <a href="indent">个人中心 </a>&nbsp; &nbsp;
-                      <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
+                      <a th:href="@{myfavoriteview(uname=${session.currentUser.uname})}" class="collection">我的收藏</a>&nbsp; &nbsp;
                     <a href="logout">退出</a>
                     </span>
             </div>
@@ -101,11 +101,11 @@
                 <p>黑马旅行<span>搜索结果</span></p>
             </div>
             <div class="shaixuan">
-                <a href="routelist">评价排行</a>
-                <a href="routelistByScllect">收藏排行</a>
-                <a href="routelistBySindent">销量排行</a>
-                <a href="routelistByPrice">价格排行</a>
-                <a href="routelistByStime">最新特色</a>
+                <a href="routelist" class="btn btn-primary btn-lg active" role="button">评价排行</a>
+                <a href="routelistByScllect" class="btn btn-primary btn-lg active" role="button">收藏排行</a>
+                <a href="routelistBySindent" class="btn btn-primary btn-lg active" role="button">销量排行</a>
+                <a href="routelistByPrice" class="btn btn-primary btn-lg active" role="button">价格排行</a>
+                <a href="routelistByStime" class="btn btn-primary btn-lg active" role="button">最新特色</a>
 
             </div>
             <div class="xinxi clearfix">
@@ -116,7 +116,7 @@
                     </div>
                     <ul>
                         <li th:each="s:${scenics}">
-                            <div class="img"><img th:src="${s.simgs}" alt=""></div>
+                            <div class="img"><img th:src="${s.simgs}" alt="" class="img"></div>
                             <div class="text1">
                                 <p th:text="${s.sname}"></p>
                                 <br/>
@@ -166,7 +166,7 @@
                             <a class="btn btn-default" th:href="@{routelistByScllect(page=${maxPage})}">末页</a>
                         </ul>
                     </div>
-                    <div class="pageNum" th:if="${sign}==4">routelistBySindent
+                    <div class="pageNum" th:if="${sign}==4">
                         <ul>
                             <a class="btn btn-default" th:href="@{routelistByStime(page=1)}">首页</a>
                             <a class="btn btn-default" th:href="@{routelistByStime(page=${currentPage+(-1)})}">上一页</a>

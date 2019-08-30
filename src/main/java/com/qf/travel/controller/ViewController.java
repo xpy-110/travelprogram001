@@ -10,6 +10,7 @@ public class ViewController {
         return "route_detail";
     }
 
+
     @RequestMapping("myfavorite")
     public String myfavorite(String uname){
         System.out.println("uname = " + uname);
