@@ -338,7 +338,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/regemail")
     public boolean registerEmail(String email){
-        boolean b = userService.getUserByName(email);
+        boolean b = userService.getUserByEmail(email);
         return b;
     }
 
