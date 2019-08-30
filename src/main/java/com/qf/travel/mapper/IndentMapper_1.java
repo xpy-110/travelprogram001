@@ -21,4 +21,6 @@ public interface IndentMapper_1 {
     List<Indent> loadAll11();
 
     int getCountByStype(String stype);
+
+    int getCountAllByState(String istate);
 }

@@ -243,7 +243,6 @@
             location.href="login";
         }else {
             $.post("saveIndent",{"sid":sid ,"uname":uname,"icount":icount,"sprice":sprice,"iprice":iprice},function (b) {
-                alert(b);
                 if (b == 0){
                     alert("添加失败");
                 }else {

@@ -401,7 +401,7 @@ public class UserController {
         return "addMem";
     }
     @ResponseBody
-    @RequiresPermissions(value = {"addMen"})
+    @RequiresPermissions(value = {"addMem"})
     @RequestMapping("/addMems")
     public boolean addMems(String uname,String upwd,String email,String realname,
                             String tel,String birth,String sex){
