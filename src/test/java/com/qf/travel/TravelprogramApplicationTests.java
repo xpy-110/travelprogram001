@@ -6,6 +6,8 @@ import com.qf.travel.mapper.UserMapper;
 import com.qf.travel.pojo.Indent;
 import com.qf.travel.pojo.Scenic;
 import com.qf.travel.pojo.User;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,27 @@ public class TravelprogramApplicationTests {
         map.put("uuu","路线");
         List<Indent> indents = indentMapper.queryAllByUname(map);
         System.out.println(indents);
+    }
+    @Test
+    public void jiami(){
+        //75472477050d921dea5e7d0d1edadd28
+        //75472477050d921dea5e7d0d1edadd28
+        String s = "123456";
+        String salt = "travel";
+        Md5Hash md5Hash = new Md5Hash(s,salt,1024);
+        System.out.println(md5Hash.toHex());
+    }
+    @Test
+    public void simpljiami(){
+        //75472477050d921dea5e7d0d1edadd28
+        //75472477050d921dea5e7d0d1edadd28
+        //75472477050d921dea5e7d0d1edadd28
+        String type = "MD5";
+        String s = "test";
+        String salt = "abc";
+        int d = 1024;
+        SimpleHash simpleHash = new SimpleHash(type,s,salt,d);
+        System.out.println(simpleHash.toHex());
+        System.out.println(simpleHash);
     }
 }
