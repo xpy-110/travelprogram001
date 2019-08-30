@@ -15,4 +15,8 @@ public interface IndentMapper_1 {
     int getAllCount();
     List<Indent> loadAll(String istate);
     Indent getUnameById(int id);
+
+    int getCountStyIsta(Map<String,String> map);
+
+    List<Indent> loadAll11();
 }

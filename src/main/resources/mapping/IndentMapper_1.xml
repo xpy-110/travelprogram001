@@ -64,4 +64,12 @@
     <select id="getUnameById" parameterType="int" resultType="indent">
         select * from indent where id=#{id}
     </select>
+
+    <select id="getCountStyIsta" parameterType="map" resultType="int">
+        SELECT COUNT(i.id) FROM indent i,scenic s WHERE i.sid=s.sid AND i.istate=#{istate} and s.stype=#{stype}
+    </select>
+    <select id="loadAll11" resultType="indent">
+        select * from indent
+    </select>
+
 </mapper>

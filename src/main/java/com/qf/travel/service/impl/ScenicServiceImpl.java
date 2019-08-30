@@ -90,6 +90,11 @@ public class ScenicServiceImpl implements ScenicService {
         return scenicMapper.getScenicByUname(uname);
     }
 
+    @Override
+    public List<Scenic> exportScenic(String type) {
+        return scenicMapper.loadAllByStype(type);
+    }
+
 
     @Override
     public List<Scenic> loadAllByStype(String type,int page,int rows) {
@@ -153,4 +158,10 @@ public class ScenicServiceImpl implements ScenicService {
         map.put("uuu",uuu);
         return scenicMapper.inquireScenic(map);
     }
+
+    @Override
+    public int getCountBytype(String stype) {
+        return scenicMapper.getCountBytype(stype);
+    }
+
 }

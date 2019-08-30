@@ -32,6 +32,7 @@ public interface ScenicService {
 
 
     //根据类型查询数据
+    public  List<Scenic> exportScenic(String type);
     public List<Scenic> loadAllByStype(String type,int page,int rows);
     public List<Scenic> loadByStypeSstate(Scenic scenic,int page,int rows);
     //根据id修改状态
@@ -50,4 +51,6 @@ public interface ScenicService {
     public Scenic getScenicByid(int sid);
     // 模糊查询
     List<Scenic> inquireScenic(String stype,String uuu);
+
+    public int getCountBytype(String stype);
 }

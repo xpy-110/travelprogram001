@@ -61,4 +61,16 @@ public class IndentServiceImpl_1 implements IndentService_1 {
     public Indent getUnameById(int id) {
         return indentMapper_1.getUnameById(id);
     }
+
+    @Override
+    public int getCountStyIsta(String istate,String stype) {
+        Map<String,String> map = new HashMap<>();
+        map.put("istate",istate);
+        map.put("stype",stype);
+        return indentMapper_1.getCountStyIsta(map);
+    }
+    @Override
+    public  List<Indent> loadAll11(){
+        return indentMapper_1.loadAll11();
+    }
 }

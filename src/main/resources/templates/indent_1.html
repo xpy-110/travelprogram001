@@ -518,38 +518,7 @@
     function del() {
         alert("你确定要删除么？");
     }
-    $(function () {
-        //加
-        $("#add").click(function () {
-            var count = $("#icount").val();
-            if(count<10){
-                count++;
-                var price = $("#inp1").val();
-                price*=count
-                $("#icount").val(count);
-                $("#iprice").empty();
-                $("#iprice").append(price);
-            }else{
-                alert("订单数量不能大于10");
-            }
 
-        });
-        //减
-        $("#sum").click(function () {
-            var count = $("#icount").val();
-            if(count>1){
-                count--;
-                var price = $("#inp1").val();
-                price*=count
-                $("#iprice").empty();
-                $("#iprice").append(price);
-                $("#icount").val(count);
-            }else{
-                alert("订单数量不能小于1");
-            }
-
-        });
-    });
 </script>
 <div class="right" style="text-align:center;right: 7%;position:absolute;">
     <div class="top">

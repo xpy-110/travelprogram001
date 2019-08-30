@@ -46,11 +46,13 @@ public class TravelprogramApplicationTests {
         List<User> users = userMapper.inquireUser(map);
         System.out.println(users);
     }
-    @Test
-    public void loadall(){
+
+   /*
+   @Test
+   public void loadall(){
         List<Indent> indents = indentMapper.findIndent("test");
         System.out.println(indents);
-    }
+    }*/
     @Test
     public void queryAll(){
         List<Indent> indents = indentMapper.queryAll("北京");
