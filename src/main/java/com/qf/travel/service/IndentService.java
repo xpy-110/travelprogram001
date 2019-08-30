@@ -54,6 +54,8 @@ public interface IndentService {
     public Indent getIndentById(int id);
     // 根据id改变state
     public boolean updateIstateById(int id);
+    // 根据id改变state
+    public boolean updateIstateById1(int id);
     //  查询订单
     public Scenic getScenicBySid(int sid);
 

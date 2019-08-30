@@ -124,7 +124,6 @@ public class IndentController {
         boolean bool = indentService.deleteIds(list);
         return bool;
     }
-
     /*新增订单的方法*/
     @ResponseBody
     @RequestMapping("/saveIndent")
@@ -150,7 +149,7 @@ public class IndentController {
         }
         return id;
     }
-
+    /*根据id查询indent信息发送到详情界面*/
     @RequestMapping("indent_detail")
     public String indent_detail(int id , Model model){
         System.out.println("id = " + id);
@@ -162,9 +161,54 @@ public class IndentController {
         model.addAttribute("indent",indent);
         return "indent_detail";
     }
+    /*根据id查询indent信息发送到详情界面*/
+    @RequestMapping("indent_detail1")
+    public String indent_detail1(int id , Model model){
+        Indent indent = indentService.getIndentById(id);
+        System.out.println("id = " + id);
+        System.out.println("indent = " + indent);
+        int sid =indent.getSid();
+        System.out.println("sid = " + sid);
+        Scenic scenic = indentService.getScenicBySid(sid);
+        model.addAttribute("scenic",scenic);
+        System.out.println("scenic = " + scenic + sid);
+        model.addAttribute("indent",indent);
+        return "indent_detail1";
+    }
+    /*根据id查询indent信息发送到详情界面*/
+    @RequestMapping("indent_detail2")
+    public String indent_detail2(int id , Model model){
+        System.out.println("id = " + id);
+        Indent indent = indentService.getIndentById(id);
+        int sid =indent.getSid();
+        Scenic scenic = indentService.getScenicBySid(sid);
+        model.addAttribute("scenic",scenic);
+        System.out.println("scenic = " + scenic + sid);
+        model.addAttribute("indent",indent);
+        return "indent_detail2";
+    }
+    /*根据id查询indent信息发送到详情界面*/
+    @RequestMapping("indent_detail3")
+    public String indent_detail3(int id , Model model){
+        System.out.println("id = " + id);
+        Indent indent = indentService.getIndentById(id);
+        int sid =indent.getSid();
+        Scenic scenic = indentService.getScenicBySid(sid);
+        model.addAttribute("scenic",scenic);
+        System.out.println("scenic = " + scenic + sid);
+        model.addAttribute("indent",indent);
+        return "indent_detail3";
+    }
+    //改变订单状态为已付款
     @RequestMapping("/updateIstateById")
     public String updateIstateById(int id ,Model model){
         boolean b = indentService.updateIstateById(id);
         return "redirect:findIndent2";
+    }
+    //改变订单状态为已完成订单
+    @RequestMapping("/updateIstateById1")
+    public String updateIstateById1(int id ,Model model){
+        boolean b = indentService.updateIstateById1(id);
+        return "redirect:findIndent";
     }
 }

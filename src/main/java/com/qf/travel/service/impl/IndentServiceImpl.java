@@ -119,6 +119,12 @@ public class IndentServiceImpl implements IndentService {
         int i = indentMapper.updateIstateById(id);
         return i>0?true:false;
     }
+    @Override
+    public boolean updateIstateById1(int id) {
+        System.out.println("0000000000000000000000"+id);
+        int i = indentMapper.updateIstateById1(id);
+        return i>0?true:false;
+    }
 
     @Override
     public Scenic getScenicBySid(int sid) {
