@@ -24,6 +24,7 @@
     uname=#{uname}
     and
     istate=#{istate}
+    order by itime desc
     </select>
     <select id="findIndent1" parameterType="map" resultMap="resultAllScenic">
     SELECT
@@ -34,6 +35,7 @@
     uname=#{uname}
     and
     istate=#{istate}
+    order by itime desc
     </select>
     <select id="getTotalCount" parameterType="string" resultType="int">
         select
@@ -112,6 +114,14 @@
     <!--根据id改变state-->
     <update id="updateIstateById1" parameterType="int">
         update indent set istate="已完成订单" where id =#{id}
+    </update>
+    <!--根据id改变icount-->
+    <update id="updateIndent" parameterType="int">
+        update indent set icount=#{icount} where id =#{id}
+    </update>
+    <!--根据id改变iprice-->
+    <update id="updateIndent1" parameterType="int">
+        update indent set iprice=#{iprice} where id =#{id}
     </update>
     <!--根据sid查询scenic-->
     <select id="getScenicBySid" parameterType="int" resultType="scenic">
