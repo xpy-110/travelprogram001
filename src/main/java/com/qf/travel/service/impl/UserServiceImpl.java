@@ -152,4 +152,14 @@ public class UserServiceImpl implements UserService {
         map.put("uuu",uuu);
         return userMapper.inquireUser(map);
     }
+
+    @Override
+    public List<User> loadAdmin() {
+        return userMapper.loadAdmin();
+    }
+
+    @Override
+    public List<User> loadMem() {
+        return userMapper.loadMem();
+    }
 }

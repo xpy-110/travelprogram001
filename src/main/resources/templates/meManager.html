@@ -66,10 +66,10 @@
 							<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">4</span></span>
 							<ul style="margin-top:10px;">
 								<li style="height:30px;">
-									<a href="adminis" style="color:red;"><i class="glyphicon glyphicon-user"></i> 管理员维护</a>
+									<a href="adminis"><i class="glyphicon glyphicon-user"></i> 管理员维护</a>
 								</li>
 								<li style="height:30px;">
-									<a href="meManager"><i class="glyphicon glyphicon-king"></i> 会员维护</a>
+									<a href="meManager" style="color:red;"><i class="glyphicon glyphicon-king"></i> 会员维护</a>
 								</li>
 								<li style="height:30px;">
 									<a href="permission"><i class="glyphicon glyphicon-lock"></i> 权限维护</a>
@@ -121,12 +121,14 @@
 								</li>
 							</ul>
 						</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon-th-large"></i> 业务管理 <span class="badge" style="float:right">7</span></span> 
-						<ul style="margin-top:10px;display:none;">
-
-						</ul>
-					</li>
+						<li class="list-group-item tree-closed">
+							<span><i class="glyphicon glyphicon-th-large"></i> 业务管理 <span class="badge" style="float:right">1</span></span>
+							<ul style="margin-top:10px;display:none;">
+								<li style="height:30px;">
+									<a href="IndentManage"><i class="glyphicon glyphicon-check"></i> 订单审核</a>
+								</li>
+							</ul>
+						</li>
 				</ul>
 			</div>
         </div>
@@ -147,6 +149,7 @@
 </form>
 				  <!--action="deleteUsers"-->
 <form id="dor"  method="post">
+<button type="button" id="ExportMem" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-open"></i> 导出</button>
 <button type="button" id="deleteMems" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
 <a type="button" class="btn btn-primary" style="float:right;" href="addMem"><i class="glyphicon glyphicon-plus"></i> 新增</a>
 <br>
@@ -177,6 +180,7 @@
 				  <td th:text="${u.email}"></td>
 				  <td th:text="${u.createtime}"></td>
                   <td>
+					  <a th:href="@{IndentMen(uname=${u.uname})}" type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-list-alt"></i></a>
 				      <a th:href="@{editMem(userId=${u.uid})}" type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></a>
 					  <a th:href="@{deleteMem(userId=${u.uid})}" type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></a>
 				  </td>
@@ -245,6 +249,15 @@
 							}
 						})
 					}
+				});
+				$("#ExportMem").click(function () {
+					$.post("ExportMem",function (data) {
+						if (data == true){
+							alert("导出会员信息成功！");
+						} else {
+							alert("导出会员信息失败！");
+						}
+					})
 				});
             });
 

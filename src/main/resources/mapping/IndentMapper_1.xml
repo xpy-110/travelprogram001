@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.IndentMapper_1">
+    <resultMap id="resultAllScenic" type="com.qf.travel.pojo.Indent">
+        <id property="id" column="id"></id>
+        <result property="sid" column="sid"></result>
+        <result property="uname" column="uname"></result>
+        <result property="icount" column="icount"></result>
+        <result property="iprice" column="iprice"></result>
+        <result property="itime" column="itime"></result>
+        <result property="istate" column="istate"></result>
+        <association property="scenic" javaType="scenic"
+                     select="com.qf.travel.mapper.ScenicMapper.getScenicByid" column="sid">
+        </association>
+    </resultMap>
+    <!--模糊查询全部-->
+    <select id="queryAll" parameterType="string" resultMap="resultAllScenic">
+    SELECT
+      *
+      FROM
+      indent i,
+      scenic s
+      WHERE
+      s.Sid=i.sid
+      and
+      concat(s.Sname,s.Sprice,s.Scity,s.Stype,i.istate) like "%"#{uuu}"%"
+    </select>
+    <select id="getAllCount" resultType="int">
+        select
+        count(id)
+        from
+        indent
+    </select>
+    <select id="getTotalCount" parameterType="string" resultType="int">
+        select
+        count(id)
+        from
+        indent
+        where
+        uname=#{uname}
+    </select>
+    <select id="findIndent" parameterType="string" resultMap="resultAllScenic">
+    SELECT
+      *
+      FROM
+      indent
+      WHERE
+    uname=#{uname}
+    </select>
+    <select id="loadAll" parameterType="string" resultMap="resultAllScenic">
+    SELECT
+      *
+      FROM
+      indent
+      where
+      istate=#{istate}
+    </select>
+    <update id="IndentManUp" parameterType="map">
+        update indent set istate=#{istate} where id=#{id}
+    </update>
+
+    <select id="getUnameById" parameterType="int" resultType="indent">
+        select * from indent where id=#{id}
+    </select>
+</mapper>
