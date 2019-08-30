@@ -89,6 +89,7 @@ public class UserController {
         User b=userService.findUser(u);
         int a=0;
         if (b!=null) {
+            System.out.println("login1111"+b);
             User user=userService.findUserByUname(uname);
             List<Integer> rids=userService.findUR(user.getUid());
             request.getSession().setAttribute("user", b);
@@ -246,6 +247,7 @@ public class UserController {
         user.setTel(tel);
         user.setCreatetime(date);
         boolean bool = userService.updateUser(user);
+        System.out.println(bool);
         return bool;
     }
     //删除管理员信息
@@ -294,6 +296,7 @@ public class UserController {
         user.setCreatetime(date);
         user.setSex(sex);
         boolean bool = userService.saveUser(user,9);
+        System.out.println(bool);
         return bool;
     }
     //注册

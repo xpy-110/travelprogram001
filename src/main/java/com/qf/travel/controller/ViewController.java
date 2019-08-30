@@ -11,7 +11,8 @@ public class ViewController {
     }
 
     @RequestMapping("myfavorite")
-    public String myfavorite(){
+    public String myfavorite(String uname){
+        System.out.println("uname = " + uname);
         return "myfavorite";
     }
 
@@ -27,7 +28,7 @@ public class ViewController {
     public String indent_2(){
         return "redirect:findIndent1";
     }
-    @RequestMapping("indent_detail")
+    @RequestMapping("indent_detailview")
     public String indent_detail(){
         return "indent_detail";
     }

@@ -181,7 +181,6 @@
                         gooddiv.append("<br>");
                         gooddiv.append(gindentfont);
                         gooddiv.append("<br>")
-
                         gooddiv.attr("id",datas[key].sid);
                         gooddiv.click(function(){
                             var sid=$(this).attr("id");
@@ -396,7 +395,7 @@
                 <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
                     <a href="findIndent">我的订单</a>&nbsp; &nbsp;
                     <a href="indent">个人中心 </a>&nbsp; &nbsp;
-                  <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
+                  <a th:href="@{myfavoriteview(uname=${session.currentUser.uname})}" class="collection">我的收藏</a>&nbsp; &nbsp;
                 <a href="logout">退出</a>
                 </span>
 
