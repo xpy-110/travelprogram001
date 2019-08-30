@@ -60,6 +60,8 @@ public interface IndentMapper {
     public Indent getIndentById(int id);
     //  根据id修改istate
     public int updateIstateById(int id);
+    //  根据id修改istate
+    public int updateIstateById1(int id);
     //  根据sid查询订单详情
     public Scenic getScenicBySid(int sid);
 

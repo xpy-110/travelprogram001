@@ -357,7 +357,8 @@
         <ul>
             <li th:each="i:${indents}">
                 <div style="float: left;"><input name="ids" type="checkbox" th:value="${i.id}"  style="vertical-align:-444%;"/></div>
-                <div class="img" style="margin-top: 35px;"><img th:src="${i.scenic.simgs}" style="width: 160px;height: 95px;" alt=""></div>
+                <div class="img" style="margin-top: 35px;">
+                    <a th:href="@{indent_detail3(id=${i.id})}"><img  th:src="${i.scenic.simgs}" style="width: 160px;height: 95px;" alt=""></a></div>
                 <div class="text1">
                     <p th:text="${i.scenic.sname}"></p>
                     <br/>
@@ -374,9 +375,9 @@
                         <span>&yen;</span>
                         <span th:text="${i.iprice}" id="iprice"></span>
                     </p>
-                    <p><a href="route_detail">订单详情</a></p>
+                    <p><a th:href="@{indent_detail3(id=${i.id})}">订单详情</a></p>
                 </div>
-                <div style="float: left;margin-top: 70px;">
+                <div style="float: left;margin-top: 70px;margin-left: -15px;">
                     <p>
                         <span th:text="${i.istate}"></span>
                     </p>
@@ -445,6 +446,7 @@
             }
             $.post("delIndent",{"ids":ids},function (data) {
                 if (data!=false){
+                    alert("你确定要删除么？");
                     location.href="findIndent";
                 } else {
                     alert("删除失败");

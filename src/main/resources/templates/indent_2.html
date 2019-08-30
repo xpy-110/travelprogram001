@@ -357,7 +357,7 @@
         <ul>
             <li th:each="i:${indents}">
                 <div style="float: left;"><input name="ids" type="checkbox" th:value="${i.id}"  style="vertical-align:-444%;"/></div>
-                <div class="img" style="margin-top: 35px;"><img th:src="${i.scenic.simgs}" style="width: 160px;height: 95px;" alt=""></div>
+                <div class="img" style="margin-top: 35px;"><a th:href="@{indent_detail1(id=${i.id})}"><img th:src="${i.scenic.simgs}" style="width: 160px;height: 95px;" alt=""></a></div>
                 <div class="text1">
                     <p th:text="${i.scenic.sname}"></p>
                     <br/>
@@ -376,14 +376,14 @@
                         <input id="inp1" type="hidden" th:value="${i.scenic.sprice}">
                         <span th:text="${i.iprice}" id="iprice"></span>
                     </p>
-                    <p><a href="route_detail">订单详情</a></p>
+                    <p><a th:href="@{indent_detail1(id=${i.id})}">订单详情</a></p>
                 </div>
                 <div style="float: left;margin-top: 70px;">
                     <p>
                         <span th:text="${i.istate}"></span>
                     </p>
                 </div>
-                <div  style="font-size: 15px;margin-top: 70px;text-align: center; float: right;margin-right: 30px;">
+                <div  style="font-size: 15px;margin-top: 70px;text-align: center; float: right;margin-right: 20px;">
                     <p><a th:href="@{deleteById2(id=${i.id})}"  onclick="del()" style="color: #ff4848;" class="button">取消订单</a></p>
                 </div>
             </li>
@@ -429,6 +429,7 @@
             }
             $.post("delIndent",{"ids":ids},function (data) {
                 if (data!=false){
+                    alert("您已经取消订单,退款将在一到三个工作日内退还您的账户");
                     location.href="findIndent2";
                 } else {
                     alert("取消失败");

@@ -378,15 +378,15 @@
                         <input th:id="price+(${i.id})" type="hidden" th:value="${i.scenic.sprice}">
                         <span th:text="${i.iprice}" th:id="iprice+(${i.id})"></span>
                     </p>
-                    <p><a th:href="@{indent_detail(id=${i.id})}">订单详情</a></p>
+                    <p><a th:href="@{indent_detail2(id=${i.id})}">订单详情</a></p>th:onclick="|indent_detail(${i.id},'detail')|"
                 </div>
                 <div style="float: left;margin-top: 70px;">
                     <p>
                         <span th:text="${i.istate}"></span>
                     </p>
                 </div>
-                <div  style="font-size: 15px;margin-top: 70px;text-align: center; float: right;margin-right: 30px;">
-                    <p><a th:href="@{deleteById1(id=${i.id})}"  onclick="del()" style="color: #ff4848;" class="button">删除</a></p>
+                <div  style="font-size: 15px;margin-top: 70px;text-align: center; float: right;margin-right: 20px;">
+                    <p><a th:href="@{deleteById1(id=${i.id})}"  onclick="del()" style="color: #ff4848;" class="button">取消订单</a></p>
                 </div>
             </li>
         </ul>
@@ -432,6 +432,9 @@
     </div>
 </div>
 <script>
+    function indent_detail(id) {
+        alert("111111");
+    }
     function submit() {
         $("input[name='ids']:checked").each(function(i) {
             checkID[i] = $(this).val();
@@ -522,7 +525,7 @@
             checkID[i] = $(this).val();
         });
         if (checkID.length==0){
-            alert("请选择要删除的订单");
+            alert("请选择要取消的订单");
         }else {
             var ids = "";
             for(var i=0; i<checkID.length;i++){
@@ -530,6 +533,7 @@
             }
             $.post("delIndent",{"ids":ids},function (data) {
                 if (data!=false){
+                    alert("订单已取消！");
                     location.href="findIndent1";
                 } else {
                     alert("删除失败");
@@ -539,7 +543,7 @@
     });
     /*删除确定*/
     function del() {
-        alert("你确定要删除么？");
+        alert("订单已取消！");
     }
 
 </script>
