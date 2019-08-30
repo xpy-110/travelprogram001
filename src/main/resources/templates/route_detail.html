@@ -48,7 +48,7 @@
                         <input type="hidden" th:value="${session.currentUser.uname}" id="topuname">&nbsp;
                         <a href="findIndent">我的订单</a>&nbsp; &nbsp;
                         <a href="indent">个人中心 </a>&nbsp; &nbsp;
-                      <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
+                      <a th:href="@{myfavoriteview(uname=${session.currentUser.uname})}" class="collection">我的收藏</a>&nbsp; &nbsp;
                     <a href="logout">退出</a>
                     </span>
         </div>
@@ -167,12 +167,13 @@
                     </li>
                     <input type="hidden" id="sid" th:value="${scenic.sid}"/>
                     <p class="collect">
-                        <a class="btn"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
+                        <button id="shoucang" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">点击收藏</button>
+                        <span id="nameError" style="color: red;" class="error"></span>
+
                     </p>
                     <p>
-                        <a class="btn" href="indent_detail"><i class="glyphicon glyphicon-heart-empty"></i>立即预定</a>
-                        <button id="orderbt" class="glyphicon glyphicon-heart-empty">立即订购</button>
-                        <button id="addgcbt" class="glyphicon glyphicon-heart-empty">添加到我的订单</button>
+                        <button id="orderbt" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">立即订购</button>
+                        <button id="addgcbt" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">添加到我的订单</button>
                     </p>
 
                 </div>        
@@ -217,10 +218,27 @@
         var sid = $("#sid").val();
         var uname = $("#topuname").val();
         var sprice = [[${scenic.sprice}]];
+    $("#shoucang").on('click',function () {
+        if (typeof(uname)=="undefined"){
+            alert("您未登录");
+            location.href="login";
+        }else {
+            $.post("saveFavorite", {"uname": uname, "sid": sid}, function (bs) {
+                if (bs == true) {
+                    alert("收藏成功");
+                    $("#nameError").html("已经添加到收藏夹");
+                    $("#nameError").show();
+                } else {
+                    alert("您已经收藏过了")
+                    $("#nameError").html("已经添加到收藏夹");
+                    $("#nameError").show();
+                }
+            })
+        }
+    })
     $("#orderbt").on('click',function () {
         var icount = $("#in1").val();
         var iprice = parseInt(sprice)*parseInt(icount);
-        alert(uname)
         if (typeof(uname)=="undefined"){
             alert("您未登录");
             location.href="login";
@@ -243,13 +261,11 @@
         var icount = $("#in1").val();
         var iprice = parseInt(sprice)*parseInt(icount);
         var sid = $("#sid").val();
-        alert(sid);
         if (typeof(uname)=="undefined"){
             alert("您未登录");
             location.href="login";
         }else {
             $.post("saveIndent",{"sid":sid ,"uname":uname,"icount":icount,"sprice":sprice,"iprice":iprice},function (b) {
-                alert(b);
                 if (b != 0){
                     alert("已经添加到我的订单");
                 }else {

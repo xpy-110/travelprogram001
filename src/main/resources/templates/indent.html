@@ -306,7 +306,7 @@
                 <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
                     <a th:href="@{findIndent(istate='已完成订单')}">我的订单</a>&nbsp; &nbsp;
                     <a href="indent">个人中心 </a>&nbsp; &nbsp;
-                  <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
+                  <a th:href="@{myfavoriteview(uname=${session.currentUser.uname})}" class="collection">我的收藏</a>&nbsp; &nbsp;
                 <a href="logout">退出</a>
                 </span>
 

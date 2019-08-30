@@ -166,6 +166,6 @@ public class IndentController {
     @RequestMapping("/updateIstateById")
     public String updateIstateById(int id ,Model model){
         boolean b = indentService.updateIstateById(id);
-        return "findIndent2";
+        return "redirect:findIndent2";
     }
 }
