@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -21,18 +25,19 @@ public class IndentController {
     private IndentService indentService;
     @RequestMapping("/findIndent")
     public String findIndent(@RequestParam(required = false,defaultValue = "1") int page,
-                             @RequestParam(required = false,defaultValue = "6") int rows,
-                             Model model, HttpServletRequest request){
+                              @RequestParam(required = false,defaultValue = "6") int rows,
+                              Model model, HttpServletRequest request){
+        String istate="已完成订单";
         User user = (User) request.getSession().getAttribute("currentUser");
         String uname = user.getUname();
-        int maxPage=indentService.calcMaxPage(uname,rows);
+        int maxPage=indentService.calcMaxPage1(istate,uname,rows);
         if(page<1){
             page=maxPage;
         }
         if(page>maxPage){
             page=1;
         }
-        List<Indent> indents=indentService.findIndent(uname,page, rows);
+        List<Indent> indents=indentService.findIndent1(istate,uname,page,rows);
         System.out.println(indents);
         model.addAttribute("indents",indents);
         model.addAttribute("currentPage",page);
@@ -42,9 +47,9 @@ public class IndentController {
     @RequestMapping("/findIndent1")
     public String findIndent1(@RequestParam(required = false,defaultValue = "1") int page,
                              @RequestParam(required = false,defaultValue = "6") int rows,
-                             Model model, HttpServletRequest request,String istate){
-        System.out.println(istate);
+                             Model model, HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("currentUser");
+        String istate="待付款";
         String uname = user.getUname();
         int maxPage=indentService.calcMaxPage1(uname,istate,rows);
         if(page<1){
@@ -53,22 +58,33 @@ public class IndentController {
         if(page>maxPage){
             page=1;
         }
-        if(istate.equals("已付款")){
-            List<Indent> indents=indentService.findIndent1(uname,istate,rows,page);
-            System.out.println(indents);
-            model.addAttribute("indents",indents);
-            model.addAttribute("currentPage",page);
-            model.addAttribute("maxPage",maxPage);
-            return "indent_2";
-        }else{
-            List<Indent> indents=indentService.findIndent1(uname,istate,rows,page);
+            List<Indent> indents=indentService.findIndent1(istate,uname,page,rows);
             System.out.println(indents);
             model.addAttribute("indents",indents);
             model.addAttribute("currentPage",page);
             model.addAttribute("maxPage",maxPage);
             return "indent_1";
+    }
+    @RequestMapping("/findIndent2")
+    public String findIndent2(@RequestParam(required = false,defaultValue = "1") int page,
+                              @RequestParam(required = false,defaultValue = "6") int rows,
+                              Model model, HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("currentUser");
+        String istate="已付款";
+        String uname = user.getUname();
+        int maxPage=indentService.calcMaxPage1(uname,istate,rows);
+        if(page<1){
+            page=maxPage;
         }
-
+        if(page>maxPage){
+            page=1;
+        }
+        List<Indent> indents=indentService.findIndent1(istate,uname,page,rows);
+        System.out.println(indents);
+        model.addAttribute("indents",indents);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("maxPage",maxPage);
+        return "indent_2";
     }
     /**
      * 单个删除
@@ -77,8 +93,20 @@ public class IndentController {
     @RequestMapping("/deleteById")
     public String deleteById(int id){
        indentService.deleteById(id);
-        return "redirect:indent";
+        return "redirect:findIndent“";
     }
+    @RequestMapping("/deleteById1")
+    public String deleteById1(int id){
+        indentService.deleteById(id);
+        return "redirect:findIndent1";
+    }
+    @RequestMapping("/deleteById2")
+    public String deleteById2(int id){
+        indentService.deleteById(id);
+        return "redirect:findIndent2";
+    }
+
+
 
     /**
      * 批量删除

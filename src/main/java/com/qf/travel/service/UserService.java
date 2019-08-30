@@ -54,4 +54,7 @@ public interface UserService {
     public boolean save(User user);
     /*模糊查询*/
     public List<User> inquireUser(int rid,String uuu);
+
+    List<User> loadAdmin();
+    List<User> loadMem();
 }

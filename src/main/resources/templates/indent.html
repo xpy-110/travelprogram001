@@ -304,7 +304,7 @@
         <!-- 登录状态  -->
         <div class="login" th:if="${session.islogin==false}">
                 <span>欢迎回来，<font th:text="${session.currentUser.uname}"></font>&nbsp; &nbsp;
-                    <a href="findIndent">我的订单</a>&nbsp; &nbsp;
+                    <a th:href="@{findIndent(istate='已完成订单')}">我的订单</a>&nbsp; &nbsp;
                     <a href="indent">个人中心 </a>&nbsp; &nbsp;
                   <a href="myfavorite" class="collection">我的收藏</a>&nbsp; &nbsp;
                 <a href="logout">退出</a>
@@ -338,9 +338,9 @@
 <div class="navitem">
     <ul class="nav">
         <li ><a href="memberSave">首页</a></li>
-        <li class="nav-active"><a href="findIndent">所有订单</a></li>
-        <li><a th:href="@{findIndent1(istate='待付款')}">待付款</a></li>
-        <li><a th:href="@{findIndent1(istate='已付款')}">已付款</a></li>
+        <li class="nav-active"><a href="findIndent">已完成订单</a></li>
+        <li><a href="findIndent1">待付款</a></li>
+        <li><a href="findIndent2">已付款</a></li>
         <li><a href="evaluate">评价</a></li>
     </ul>
 </div>
@@ -364,9 +364,7 @@
                     <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
                 </div>
                 <div class="text2" style="margin-top: 40px;">
-                    <img src="images/sub.jpg" alt="minus"  onclick="changeNum([[${i.icount}]],'minus')"  class="hand" style="border:0px;width: 15px;height: 15px;float: left;"/>
-                    <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 15px;height: 15px;"/>
-                    <img src="images/add.jpg" alt="add" th:onclick="changeNum([[${i.icount}]],'add')"  class="hand" style="border:0px;width: 15px;height: 15px;float: right;"/>
+                    <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 22px;height: 22px;font-size: 22px;color: #563d7c"/>
                 </div>
                 <div class="price">
                     <p class="price_num">
@@ -456,6 +454,20 @@
     function del() {
        alert("你确定要删除么？");
     }
+    $(function () {
+        //加
+        $("#add").click(function () {
+            var count = $("#icount").val();
+            count++;
+            $("#icount").val(count);
+        });
+        //减
+        $("#sum").click(function () {
+            var count = $("#icount").val();
+            count--;
+            $("#icount").val(count);
+        });
+    });
 </script>
         <div class="right" style="text-align:center;right: 7%;position:absolute;">
             <div class="top">

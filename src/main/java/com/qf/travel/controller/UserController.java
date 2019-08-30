@@ -2,6 +2,7 @@ package com.qf.travel.controller;
 
 import com.qf.travel.pojo.User;
 import com.qf.travel.service.UserService;
+import com.qf.travel.utils.ExportExcel;
 import com.qf.travel.utils.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -56,7 +57,6 @@ public class UserController {
             Subject subject = SecurityUtils.getSubject();//从安全管理器中获取主体对象
             UsernamePasswordToken token=new UsernamePasswordToken(uname,upwd); //构建令牌对象
             subject.login(token);
-            System.out.println(token);
             if(subject.isAuthenticated()){//判断是否正确登录
                 //用户信息与权限信息存储
                 System.out.println("登陆成功");
@@ -302,7 +302,7 @@ public class UserController {
     //注册
     @ResponseBody
     @RequestMapping("/zhuce")
-    public int registerUser (HttpSession session,String checkcode,String uname, String upwd, String email, String realname, String tel, String sex,String birth){
+    public boolean registerUser (String uname, String upwd, String email, String realname, String tel, String sex,String birth){
         User user = new User();
         user.setUname(uname);
         String password = Md5Utils.getpawd(upwd);
@@ -315,24 +315,14 @@ public class UserController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String createtime = dateFormat.format(new Date());
         user.setCreatetime(createtime);
-        System.out.println("user = " + user);
-        String code =(String) session.getAttribute("number");
-        System.out.println("code = " + code);
-        System.out.println("checkcode = " + checkcode);
-        int aa=0;
-        if(!code.equalsIgnoreCase(checkcode)){
-            aa=1;
-        }else if(userService.save(user)==true){
-            aa=2;
-        }
-        return aa;
+        boolean b = userService.save(user);
+        return b;
     }
 
     @ResponseBody
     @RequestMapping("/reguname")
     public boolean registerUname(String uname){
         boolean b = userService.getUserByName(uname);
-        System.out.println("b = " + b);
         return b;
     }
 
@@ -392,7 +382,6 @@ public class UserController {
             list.add(id);
         }
         boolean bool = userService.deleteUser(list);
-        System.out.println(bool);
         return bool;
     }
     //增加会员
@@ -418,7 +407,6 @@ public class UserController {
         user.setCreatetime(date);
         user.setSex(sex);
         boolean bool = userService.saveUser(user,1);
-        System.out.println(bool);
         return bool;
     }
     //修改会员信息
@@ -446,7 +434,6 @@ public class UserController {
         user.setTel(tel);
         user.setCreatetime(date);
         boolean bool = userService.updateUser(user);
-        System.out.println(bool);
         return bool;
     }
     //模糊查询管理员
@@ -456,5 +443,28 @@ public class UserController {
         List<User> users = userService.inquireUser(1,uuu);
         model.addAttribute("users",users);
         return "mequery";
+    }
+
+    //导出管理员表
+    @ResponseBody
+    @RequestMapping("/ExportAdmins")
+    public boolean EcportAdmin(){
+        List<User> users = userService.loadAdmin();
+        boolean bool = ExportExcel.exportUser(users,"管理员表.xls");
+        return bool;
+    }
+    //导入管理员表
+    @ResponseBody
+    @RequestMapping("/ImportAdmins")
+    public boolean ImportAdmins(){
+        return false;
+    }
+    //导出会员表
+    @ResponseBody
+    @RequestMapping("/ExportMem")
+    public boolean EcportMem(){
+        List<User> users = userService.loadMem();
+        boolean bool = ExportExcel.exportUser(users,"会员表.xls");
+        return bool;
     }
 }

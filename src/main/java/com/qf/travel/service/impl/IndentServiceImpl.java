@@ -15,7 +15,6 @@ import java.util.Map;
 
 @Service
 public class IndentServiceImpl implements IndentService {
-
     @Resource
     private IndentMapper indentMapper;
     /**
@@ -23,10 +22,14 @@ public class IndentServiceImpl implements IndentService {
      * @return
      */
     @Override
-    public List<Indent> findIndent(String uname,int page,int rows) {
+    public List<Indent> findIndent(String istate,String uname, int page, int rows) {
         PageHelper.startPage(page, rows);
-        List<Indent> indent = indentMapper.findIndent(uname);
-        System.out.println("service"+indent);
+        Map<String,String> map=new HashMap<>();
+        map.put("uname",uname);
+        map.put("istate",istate);
+        System.out.println("map = " + map);
+        List<Indent> indent = indentMapper.findIndent1(map);
+        System.out.println("indent = " + indent);
         return indent;
     }
     /**
@@ -85,8 +88,9 @@ public class IndentServiceImpl implements IndentService {
     public List<Indent> findIndent1(String istate,String uname, int page, int rows) {
         PageHelper.startPage(page, rows);
         Map<String,String> map=new HashMap<>();
-        map.put("istate",istate);
         map.put("uname",uname);
+        map.put("istate",istate);
+        System.out.println("map = " + map);
         List<Indent> indent = indentMapper.findIndent1(map);
         System.out.println("indent = " + indent);
         return indent;
