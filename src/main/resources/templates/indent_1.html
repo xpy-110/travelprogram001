@@ -337,7 +337,7 @@
 <!-- 首页导航 -->
 <div class="navitem">
     <ul class="nav">
-        <li ><a href="memberSave">首页</a></li>
+        <li ><a th:href="@{memberSave(uname=${session.currentUser.uname})}">首页</a></li>
         <li ><a href="findIndent">已完成订单</a></li>
         <li class="nav-active"><a href="findIndent1">待付款</a></li>
         <li><a href="findIndent2">已付款</a></li>
@@ -347,7 +347,7 @@
 <div class="xinxi clearfix" id="shopping">
     <div class="left" style="text-align:center;left: 6%;position:absolute;vertical-align:middle">
         <div class="header">
-            <span style="margin-right: 130px;"><input id="allCheckBox" type="checkbox"/>全选</span>
+            <span style="margin-right: 130px;"><input onclick="all()" id="allCheckBox" type="checkbox"/>全选</span>
             <span style="margin-left: 120px;">商品信息</span>
             <span style="margin-left: 180px;">订单数量</span>
             <span style=" margin-left: 120px;margin-right: 30px;">订单价格</span>
@@ -356,25 +356,29 @@
         </div>
         <ul>
             <li th:each="i:${indents}">
-                <div style="float: left;"><input name="ids" type="checkbox" th:value="${i.id}"  style="vertical-align:-444%;"/></div>
+                <div style="float: left;">
+                    <input th:onclick="|jisuan(${i.id},'jisuan')|" th:id="cccc+(${i.id})" name="ids" type="checkbox" th:value="${i.id}"  style="vertical-align:-444%;"/></div>
                 <div class="img" style="margin-top: 35px;"><img th:src="${i.scenic.simgs}" style="width: 160px;height: 95px;" alt=""></div>
                 <div class="text1">
                     <p th:text="${i.scenic.sname}"></p>
                     <br/>
                     <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
+                    <br/>
+                    <b style="color: #8c8c8c;font-size: 10px;">订单提交时间:</b>
+                    <b th:text="${i.itime}" style="color: #8c8c8c;font-size: 10px;"></b>
                 </div>
                 <div class="text2" style="margin-top: 40px;">
                     <img src="images/sub.jpg" alt="minus"  id="sum" th:onclick="|minus(${i.id},'minus')|"  class="hand" style="border:0px;width: 20px;height: 20px;float: left;"/>
-                    <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 22px;height: 22px;color: #0f0f0f;font-size: 22px;"/>
+                    <input th:id="count+(${i.id})" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 22px;height: 22px;color: #0f0f0f;font-size: 22px;"/>
                     <img src="images/add.jpg" alt="add" id="add"  th:onclick="|add(${i.id},'add')|" class="hand" style="border:0px;width: 20px;height: 20px;float: right;"/>
                 </div>
                 <div class="price">
                     <p class="price_num">
                         <span>&yen;</span>
-                        <input id="inp1" type="hidden" th:value="${i.scenic.sprice}">
-                        <span th:text="${i.iprice}" id="iprice"></span>
+                        <input th:id="price+(${i.id})" type="hidden" th:value="${i.scenic.sprice}">
+                        <span th:text="${i.iprice}" th:id="iprice+(${i.id})"></span>
                     </p>
-                    <p><a href="route_detail">订单详情</a></p>
+                    <p><a th:href="@{indent_detail(id=${i.id})}">订单详情</a></p>
                 </div>
                 <div style="float: left;margin-top: 70px;">
                     <p>
@@ -388,6 +392,10 @@
         </ul>
         <div style="float: left">
             <a id="del1" type="button" ><img src="images/del.jpg" alt="delete"/></a>
+        </div>
+        <div style="float: right">
+            <span>&yen;</span>
+            <span id="totel1">0.00</span>
         </div>
         <div>
             <tfoot>
@@ -406,59 +414,86 @@
     </div>
 </div>
 <script>
-    //减
-    function minus(minus) {
-        var count=$("#icount").val();
-        if(count>1){
-            count--;
-            var price = $("#inp1").val();
+    //所选商品价格
+    var totalprice = 0.00;
+    function jisuan(id) {
+        alert(id);
+        if ($("#cccc"+id).is(":checked")) {
+            var count=$("#count"+id).val();
+            var price = $("#price"+id).val();
             price*=count;
-            $("#iprice").empty();
-            $("#iprice").append(price);
-            $("#icount").val(count);
+            alert(price);
+            totalprice += price;
+        } else {
+            var count=$("#count"+id).val();
+            var price = $("#price"+id).val();
+            price*=count;
+            alert(price);
+            totalprice -= price;
+        }
+        $("#totel1").empty();
+        $("#totel1").append(totalprice);
+    }
+    //减
+    function minus(id) {
+        var count=$("#count"+id).val();
+        count--;
+        if(count>0){
+            var price = $("#price"+id).val();
+            if ($("#cccc"+id).is(":checked")) {
+                alert(price);
+                totalprice -= price;
+                $("#totel1").empty();
+                $("#totel1").append(totalprice);
+            }
+            price*=count;
+            $("#iprice"+id).empty();
+            $("#iprice"+id).append(price);
+            $("#count"+id).val(count);
         }else{
             alert("订单数量不能小于1");
         }
     }
     //加
-    function add(add) {
-        var count=$("#icount").val();
+    function add(id) {
+        var count=$("#count"+id).val();
+        count++;
         if(count<10){
-            count++;
-            var price = $("#inp1").val();
+            var price = $("#price"+id).val();
+            if ($("#cccc"+id).is(":checked")) {
+                alert(price);
+                totalprice = totalprice+price;
+                alert(totalprice);
+                $("#totel1").empty();
+                $("#totel1").append(totalprice);
+            }
             price*=count
-            alert(count);
-            $("#icount").val(count);
-            $("#iprice").empty();
-            $("#iprice").append(price);
+            $("#iprice"+id).empty();
+            $("#iprice"+id).append(price);
+            $("#count"+id).val(count);
         }else{
             alert("订单数量不能大于10");
         }
     }
-    /*改变所购商品的数量*/
-    function changeNum(numId,flag){
-        var numId=document.getElementById(numId);
-        if(flag=="minus"){/*减少商品数量*/
-            if(numId.value<1){
-                alert("订单数量必须是大于0");
-                return false;
-            }
-            else{
-                numId.value=parseInt(numId.value)-1;
-                productCount();
-            }
-        }
-        else{/*flag为add，增加商品数量*/
-            numId.value=parseInt(numId.value)+1;
-            productCount();
-        }
-    }
+
     /*复选框全选或全不选效果*/
     $("#allCheckBox").click(function () {
+        $("#totle1").empty();
+        totalprice = 0.00;
         var b = this.checked;
         $("input[name='ids']").each(function () {
             this.checked=b;
         })
+        var checkID=[];
+        $("input[name='ids']:checked").each(function(i){
+            checkID[i] = $(this).val();
+            var id = checkID[i];
+            var count=$("#count"+id).val();
+            var price = $("#price"+id).val();
+            var iprice = price*count;
+            totalprice += iprice;
+        });
+        $("#totel1").append(totalprice);
     });
     $("#del1").click(function () {
         var checkID=[];
