@@ -139,7 +139,8 @@
 			  </div>
 			  <div class="panel-body">
 <form id="dor"  method="post">
-<button type="button" id="ExportAdmins" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-open"></i> 导出</button>
+	<button type="button" id="ImportIndent" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-save"></i> 导入</button>
+	<button type="button" id="ExportIndent" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-open"></i> 导出</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -209,12 +210,21 @@
 					}
 				});
 
-				$("#ExportAdmins").click(function () {
-					$.post("ExportAdmins",function (data) {
+				$("#ExportIndent").click(function () {
+					$.post("ExportIndent",function (data) {
 						if (data == true){
-							alert("导出管理员信息成功！");
+							alert("导出订单信息成功！");
 						} else {
-							alert("导出管理员信息失败！");
+							alert("导出订单信息失败！");
+						}
+					})
+				});
+				$("#ImportIndent").click(function () {
+					$.post("ImportIndent",function (data) {
+						if (data == true){
+							alert("导入订单信息成功！");
+						} else {
+							alert("导入订单信息失败！");
 						}
 					})
 				});

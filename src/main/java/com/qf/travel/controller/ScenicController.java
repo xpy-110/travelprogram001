@@ -2,6 +2,8 @@ package com.qf.travel.controller;
 
 import com.qf.travel.pojo.Scenic;
 import com.qf.travel.service.ScenicService;
+import com.qf.travel.utils.ExportExcel;
+import com.qf.travel.utils.ImportExcel;
 import com.qf.travel.utils.ScienceUtiles;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -414,6 +416,26 @@ public class ScenicController {
         List<Scenic> scenics = scenicService.inquireScenic("酒店",uuu);
         model.addAttribute("scenics",scenics);
         return "hotelquery";
+    }
+    //导出景点表
+    @ResponseBody
+    @RequestMapping("/Exportscenic")
+    public boolean EcportMem(String fileName,String stype){
+        List<Scenic> scenics = scenicService.exportScenic(stype);
+        System.out.println(scenics);
+        boolean bool = ExportExcel.exportScenic(scenics,fileName);
+        return bool;
+    }
+    //导入景点表
+    @ResponseBody
+    @RequestMapping("/Importscenic")
+    public boolean ImportMem(String fileName){
+        boolean bool = false;
+        List<Scenic> list = ImportExcel.importScenic(fileName);
+        for (int i = 0; i < list.size(); i++) {
+            bool = scenicService.saveSecien(list.get(i));
+        }
+        return bool;
     }
 
 }

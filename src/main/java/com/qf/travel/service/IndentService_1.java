@@ -13,4 +13,7 @@ public interface IndentService_1 {
     int getAllmaxpage(int rows);
     List<Indent> loadAll(int page,int rows,String istate);
     Indent getUnameById(int id);
+
+    int getCountStyIsta(String istate,String stype);
+    List<Indent> loadAll11();
 }

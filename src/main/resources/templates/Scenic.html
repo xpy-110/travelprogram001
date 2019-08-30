@@ -150,7 +150,9 @@
 </form>
 				  <!--action="deleteUsers"-->
 <form id="dor"  method="post">
-<button type="button" id="deleteHodels" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+	<button type="button" id="Importscenic" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-save"></i> 导入</button>
+	<button type="button" id="Exportscenic" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-open"></i> 导出</button>
+	<button type="button" id="deleteHodels" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -252,6 +254,27 @@
 							}
 						})
 					}
+				});
+				$("#Exportscenic").click(function () {
+					var fileName = "景点信息表.xls";
+					var stype = "景点";
+					$.post("Exportscenic",{"fileName":fileName,"stype":stype},function (data) {
+						if (data == true){
+							alert("导出景点信息成功！");
+						} else {
+							alert("导出景点信息失败！");
+						}
+					})
+				});
+				$("#ImportMem").click(function () {
+					var fileName = "景点信息表.xls";
+					$.post("ImportMem",{"fileName":fileName},function (data) {
+						if (data == true){
+							alert("导入景点信息成功！");
+						} else {
+							alert("导入景点信息失败！");
+						}
+					})
 				});
             });
 

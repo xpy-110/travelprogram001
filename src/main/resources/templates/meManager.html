@@ -149,6 +149,7 @@
 </form>
 				  <!--action="deleteUsers"-->
 <form id="dor"  method="post">
+<button type="button" id="ImportMem" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-save"></i> 导入</button>
 <button type="button" id="ExportMem" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-open"></i> 导出</button>
 <button type="button" id="deleteMems" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
 <a type="button" class="btn btn-primary" style="float:right;" href="addMem"><i class="glyphicon glyphicon-plus"></i> 新增</a>
@@ -256,6 +257,15 @@
 							alert("导出会员信息成功！");
 						} else {
 							alert("导出会员信息失败！");
+						}
+					})
+				});
+				$("#ImportMem").click(function () {
+					$.post("ImportMem",function (data) {
+						if (data == true){
+							alert("导入会员信息成功！");
+						} else {
+							alert("导入会员信息失败！");
 						}
 					})
 				});

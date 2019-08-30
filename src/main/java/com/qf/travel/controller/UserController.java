@@ -3,6 +3,7 @@ package com.qf.travel.controller;
 import com.qf.travel.pojo.User;
 import com.qf.travel.service.UserService;
 import com.qf.travel.utils.ExportExcel;
+import com.qf.travel.utils.ImportExcel;
 import com.qf.travel.utils.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -466,7 +467,13 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/ImportAdmins")
     public boolean ImportAdmins(){
-        return false;
+        String filename = "管理员表.xls";
+        boolean bool = false;
+        List<User> list = ImportExcel.importUser(filename);
+        for (int i = 0; i < list.size(); i++) {
+            bool = userService.save(list.get(i));
+        }
+        return bool;
     }
     //导出会员表
     @ResponseBody
@@ -474,6 +481,18 @@ public class UserController {
     public boolean EcportMem(){
         List<User> users = userService.loadMem();
         boolean bool = ExportExcel.exportUser(users,"会员表.xls");
+        return bool;
+    }
+    //导入会员表
+    @ResponseBody
+    @RequestMapping("/ImportMem")
+    public boolean ImportMem(){
+        String filename = "会员表.xls";
+        boolean bool = false;
+        List<User> list = ImportExcel.importUser(filename);
+        for (int i = 0; i < list.size(); i++) {
+            bool = userService.save(list.get(i));
+        }
         return bool;
     }
 }
