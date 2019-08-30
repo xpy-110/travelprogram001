@@ -338,9 +338,9 @@
 <div class="navitem">
     <ul class="nav">
         <li><a href="memberSave">首页</a></li>
-        <li><a href="findIndent">所有订单</a></li>
-        <li ><a th:href="@{findIndent1(istate='待付款')}">待付款</a></li>
-        <li class="nav-active"><a th:href="@{findIndent1(istate='已付款')}">已付款</a></li>
+        <li><a href="findIndent">已完成订单</a></li>
+        <li ><a href="findIndent1">待付款</a></li>
+        <li class="nav-active"><a href="findIndent2">已付款</a></li>
         <li><a href="evaluate">评价</a></li>
     </ul>
 </div>
@@ -364,13 +364,13 @@
                     <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
                 </div>
                 <div class="text2" style="margin-top: 40px;">
-                    <img src="images/sub.jpg" alt="minus"  onclick="changeNum([[${i.icount}]],'minus')"  class="hand" style="border:0px;width: 15px;height: 15px;float: left;"/>
-                    <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 15px;height: 15px;"/>
-                    <img src="images/add.jpg" alt="add" th:onclick="changeNum([[${i.icount}]],'add')"  class="hand" style="border:0px;width: 15px;height: 15px;float: right;"/>
+                    <input id="icount" type="text" th:value="${i.icount}"  readonly="readonly" style="text-align:center;width: 22px;height: 22px;font-size: 22px;color: #262626;"/>
+
                 </div>
                 <div class="price">
                     <p class="price_num">
                         <span>&yen;</span>
+                        <input id="inp1" type="hidden" th:value="${i.scenic.sprice}">
                         <span th:text="${i.iprice}" id="iprice"></span>
                     </p>
                     <p><a href="route_detail">订单详情</a></p>
@@ -381,7 +381,7 @@
                     </p>
                 </div>
                 <div  style="font-size: 15px;margin-top: 70px;text-align: center; float: right;margin-right: 30px;">
-                    <p><a th:href="@{deleteById(id=${i.id})}"  onclick="del()" style="color: #ff4848;" class="button">删除</a></p>
+                    <p><a th:href="@{deleteById2(id=${i.id})}"  onclick="del()" style="color: #ff4848;" class="button">取消订单</a></p>
                 </div>
             </li>
         </ul>
@@ -404,25 +404,7 @@
         </div>
     </div>
 </div>
-<script>
-    /*改变所购商品的数量*/
-    function changeNum(numId,flag){
-        var numId=document.getElementById(numId);
-        if(flag=="minus"){/*减少商品数量*/
-            if(numId.value<1){
-                alert("订单数量必须是大于0");
-                return false;
-            }
-            else{
-                numId.value=parseInt(numId.value)-1;
-                productCount();
-            }
-        }
-        else{/*flag为add，增加商品数量*/
-            numId.value=parseInt(numId.value)+1;
-            productCount();
-        }
-    }
+<script type="text/javascript">
     /*复选框全选或全不选效果*/
     $("#allCheckBox").click(function () {
         var b = this.checked;
@@ -436,7 +418,7 @@
             checkID[i] = $(this).val();
         });
         if (checkID.length==0){
-            alert("请选择要删除的订单");
+            alert("请选择要取消的订单");
         }else {
             var ids = "";
             for(var i=0; i<checkID.length;i++){
@@ -447,15 +429,49 @@
                 if (data==true){
                     location.href="indent";
                 } else {
-                    alert("删除失败");
+                    alert("取消失败");
                 }
             })
         }
     });
     /*删除确定*/
     function del() {
-        alert("你确定要删除么？");
+        alert("您已经取消这个订单,退款将在一到三个工作日内退还您的账户");
     }
+    $(function () {
+        //加
+        $("#add").click(function () {
+            var count = $("#icount").val();
+            if(count<10){
+                count++;
+                var price = $("#inp1").val();
+                price*=count
+                $("#icount").val(count);
+                $("#iprice").empty();
+                $("#iprice").append(price);
+            }else{
+                alert("订单数量不能大于10");
+            }
+
+
+        });
+        //减
+        $("#sum").click(function () {
+            var count = $("#icount").val();
+            if(count>1){
+                count--;
+                var price = $("#inp1").val();
+                price*=count
+                $("#iprice").empty();
+                $("#iprice").append(price);
+                $("#icount").val(count);
+            }else{
+                alert("订单数量不能小于1");
+            }
+
+        });
+    });
+
 </script>
 <div class="right" style="text-align:center;right: 7%;position:absolute;">
     <div class="top">
