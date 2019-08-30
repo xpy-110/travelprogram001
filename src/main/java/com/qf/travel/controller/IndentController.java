@@ -1,6 +1,7 @@
 package com.qf.travel.controller;
 
 import com.qf.travel.pojo.Indent;
+import com.qf.travel.pojo.Scenic;
 import com.qf.travel.pojo.User;
 import com.qf.travel.service.IndentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,12 +129,15 @@ public class IndentController {
         System.out.println("id = " + id);
         Indent indent = indentService.getIndentById(id);
         int sid =indent.getSid();
+        Scenic scenic = indentService.getScenicBySid(sid);
+        model.addAttribute("scenic",scenic);
+        System.out.println("scenic = " + scenic + sid);
         model.addAttribute("indent",indent);
         return "indent_detail";
     }
     @RequestMapping("/updateIstateById")
     public String updateIstateById(int id ,Model model){
         boolean b = indentService.updateIstateById(id);
-        return "indent";
+        return "findIndent2";
     }
 }

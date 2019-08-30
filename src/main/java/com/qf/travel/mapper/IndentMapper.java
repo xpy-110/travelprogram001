@@ -1,6 +1,7 @@
 package com.qf.travel.mapper;
 
 import com.qf.travel.pojo.Indent;
+import com.qf.travel.pojo.Scenic;
 import org.apache.ibatis.annotations.Mapper;
 
 import javax.annotation.Resource;
@@ -59,5 +60,7 @@ public interface IndentMapper {
     public Indent getIndentById(int id);
     //  根据id修改istate
     public int updateIstateById(int id);
+    //  根据sid查询订单详情
+    public Scenic getScenicBySid(int sid);
 
 }

@@ -38,21 +38,25 @@
         position:absolute;right:10px;top:122px;
     }
     #bodyDiv{
-        background-color: #CCFFCC;
+        background-color: #faebcc;
         width: 100%;
-        height: 100%;
-        text-align: center;
+        height: 500px;
     }
     #bigDiv{
-        background-color: #c4e3f3;
-        text-align: center;
-        margin-left: 30%;
-        width: 40%;
+        background-color: #FFAAAA;
+        margin-top: 20px;
+        margin-left: 40%;
+        width: 330px;
+        height: 420px;
+        border: 3px solid sandybrown;
+
+    }
+    #imgs{
+        width: 296px;
         height: 200px;
     }
-    p{
-        size: 30px;
-
+    #div01{
+        margin-top: 15px;
     }
 </style>
 <body>
@@ -117,15 +121,24 @@
     </ul>
 </div>
 <div id="bodyDiv">
-    <h1>欢迎来到支付界面</h1>
-    <div id="bigDiv">
-        <p>欢迎您：<b><font class="font1" th:text="${indent.uname}"></font></b><br></p>
+    <p style="font-size: 20px"><b>欢迎您来到支付界面</b><br></p>
+    <div id="bigDiv" class="col-md-6">
+        <div>
+            <img th:src="${scenic.simgs}" id="imgs"/>
+        </div>
+        <p style="font-size: 20px" ><b th:text="${scenic.sname}"></b></p>
+        <p style="font-size: 15px">此地的特色是：<b th:text="${scenic.sfeature}"></b></p>
+        <div id="div01">
+            <p>单价为:<font style="font-size: 15px;color: red" th:text="${scenic.sprice}"></font>每人</p><br><br>
+            <p style="font-size: 20px">订购人数为：<span th:text="${indent.icount}"></span>人</p>
+        </div>
 
-        <p style="size: 20px">订购人数为：<span th:text="${indent.icount}"></span>人</p>
-        <p>总共支付价格应为：<span th:text="${indent.iprice}"></span></p>
+        <p>总共支付价格应为：<span style="font-size: 20px;color: red" th:text="${indent.iprice}"></span></p>
+
+
+        <a th:href="@{updateIstateById(id=${indent.id})}" ><button type="button" id="myButton" data-loading-text="支付中..." class="btn btn-primary" autocomplete="off">支付成功，自动跳转至订单界面</button></a>
     </div>
-    <button id="button01">我要交钱啦</button>
-    <a th:href="@{updateIstateById(id=${indent.id})}">支付成功，自动跳转至订单界面</a>
+
 </div>
 </body>
 </html>
