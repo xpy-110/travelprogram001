@@ -19,4 +19,6 @@ public interface IndentMapper_1 {
     int getCountStyIsta(Map<String,String> map);
 
     List<Indent> loadAll11();
+
+    int getCountByStype(String stype);
 }

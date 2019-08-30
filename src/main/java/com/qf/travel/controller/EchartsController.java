@@ -85,4 +85,22 @@ public class EchartsController {
         System.out.println(list);
         return list;
     }
+    @ResponseBody
+    @RequestMapping("/zongjie")
+    public List<NumEcharts> zongjie(){
+        List<NumEcharts> list = new ArrayList<>();
+        int hotel1 = indentService_1.getCountByStype("酒店");
+        int hotel2 = indentService_1.getCountStyIsta("已完成订单","酒店");
+        int scenic1 = indentService_1.getCountByStype("景点");
+        int scenic2 = indentService_1.getCountStyIsta("已完成订单","景点");
+        int route1 = indentService_1.getCountByStype("路线");
+        int route2 = indentService_1.getCountStyIsta("已完成订单","路线");
+        list.add(new NumEcharts(hotel1,"酒店所有"));
+        list.add(new NumEcharts(hotel2,"酒店已完成"));
+        list.add(new NumEcharts(scenic1,"景点所有"));
+        list.add(new NumEcharts(scenic2,"景点已完成"));
+        list.add(new NumEcharts(route1,"路线所有"));
+        list.add(new NumEcharts(route2,"路线已完成"));
+        return list;
+    }
 }
