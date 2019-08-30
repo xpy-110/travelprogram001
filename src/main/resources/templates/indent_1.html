@@ -412,7 +412,7 @@
                             -webkit-transition-duration: 0.4s; /* Safari */
                              box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
                             transition-duration: 0.4s;"
-            onclick="submit()">提交付款</button>
+                    onclick="submit()">提交付款</button>
         </div>
         <div>
             <tfoot>
@@ -431,6 +431,11 @@
     </div>
 </div>
 <script>
+    function submit() {
+        var totel1=$("#totel1").html();
+        alert(totel1);
+    }
+    //订单详情
     function detail(id) {
         var icount=$("#count"+id).val();
         var iprice=$("#iprice"+id).html();
@@ -504,7 +509,7 @@
     function add(id) {
         var count=$("#count"+id).val();
         count++;
-        if(count<10){
+        if(count<=10){
             var price = $("#price"+id).val();
             if ($("#cccc"+id).is(":checked")) {
 
