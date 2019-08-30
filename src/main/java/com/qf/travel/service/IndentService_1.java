@@ -16,4 +16,6 @@ public interface IndentService_1 {
 
     int getCountStyIsta(String istate,String stype);
     List<Indent> loadAll11();
+
+    int getCountByStype(String stype);
 }

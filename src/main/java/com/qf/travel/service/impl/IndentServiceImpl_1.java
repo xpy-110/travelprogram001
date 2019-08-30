@@ -73,4 +73,9 @@ public class IndentServiceImpl_1 implements IndentService_1 {
     public  List<Indent> loadAll11(){
         return indentMapper_1.loadAll11();
     }
+
+    @Override
+    public int getCountByStype(String stype) {
+        return indentMapper_1.getCountByStype(stype);
+    }
 }
