@@ -25,6 +25,11 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+        $("#myButton").on('click',function () {
+            alert("已完成付款")
+        })
+    </script>
 </head>
 <style type="text/css">
     .login{
@@ -43,20 +48,278 @@
         height: 500px;
     }
     #bigDiv{
-        background-color: #FFAAAA;
         margin-top: 20px;
-        margin-left: 40%;
-        width: 330px;
+        margin-left: 10%;
+        width: 80%;
         height: 420px;
         border: 3px solid sandybrown;
-
+        float: left;
     }
     #imgs{
-        width: 296px;
+        width: 260px;
         height: 200px;
     }
     #div01{
         margin-top: 15px;
+    }
+    .xiaodiv{
+        float: left;
+        width: 270px;
+        height: 200px;
+    }
+    .right ul li {
+        width: 100%;
+        height: 72px;
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+        font-size: 12px;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    .right ul li .left {
+        float: left;
+        width: 50%;
+    }
+    .right ul li .left img {
+        width:100%;
+    }
+    .right ul li .right {
+        width: 50%;
+        float: right;
+        padding-left: 4px;
+        box-sizing: border-box;
+        padding-top: 7px;
+    }
+    .right {
+        width: 244px;
+        height: 460px;
+        float: right;
+        background-color: #f7f7f7;
+        padding: 8px;
+        padding-top: 0;
+        font-size: 14px;
+    }
+    .right .top .hot {
+        float: left;
+        color: #ff4848;
+        margin-right: 7px;
+        line-height: 38px;
+        border-bottom: 4px solid #ff4848;
+    }
+    .right .top {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 2px solid #eee;
+        margin-bottom: 8px;
+    }
+
+
+    /*css 初始化 */
+    html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: '微软雅黑';
+    }
+
+    fieldset, img, input, button {
+        border: none;
+        padding: 0;
+        margin: 0;
+        outline-style: none;  /*外面环绕线*/
+    }
+
+    ul, ol {
+        list-style: none;
+    }
+
+    input {
+        padding-top: 0;
+        padding-bottom: 0;
+        /*字体的自动识别*/
+    }
+    select, input {
+        vertical-align: middle;
+    }
+
+    /*输入字居中显示*/
+    select, input, textarea {
+        font-size: 12px;
+        margin: 0;
+    }
+
+    textarea {
+        resize: none;  /*不可以随意拖动*/
+    }
+    img{
+        display: block;
+    }
+    table {
+        border-collapse: collapse; /*合并外连线*/
+    }
+
+    .clearfix:before, .clearfix:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .clearfix {
+        *zoom: 1; /*IE/7/6*/  /*兼容IE6下的写法*/
+    }
+    a {
+        text-decoration: none;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        text-decoration: none;
+        font-weight: normal;
+        font-size: 100%;
+    }
+    .clearfix::after {
+        display: block;
+        clear: both;
+        content: "";
+        visibility: hidden;
+        height: 0;
+    }
+    .left > ul li {
+        width: 100%;
+        height: 170px;
+        border: 1px solid #eee;
+        border-left: 0;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+    .left > ul li .img {
+        width: 160px;
+        height: 95px;
+        float: left;
+    }
+    .left > ul li .text1 {
+        width: 330px;
+        float: left;
+        padding: 20px;
+        color: #a3a3a3;
+        font-size: 14px;
+    }
+    .left > ul li .text2 {
+        width: 150px;
+        float: left;
+        padding: 20px;
+        color: #a3a3a3;
+        font-size: 14px;
+    }
+    .left > ul li .text1 p:nth-of-type(1) {
+        color: #000;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .left > ul li .price {
+        width: 215px;
+        text-align: center;
+        float: left;
+        height: 95px;
+        border-left: 1px solid #eee;
+        margin-top: 35px;
+        font-size: 16px;
+    }
+    .left > ul li .price p {
+        line-height: 1;
+        margin-top: 15px;
+    }
+    .left > ul li .price .price_num {
+        line-height: 1;
+        font-size: 25px;
+        color: #ff4848;
+    }
+    .left > ul li .price .price_num span:nth-of-type(3) {
+        font-size: 16px;
+    }
+    .left .page_num_inf i {
+        float: left;
+        width: 4px;
+        background-color: #878787;
+        height: 20px;
+        margin-top: 5px;
+        margin-right: 10px;
+    }
+    .left .page_num_inf span {
+        color: #ff4848;
+    }
+    .page_one .xinxi > .right {
+        width: 244px;
+        height: 460px;
+        float: right;
+        background-color: #f7f7f7;
+        padding: 8px;
+        padding-top: 0;
+        font-size: 14px;
+    }
+    .page_one .xinxi > .right .top {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 2px solid #eee;
+        margin-bottom: 8px;
+    }
+    .page_one .xinxi > .right .top .hot {
+        float: left;
+        color: #ff4848;
+        margin-right: 7px;
+        line-height: 38px;
+        border-bottom: 4px solid #ff4848;
+    }
+    .page_one .xinxi > .right ul li {
+        width: 100%;
+        height: 72px;
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+        font-size: 12px;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    .page_one .xinxi > .right ul li .left {
+        float: left;
+        width: 50%;
+    }
+    .page_one .xinxi > .right ul li .left img {
+        width:100%;
+    }
+    .page_one .xinxi > .right ul li .right {
+        width: 50%;
+        float: right;
+        padding-left: 4px;
+        box-sizing: border-box;
+        padding-top: 7px;
+    }
+    .page_one .xinxi > .right ul li .right p:nth-of-type(1) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        font-weight: bold;
+        margin-bottom: 3px;
+    }
+    .page_one .xinxi > .right ul li .right p > span {
+        font-size: 16px;
+        color: #ff4848;
+        font-weight: bold;
+        margin-left: 2px;
+    }
+    .left .header {
+        background-color: #eee;
+        font-weight: bold;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 2px;
+        margin-bottom: 15px;
+
+    }
+    .hand{
+        cursor:pointer;
     }
 </style>
 <body>
@@ -126,24 +389,24 @@
 </div>
 <div id="bodyDiv">
     <p style="font-size: 20px"><b>欢迎您来到支付界面</b><br></p>
-    <div id="bigDiv" class="col-md-6">
-        <div>
+    <div id="bigDiv">
+        <div class="xiaodiv">
             <img th:src="${scenic.simgs}" id="imgs"/>
         </div>
-        <p style="font-size: 20px" ><b th:text="${scenic.sname}"></b></p>
-        <p style="font-size: 15px">此地的特色是：<b th:text="${scenic.sfeature}"></b></p>
-        <p style="font-size: 15px">下单时间：<b th:text="${scenic.stime}"></b> </p>
-        <div id="div01">
-            <p>单价为:<font style="font-size: 15px;color: red" th:text="${scenic.sprice}"></font>每人</p><br><br>
-            <p style="font-size: 20px">订购人数为：<span th:text="${indent.icount}"></span>人</p>
+        <div class="xiaodiv">
+            <p style="font-size: 20px;margin-top: 15px" ><b th:text="${scenic.sname}"></b></p>
+            <p style="font-size: 15px;margin-top: 15px">此地的特色是：<b th:text="${scenic.sfeature}"></b></p>
+            <p style="font-size: 15px;margin-top: 15px">下单时间：<b th:text="${scenic.stime}"></b> </p>
         </div>
-
-        <p>总共支付价格应为：<span style="font-size: 20px;color: red" th:text="${indent.iprice}"></span></p>
-
-
-        <a th:href="@{updateIstateById(id=${indent.id})}" ><button type="button" id="myButton" data-loading-text="支付中..." class="btn btn-primary" autocomplete="off">支付成功，自动跳转至订单界面</button></a>
+        <div id="div01" class="xiaodiv" style="margin-top: 15px">
+            <p style="margin-top: 15px">单价为:<font style="font-size: 15px;color: red" th:text="${scenic.sprice}"></font>每人</p><br><br>
+            <p style="font-size: 20px;margin-top: 15px">订购人数为：<span th:text="${indent.icount}"></span>人</p>
+            <p style="margin-top: 15px">总共支付价格应为：<span style="font-size: 20px;color: red" th:text="${indent.iprice}"></span></p>
+        </div>
+        <div class="xiaodiv" style="margin-top: 15px">
+            <a th:href="@{updateIstateById(id=${indent.id})}" ><button type="button" id="myButton" data-loading-text="支付中..." class="btn btn-primary" autocomplete="off">支付成功，自动跳转至订单界面</button></a>
+        </div>
     </div>
-
 </div>
 </body>
 </html>
