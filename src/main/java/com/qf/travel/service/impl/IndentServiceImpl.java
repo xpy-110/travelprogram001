@@ -127,6 +127,19 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
+    public int updateIndent(int id, int icount) {
+        int i = indentMapper.updateIndent(id, icount);
+        System.out.println("i = " + i);
+        return i;
+    }@Override
+    public int updateIndent1(int id, int iprice) {
+        int i = indentMapper.updateIndent1(id, iprice);
+        System.out.println("i = " + i);
+        return i;
+    }
+
+
+    @Override
     public Scenic getScenicBySid(int sid) {
         Scenic scenic = indentMapper.getScenicBySid(sid);
         return scenic;

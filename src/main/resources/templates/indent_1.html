@@ -358,7 +358,7 @@
             <li th:each="i:${indents}">
                 <div style="float: left;">
                     <input th:onclick="|jisuan(${i.id},'jisuan')|" th:id="cccc+(${i.id})" name="ids" type="checkbox" th:value="${i.id}"  style="vertical-align:-444%;"/></div>
-                <div class="img" style="margin-top: 35px;"><img th:src="${i.scenic.simgs}" style="width: 160px;height: 95px;" alt=""></div>
+                <div class="img" style="margin-top: 35px;"><a th:onclick="|detail1(${i.id},'detail1')|"><img th:src="${i.scenic.simgs}" style="width: 160px;height: 95px;" alt=""></a></div>
                 <div class="text1">
                     <p th:text="${i.scenic.sname}"></p>
                     <br/>
@@ -378,8 +378,7 @@
                         <input th:id="price+(${i.id})" type="hidden" th:value="${i.scenic.sprice}">
                         <span th:text="${i.iprice}" th:id="iprice+(${i.id})"></span>
                     </p>
-                    <p><a th:href="@{indent_detail2(id=${i.id})}">订单详情</a></p>th:onclick="|indent_detail(${i.id},'detail')|"
-                </div>
+                    <p><a th:onclick="|detail(${i.id},'detail')|">订单详情</a></p></div>
                 <div style="float: left;margin-top: 70px;">
                     <p>
                         <span th:text="${i.istate}"></span>
@@ -432,8 +431,31 @@
     </div>
 </div>
 <script>
-    function indent_detail(id) {
-        alert("111111");
+    function detail(id) {
+        var icount=$("#count"+id).val();
+        var iprice=$("#iprice"+id).html();
+        $.post("updateIndent",{
+            "icount":icount,
+            "iprice":iprice,
+            "id":id
+        },function (data) {
+            if(data=1){
+              location.href="indent_detail2?id="+id;
+            }
+        });
+    }
+    function detail1(id) {
+        var icount=$("#count"+id).val();
+        var iprice=$("#iprice"+id).val();
+        $.post("updateIndent",{
+            "icount":icount,
+            "iprice":iprice,
+            "id":id
+        },function (data) {
+            if(data=1){
+                location.href="indent_detail2?id="+id;
+            }
+        });
     }
     function submit() {
         $("input[name='ids']:checked").each(function(i) {

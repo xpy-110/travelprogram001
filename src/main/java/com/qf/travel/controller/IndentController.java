@@ -211,4 +211,19 @@ public class IndentController {
         boolean b = indentService.updateIstateById1(id);
         return "redirect:findIndent";
     }
+    //改变订单中数量与价格
+    @ResponseBody
+    @RequestMapping("/updateIndent")
+    public int updateIndent(int id,int icount,double iprice){
+        int price;
+        price=(int) iprice;
+        System.out.println("price = " + price);
+        int i = indentService.updateIndent(id, icount);
+        int i1 = indentService.updateIndent1(id, price);
+        System.out.println("i1 = " + i1);
+        System.out.println("i = " + i);
+        return i;
+    }
+
+
 }
