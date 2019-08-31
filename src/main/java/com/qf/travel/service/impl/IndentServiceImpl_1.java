@@ -78,4 +78,9 @@ public class IndentServiceImpl_1 implements IndentService_1 {
     public int getCountByStype(String stype) {
         return indentMapper_1.getCountByStype(stype);
     }
+
+    @Override
+    public int getCountAllByState(String istate) {
+        return indentMapper_1.getCountAllByState(istate);
+    }
 }
