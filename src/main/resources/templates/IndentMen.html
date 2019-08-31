@@ -139,9 +139,6 @@
 			  </div>
 			  <div class="panel-body">
 <form id="dor"  method="post">
-<button type="button" id="ExportMem" class="btn btn-danger" style="float:right;margin-left:20px;"><i class=" glyphicon glyphicon-open"></i> 导出</button>
-<button type="button" id="deleteMems" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<a type="button" class="btn btn-primary" style="float:right;" href="addMem"><i class="glyphicon glyphicon-plus"></i> 新增</a>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -206,15 +203,6 @@
 					}
 				});
 
-				$("#ExportMem").click(function () {
-					$.post("ExportMem",function (data) {
-						if (data == true){
-							alert("导出会员信息成功！");
-						} else {
-							alert("导出会员信息失败！");
-						}
-					})
-				});
             });
 
         </script>
